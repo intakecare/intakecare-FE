@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat");
+@import url("https://fonts.googleapis.com/css?family=Comfortaa");
+
+.n-h1,
+.n-h2,
+.n-h3,
+.n-h4,
+.n-h5,
+.n-h6 {
+  font-family: Comfortaa;
+}
+
+.body {
+  font-family: Montserrat;
+}
+
+.main.n-layout-header {
+  background: #006666ff;
+}
+
+.main.n-layout {
+  background: rgb(250, 250, 250);
+  background: linear-gradient(
+    0deg,
+    rgba(250, 250, 250, 1) 10%,
+    rgba(0, 102, 102, 1) 90%
+  );
+}
+.mainView {
+  margin: auto;
+}
+
+.content {
+  max-width: 1260px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.content-wide {
+  margin: 20px;
+  margin-top: 10px;
+  max-width: calc(100% - 40px);
+}
+
+.content::before,
+.content-wide::before {
+  content: "";
+  position: absolute;
+  background: transparent;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  bottom: -10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
+  mix-blend-mode: soft-light;
+}

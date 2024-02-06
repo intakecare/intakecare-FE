@@ -1,0 +1,93 @@
+{
+  "common": {
+    "fontFamily": "Montserrat",
+    "borderRadius": "20px",
+    "borderRadiusSmall": "15px",
+    "fontSizeHuge": "36px",
+    "fontSizeLarge": "32px",
+    "fontSizeMedium": "16px",
+    "infoColorSuppl": "#66D9B3FF",
+    "baseColor": "#FAFAFAFF",
+    "infoColorPressed": "#1A9980FF",
+    "infoColorHover": "#66D9B3FF",
+    "infoColor": "#33CC99FF",
+    "primaryColor": "#006666FF",
+    "primaryColorHover": "#1A9980FF",
+    "primaryColorPressed": "#004D4DFF",
+    "primaryColorSuppl": "#1A9980FF",
+    "successColor": "#338ACCFF",
+    "successColorHover": "#66A7D9FF",
+    "successColorSuppl": "#66A7D9FF",
+    "successColorPressed": "#1A5199FF",
+    "textColorBase": "#333333FF",
+    "errorColor": "#510045FF",
+    "errorColorHover": "#720056FF",
+    "errorColorSuppl": "#720056FF",
+    "errorColorPressed": "#341D2FFF",
+    "warningColor": "#F0761FFF",
+    "warningColorHover": "#FC8B3FFF",
+    "warningColorPressed": "#C95710FF",
+    "warningColorSuppl": "#FC8B3FFF" 
+  },
+  "Card": {
+    "borderRadius": "10px",
+    "colorEmbedded": "#FAFAFAFF"
+  },
+  "Avatar": {
+    "borderRadius": "5px"
+  },
+  "Alert": {
+    "borderRadius": "10px"
+  },
+  "Calendar": {
+    "borderRadius": "10px"
+  },
+  "Cascader": {
+    "menuBorderRadius": "10px"
+  },
+  "Checkbox": {
+    "borderRadius": "5px"
+  },
+  "ColorPicker": {
+    "borderRadius": "10px"
+  },
+  "DataTable": {
+    "borderRadius": "10px"
+  },
+  "DatePicker": {
+    "panelBorderRadius": "10px"
+  },
+  "Descriptions": {
+    "borderRadius": "10px"
+  },
+  "Dropdown": {
+    "borderRadius": "5px"
+  },
+  "Dialog": {
+    "borderRadius": "10px"
+  },
+  "Input": {},
+  "Skeleton": {
+    "borderRadius": "5px"
+  },
+  "Table": {
+    "borderRadius": "10px"
+  },
+  "Tabs": {
+    "tabBorderRadius": "20px"
+  },
+  "TimePicker": {
+    "borderRadius": "10px"
+  },
+  "Transfer": {
+    "borderRadius": "10px"
+  },
+  "Typography": {},
+  "Layout": {
+    "footerColor": "rgba(250, 250, 250, 1)"
+  },
+  "Radio": {
+    "buttonTextColorActive": "#FFFFFFFF",
+    "buttonColorActive": "#006666FF"
+  }
+}

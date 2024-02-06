@@ -1,0 +1,198 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import ResponsiveView from "../components/ResponsiveView.vue";
+import { useI18n } from "vue-i18n";
+import {useUserStore} from "@/stores/user";
+
+const { t, locale } = useI18n({ useScope: "global", inheritLocale: true });
+const UserModule = useUserStore();
+// const LanguageModule = getModule(Language);
+const isLogged = computed(() => UserModule.username);
+const firstName = computed(() => UserModule.name);
+const userType = computed(() => UserModule.user_type);
+
+const menuOptions = computed(() => {
+  const menu = [
+    { label: t("navigation.aboutUs"), key: "About" },
+    { label: t("navigation.project"), key: "Project" },
+  ];
+  if (!isLogged.value) {
+    menu.push({ label: t("navigation.login"), key: "Login" });
+  } else {
+    if (userType.value === "doctor") {
+      menu.push({ label: t("general.patient", 2), key: "Patients" });
+    }
+    if (userType.value === "admin_itc") {
+      menu.push({ label: t("navigation.dashboard"), key: "Dashboard" });
+    }
+    if (userType.value === "patient") {
+      menu.push({ label:  t("patientDetail.myTherapies"), key: "PatientTherapy" });
+    }
+  }
+  return menu;
+});
+
+const loginOptions = computed(() => {
+  const option = [
+    {label: t("navigation.myProfile"), key: "PatientProfile"},
+    {label: t("navigation.logout"), key: "Logout" },
+  ];
+  return option
+})
+
+const clickNav = (destination: string) => {
+  router.push({ name: destination });
+  console.log(destination)
+};
+// const languageOptions = getAvailabeleLocales();
+
+const changeLanguage = (lang: string) => {
+  locale.value = lang;
+  // LanguageModule.setLanguage(lang);
+};
+const logout = () => {
+  UserModule.removeUser();
+  router.push({ name: "Home" });
+};
+
+const handleSelect = (key: string) => {
+
+  const NavElems = ["About", "Login", "PatientProfile", "Project"];
+  const LangElems = languageOptions.map((value) => value.key);
+  if (NavElems.includes(key)) clickNav(key);
+  if (LangElems.includes(key)) changeLanguage(key);
+  if (key === "Logout") logout();
+};
+
+</script>
+
+
+<template>
+  <n-space
+    justify="space-between"
+    style="max-width: 1260px; margin: auto"
+    item-style="margin: auto;
+            top: 50%;"
+  >
+    <!-- HOME LOGO -->
+    <responsive-view>
+      <template v-slot:m+>
+        <n-button text>
+          <img
+            height="40"
+            alt="ITC logo"
+            src="@/assets/logo.svg"
+            @click="clickNav('Home')"
+          />
+        </n-button>
+      </template>
+      <template v-slot:small>
+        <n-button text>
+          <img
+            height="40"
+            alt="ITC logo"
+            src="@/assets/logo-small.svg"
+            @click="clickNav('Home')"
+          />
+        </n-button>
+      </template>
+    </responsive-view>
+    <!-- NAVIGATION MENU -->
+    <responsive-view>
+      <template v-slot:large>
+        <n-space
+          justify="end"
+          item-style="margin: auto;
+            padding-bottom:4px;"
+        >
+          <n-dropdown @select="handleSelect" :options="languageOptions">
+            <n-button type="primary">{{ t("language") }}</n-button>
+          </n-dropdown>
+          <span v-for="v in menuOptions" :key="v.key">
+            <n-button type="primary" @click="clickNav(v.key)">{{
+              v.label
+            }}</n-button>
+          </span>
+
+          <n-dropdown
+            v-if="isLogged"
+            @select="handleSelect"
+            :options="loginOptions"
+          >
+            <n-button type="primary">{{ firstName || isLogged }}</n-button>
+          </n-dropdown>
+        </n-space>
+      </template>
+      <template v-slot:m->
+        <div>
+          <n-button text style="font-size: 40px" @click="show = true"
+            ><n-icon color="#fafafa"> <menu-icon /> </n-icon
+          ></n-button>
+          <n-drawer v-model:show="show" :width="280">
+            <n-drawer-content closable>
+              <template #header>
+                <div v-if="isLogged" style="padding-right: 2px">
+                  <n-h2 style="margin: auto"
+                    ><n-text type="primary"
+                      >{{ t("general.greeting") }} {{ firstName }}!</n-text
+                    ></n-h2
+                  >
+                </div>
+                <div v-else style="padding-right: 2px">
+                  <n-h2 style="margin: auto"
+                    ><n-text type="primary">{{
+                      t("navigation.menu")
+                    }}</n-text></n-h2
+                  >
+                </div>
+              </template>
+              <div v-if="isLogged">
+                <n-space vertical>
+                  <n-button
+                    text
+                    size="medium"
+                    @click="handleSelect('PatientProfile')"
+                    style="margin-top: 5px"
+                    >{{ t("navigation.profile") }}</n-button
+                  >
+
+                  <n-button
+                    text
+                    size="medium"
+                    @click="handleSelect('Logout')"
+                    style="margin-top: 5px"
+                    >{{ t("navigation.logout") }}</n-button
+                  >
+                  <n-divider />
+                </n-space>
+              </div>
+              <div
+                v-for="v in menuOptions"
+                :key="v.key"
+                style="margin-top: 5px"
+              >
+                <n-button text size="medium" @click="clickNav(v.key)">{{
+                  v.label
+                }}</n-button>
+              </div>
+
+              <n-divider />
+              <div
+                v-for="v in languageOptions"
+                :key="v.value"
+                style="margin-top: 5px"
+              >
+                <n-button text size="medium" @click="changeLanguage(v.value)">{{
+                  v.label
+                }}</n-button>
+              </div>
+            </n-drawer-content>
+          </n-drawer>
+        </div>
+      </template>
+    </responsive-view>
+  </n-space>
+</template>
+
+
+<style scoped></style>
