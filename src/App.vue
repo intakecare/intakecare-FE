@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import ITCLight from "./assets/ITCLight.json"
-import { defineComponent } from "vue"
-// import NavBar from "./components/NavBar.vue"
 import Footer from "./components/Footer.vue"
+import NavBar from "@/components/NavBar.vue";
 import Home from "@/views/Home.vue";
 import { NConfigProvider, NGlobalStyle, NLayout, NLayoutHeader, NLayoutFooter, NMessageProvider, NDialogProvider } from "naive-ui";
-import NavBar from "@/components/NavBar.vue";
+
+/**
+ * This is the main component of the application. It contains the main layout, the navigation bar and the footer.
+ */
 
 const theme = ITCLight;
 

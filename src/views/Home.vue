@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import {ref} from 'vue'
 import ResponsiveView from "@/components/ResponsiveView.vue";
-import { useI18n } from "vue-i18n";
-import { NCarousel} from "naive-ui";
+import {useI18n} from "vue-i18n";
+import {NCarousel} from "naive-ui";
 
+/**
+  * This is the home page of the application. It contains a carousel and a card with some statistics.
+*/
 
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 
 function getImgUrl(slide: string) {
-  const url = `../src/assets/carousel/${t("home.carouselPath")}${slide}.png`;
-  console.log(url);
-  return url
+  return `../src/assets/carousel/${t("home.carouselPath")}${slide}.png`
 }
 
 const data = ref(
@@ -41,10 +42,10 @@ const data = ref(
           :interval="10000"
           autoplay
         >
-          <img alt="Ichi" class="carousel-img" :src="getImgUrl('1')" />
-          <img alt="Ni" class="carousel-img" :src="getImgUrl('2')" />
-          <img alt="San" class="carousel-img" :src="getImgUrl('3')" />
-          <img alt="Shi" class="carousel-img" :src="getImgUrl('4')" />
+          <img alt="" class="carousel-img" :src="getImgUrl('1')" />
+          <img alt="" class="carousel-img" :src="getImgUrl('2')" />
+          <img alt="" class="carousel-img" :src="getImgUrl('3')" />
+          <img alt="" class="carousel-img" :src="getImgUrl('4')" />
         </n-carousel>
       </div>
     </template>

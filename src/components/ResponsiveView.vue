@@ -1,3 +1,23 @@
+<script lang="ts">
+import { defineComponent } from "vue";
+import useWindowResize from "@/use/useWindowResize";
+import ResponsiveConfig from "@/assets/responsive-config.json";
+
+/**
+ * This component is used to render different content based on the screen size.
+ */
+
+export default defineComponent({
+  name: "ResponsiveView",
+  setup() {
+    const { width, height } = useWindowResize();
+    console.log()
+
+    return { ResponsiveConfig, width, height };
+  },
+});
+</script>
+
 <template>
   <template v-if="width > ResponsiveConfig.large">
     <slot name="large"></slot>
@@ -22,17 +42,3 @@
   </template>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import useWindowResize from "@/use/useWindowResize";
-import ResponsiveConfig from "@/assets/responsive-config.json";
-
-export default defineComponent({
-  name: "ResponsiveView",
-  setup() {
-    const { width, height } = useWindowResize();
-
-    return { ResponsiveConfig, width, height };
-  },
-});
-</script>

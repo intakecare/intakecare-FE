@@ -3,14 +3,19 @@ import { computed } from "vue";
 import ResponsiveView from "../components/ResponsiveView.vue";
 import { useI18n } from "vue-i18n";
 import {useUserStore} from "@/stores/user";
+import {useLanguageStore} from "@/stores/language";
+import { Menu as MenuIcon } from "@vicons/ionicons5";
 
 const { t, locale } = useI18n({ useScope: "global", inheritLocale: true });
-const UserModule = useUserStore();
-// const LanguageModule = getModule(Language);
-const isLogged = computed(() => UserModule.username);
-const firstName = computed(() => UserModule.name);
-const userType = computed(() => UserModule.user_type);
+// Store retrieval and setup
+const userModule = useUserStore();
+const languageModel = useLanguageStore();
+const isLogged = computed(() => userModule.username);
+const firstName = computed(() => userModule.name);
+const userType = computed(() => userModule.user_type);
+const languageOptions = languageModel.getLocaleNames();
 
+// Definition of the menu options
 const menuOptions = computed(() => {
   const menu = [
     { label: t("navigation.aboutUs"), key: "About" },
@@ -32,6 +37,7 @@ const menuOptions = computed(() => {
   return menu;
 });
 
+// Definition of the login options
 const loginOptions = computed(() => {
   const option = [
     {label: t("navigation.myProfile"), key: "PatientProfile"},
@@ -41,31 +47,33 @@ const loginOptions = computed(() => {
 })
 
 const clickNav = (destination: string) => {
+  // Redirect to the selected page
   router.push({ name: destination });
   console.log(destination)
 };
-// const languageOptions = getAvailabeleLocales();
+
 
 const changeLanguage = (lang: string) => {
+  // Change the language of the application
   locale.value = lang;
-  // LanguageModule.setLanguage(lang);
+  languageModel.setLocale(lang);
 };
+
 const logout = () => {
-  UserModule.removeUser();
+  // Remove the user from the store and redirect to the home page
+  userModule.removeUser();
   router.push({ name: "Home" });
 };
 
 const handleSelect = (key: string) => {
-
+  // Handle the selection of the dropdowns
   const NavElems = ["About", "Login", "PatientProfile", "Project"];
   const LangElems = languageOptions.map((value) => value.key);
   if (NavElems.includes(key)) clickNav(key);
   if (LangElems.includes(key)) changeLanguage(key);
   if (key === "Logout") logout();
 };
-
 </script>
-
 
 <template>
   <n-space
@@ -97,6 +105,7 @@ const handleSelect = (key: string) => {
         </n-button>
       </template>
     </responsive-view>
+
     <!-- NAVIGATION MENU -->
     <responsive-view>
       <template v-slot:large>
