@@ -41,7 +41,7 @@ export const useUserStore = defineStore('user', {
                 }
             }
         },
-        removeStore() {
+        logout() {
             this.$reset();
         },
         set_user(user: any) {

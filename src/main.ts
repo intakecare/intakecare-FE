@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import {createI18n} from "vue-i18n";
 import naive from 'naive-ui'
+import router from './router'
 import App from './App.vue'
 import "@/assets/global.css";
 import { useLanguageStore } from "./stores/language";
@@ -38,4 +39,5 @@ const i18n = createI18n(options);
 // App configuration and mounting
 app.use(i18n)
 app.use(naive)
+app.use(router)
 app.mount('#app')

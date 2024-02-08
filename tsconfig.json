@@ -5,11 +5,13 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
     "noImplicitAny": false,
     "resolveJsonModule": true,
-    "types": ["vite/client"],
+    "types": ["webpack-env","vite/client", ],
     "paths": {
         "@/*": ["./src/*"]
     }

@@ -79,7 +79,7 @@
     "login":{
         "username":"Nome Utente",
         "password":"Password",
-        "forgottenPassword":"Password Dimenticata?",
+        "forgottenPassword":"Password Dimenticata? Scrivi una mail ad example{'@'}example.com",
         "usernamePasswordError":"Nome utente o password errati",
         "usernameValidation":"Il Nome utente è necessario",
         "passwordValidation":"La password è necessaria"

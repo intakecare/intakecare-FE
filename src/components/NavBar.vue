@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import {computed, ref} from "vue";
 import ResponsiveView from "../components/ResponsiveView.vue";
 import { useI18n } from "vue-i18n";
 import {useUserStore} from "@/stores/user";
 import {useLanguageStore} from "@/stores/language";
 import { Menu as MenuIcon } from "@vicons/ionicons5";
+import {useRouter} from "vue-router";
+
 
 const { t, locale } = useI18n({ useScope: "global", inheritLocale: true });
+const router = useRouter();
+
 // Store retrieval and setup
 const userModule = useUserStore();
 const languageModel = useLanguageStore();
@@ -14,6 +18,8 @@ const isLogged = computed(() => userModule.username);
 const firstName = computed(() => userModule.name);
 const userType = computed(() => userModule.user_type);
 const languageOptions = languageModel.getLocaleNames();
+
+const show = ref(false);
 
 // Definition of the menu options
 const menuOptions = computed(() => {
@@ -61,7 +67,7 @@ const changeLanguage = (lang: string) => {
 
 const logout = () => {
   // Remove the user from the store and redirect to the home page
-  userModule.removeUser();
+  userModule.logout()
   router.push({ name: "Home" });
 };
 
@@ -132,6 +138,8 @@ const handleSelect = (key: string) => {
           </n-dropdown>
         </n-space>
       </template>
+
+      <!-- MOBILE NAVIGATION MENU -->
       <template v-slot:m->
         <div>
           <n-button text style="font-size: 40px" @click="show = true"
@@ -199,6 +207,7 @@ const handleSelect = (key: string) => {
           </n-drawer>
         </div>
       </template>
+
     </responsive-view>
   </n-space>
 </template>

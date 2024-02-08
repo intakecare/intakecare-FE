@@ -5,7 +5,7 @@
     "login":{
         "username":"Username",
         "password":"Password",
-        "forgottenPassword":"Forgot your Password?",
+        "forgottenPassword":"Forgot your Password? Write an email at example{'@'}example.com",
         "usernamePasswordError":"Username or password mismatch",
         "usernameValidation":"Username is required",
         "passwordValidation":"Password is required"

@@ -2,7 +2,6 @@
 import ITCLight from "./assets/ITCLight.json"
 import Footer from "./components/Footer.vue"
 import NavBar from "@/components/NavBar.vue";
-import Home from "@/views/Home.vue";
 import { NConfigProvider, NGlobalStyle, NLayout, NLayoutHeader, NLayoutFooter, NMessageProvider, NDialogProvider } from "naive-ui";
 
 /**
@@ -32,7 +31,7 @@ const theme = ITCLight;
               style="min-height: calc(100% - 194px); margin: auto"
           >
             <div class="mainView">
-              <Home />
+              <router-view />
             </div>
           </n-layout>
           <n-layout-footer position="static" style="padding: 24px">
