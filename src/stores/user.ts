@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', {
         name: '',
         surname: '',
         username: '',
+        sex: '',
         cf: '',
         email: '',
         email_alexa: '',
@@ -28,6 +29,7 @@ export const useUserStore = defineStore('user', {
                     this.name = stored.name;
                     this.surname = stored.surname;
                     this.username = stored.username;
+                    this.sex = stored.sex
                     this.cf = stored.cf;
                     this.email = stored.email;
                     this.email_alexa = stored.email_alexa;
@@ -51,6 +53,7 @@ export const useUserStore = defineStore('user', {
             this.surname = user.surname;
             this.username = user.username;
             this.cf = user.cf;
+            this.sex = user.sex;
             this.email = user.email;
             this.email_alexa = user.email_alexa;
             this.phone = user.phone;

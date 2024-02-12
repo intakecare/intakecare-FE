@@ -47,16 +47,16 @@ const routes: Array<RouteRecordRaw> = [
     //     name: "Signup",
     //     component: () => import("../views/Signup.vue"),
     // },
-    // {
-    //     path: "/patients",
-    //     name: "Patients",
-    //     component: () => import("../views/Patients.vue"),
-    // },
-    // {
-    //     path: "/showPatient",
-    //     name: "PatientDetail",
-    //     component: () => import("../views/PatientDetail.vue"),
-    // },
+    {
+        path: "/patients",
+        name: "Patients",
+        component: () => import("../views/Patients.vue"),
+    },
+    {
+        path: "/showPatient",
+        name: "PatientDetail",
+        component: () => import("../views/PatientDetail.vue"),
+    },
     // {
     //     path: "/showPatientTherapy",
     //     name: "PatientTherapy",
