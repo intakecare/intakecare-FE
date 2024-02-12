@@ -36,12 +36,12 @@ const routes: Array<RouteRecordRaw> = [
     //   path: "/profile",
     //   name: "Profile",
     //   component: () => import("../views/Profile.vue"),
-    // },*/
-    // {
-    //     path: "/patientProfile",
-    //     name: "PatientProfile",
-    //     component: () => import("../views/PatientProfile.vue"),
-    // },
+    //},*/
+    {
+        path: "/patientProfile",
+        name: "PatientProfile",
+        component: () => import("../views/UserProfile.vue"),
+    },
     // {
     //     path: "/signup",
     //     name: "Signup",

@@ -18,22 +18,23 @@ export const useUserStore = defineStore('user', {
         key_p256dh: '',
         key_auth: ''
     }),
+    persist: true,
     actions: {
         initializeStore() {
             const stored = JSON.parse(localStorage.getItem("userStore") as string);
             if (stored) {
                 if ("User" in stored && "name" in stored.User) {
-                    this._id = stored.User._id;
-                    this.name = stored.User.name;
-                    this.surname = stored.User.surname;
-                    this.username = stored.User.username;
-                    this.cf = stored.User.cf;
-                    this.email = stored.User.email;
-                    this.email_alexa = stored.User.email_alexa;
-                    this.phone = stored.User.phone;
-                    this.user_type = stored.User.user_type;
-                    this.new_user = stored.User.new_user;
-                    this.token = stored.User.token;
+                    this._id = stored._id;
+                    this.name = stored.name;
+                    this.surname = stored.surname;
+                    this.username = stored.username;
+                    this.cf = stored.cf;
+                    this.email = stored.email;
+                    this.email_alexa = stored.email_alexa;
+                    this.phone = stored.phone;
+                    this.user_type = stored.user_type;
+                    this.new_user = stored.new_user;
+                    this.token = stored.token;
                     this.endpoint = stored.endpoint;
                     this.expirationTime = stored.expirationTime;
                     this.key_p256dh = stored.key_p256dh;
@@ -55,11 +56,14 @@ export const useUserStore = defineStore('user', {
             this.phone = user.phone;
             this.user_type = user.user_type;
             this.new_user = user.new_user;
-            this.token = user.access_token;
+            this.token = user.token;
             this.endpoint = user.endpoint;
             this.expirationTime = user.expirationTime;
             this.key_p256dh = user.key_p256dh;
             this.key_auth = user.key_auth;
+        },
+        patch(user: any) {
+            this.$patch(user);
         }
     }
 })

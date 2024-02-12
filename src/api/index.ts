@@ -11,16 +11,17 @@ import axios from "axios";
 import {useUserStore} from "@/stores/user";
 
 axios.interceptors.request.use((config) => {
-  const store = useUserStore();
-  const token = store.token;
+  const user = useUserStore();
+  const token = user.token;
 
   if (token) {
     if (config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     } else {
-      // config["headers"] = { Authorization: `Bearer ${token}` };
       console.log("No headers in the request");
     }
+  } else {
+    console.log("No token in the store");
   }
 
   return config;

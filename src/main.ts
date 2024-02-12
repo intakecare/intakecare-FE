@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import {createI18n} from "vue-i18n";
 import naive from 'naive-ui'
 import router from './router'
@@ -13,18 +14,11 @@ const app = createApp(App)
 
 // Store definition and initialization
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 const userStore = useUserStore();
 userStore.initializeStore();
 const languageStore = useLanguageStore();
-
-// Store subscription
-// Enable the information about the user (if present) to be stored in the local storage
-userStore.$subscribe((mutation, state) => {
-    localStorage.setItem("userStore", JSON.stringify(state));
-    },
-    {detached: true}
-);
 
 // i18n initialization
 const options = {
