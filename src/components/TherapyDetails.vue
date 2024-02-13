@@ -78,75 +78,79 @@ const adherence = computed(() => {
   } else return null;
 });
 
-  const shiftDates = (daysShift: number) => {
-    dateRange.value = [
-      dateRange.value[0] + daysShift * 24 * 60 * 60 * 1000,
-      dateRange.value[1] + daysShift * 24 * 60 * 60 * 1000,
-    ];
-  };
+const shiftDates = (daysShift: number) => {
+  dateRange.value = [
+    dateRange.value[0] + daysShift * 24 * 60 * 60 * 1000,
+    dateRange.value[1] + daysShift * 24 * 60 * 60 * 1000,
+  ];
+};
 
-  const getLastXDays = (daysShift: number) => {
-    dateRange.value = [
-      new Date().getTime() - daysShift * 24 * 60 * 60 * 1000,
-      new Date().getTime() + 1 * 60 * 60 * 1000,
-    ];
-  };
+const getLastXDays = (daysShift: number) => {
+  dateRange.value = [
+    new Date().getTime() - daysShift * 24 * 60 * 60 * 1000,
+    new Date().getTime() + 60 * 60 * 1000,
+  ];
+};
 
-  const color = computed(() => {
-    if (adherence.value !== null && adherence.value > AdherenceConfig.warning)
-      return {
-        color: useThemeVars().value.primaryColor,
-        railColor: changeColor(useThemeVars().value.primaryColor, {
-          alpha: 0.2,
-        }),
-      };
-    else if (
-        adherence.value !== null &&
-        adherence.value <= AdherenceConfig.warning &&
-        adherence.value > AdherenceConfig.danger
-    )
-      return {
-        color: useThemeVars().value.warningColor,
-        railColor: changeColor(useThemeVars().value.warningColor, {
-          alpha: 0.2,
-        }),
-      };
-    else if (
-        adherence.value !== null &&
-        adherence.value <= AdherenceConfig.danger
-    )
-      return {
-        color: useThemeVars().value.errorColor,
-        railColor: changeColor(useThemeVars().value.errorColor, {
-          alpha: 0.2,
-        }),
-      };
-    else return null;
-  });
-  const dotStyleT = computed(() => {
-    return `height: 15px; width: 15px; margin-left: 5px; background-color: ${
-        useThemeVars().value.primaryColor
-    }; border-radius: 50%; display: inline-block;`;
-  });
-  const dotStyleM = computed(() => {
-    return `height: 15px; width: 15px; margin-left: 5px; background-color: ${
-        useThemeVars().value.errorColor
-    }; border-radius: 50%; display: inline-block;`;
-  });
-  const dotStyleP = computed(() => {
-    return `height: 15px; width: 15px; margin-left: 5px; background-color: #CCCCCC; border-radius: 50%; display: inline-block;`;
-  });
-  onMounted(() => {
-    getData();
-  });
+const color = computed(() => {
+  if (adherence.value !== null && adherence.value > AdherenceConfig.warning)
+    return {
+      color: useThemeVars().value.primaryColor,
+      railColor: changeColor(useThemeVars().value.primaryColor, {
+        alpha: 0.2,
+      }),
+    };
+  else if (
+      adherence.value !== null &&
+      adherence.value <= AdherenceConfig.warning &&
+      adherence.value > AdherenceConfig.danger
+  )
+    return {
+      color: useThemeVars().value.warningColor,
+      railColor: changeColor(useThemeVars().value.warningColor, {
+        alpha: 0.2,
+      }),
+    };
+  else if (
+      adherence.value !== null &&
+      adherence.value <= AdherenceConfig.danger
+  )
+    return {
+      color: useThemeVars().value.errorColor,
+      railColor: changeColor(useThemeVars().value.errorColor, {
+        alpha: 0.2,
+      }),
+    };
+  else return null;
+});
 
-  watch(
-      [() => props.therapyId, dateRange],
-      () => {
-        getData();
-      },
-      { deep: true }
-  );
+const dotStyleT = computed(() => {
+  return `height: 15px; width: 15px; margin-left: 5px; background-color: ${
+      useThemeVars().value.primaryColor
+  }; border-radius: 50%; display: inline-block;`;
+});
+
+const dotStyleM = computed(() => {
+  return `height: 15px; width: 15px; margin-left: 5px; background-color: ${
+      useThemeVars().value.errorColor
+  }; border-radius: 50%; display: inline-block;`;
+});
+
+const dotStyleP = computed(() => {
+  return `height: 15px; width: 15px; margin-left: 5px; background-color: #CCCCCC; border-radius: 50%; display: inline-block;`;
+});
+
+onMounted(() => {
+  getData();
+});
+
+watch(
+    [() => props.therapyId, dateRange],
+    () => {
+      getData();
+    },
+    { deep: true }
+);
 </script>
 
 <template>

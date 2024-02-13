@@ -118,7 +118,8 @@
         "dob":"Data di Nascita",
         "male":"Maschio",
         "female":"Femmina",
-        "emailValidation":"L' e-Mail è necessaria"
+        "emailValidation":"L' e-Mail è necessaria",
+        "missingData":"Dati Mancanti"
     },
     "profile":{
         "cf":"Codice Fiscale",

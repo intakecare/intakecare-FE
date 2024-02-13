@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineComponent, onMounted, ref, computed } from "vue";
+import {onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import Therapy from "@/components/Therapy.vue";
 import * as api from "@/api";
@@ -22,8 +22,13 @@ import ResponsiveConfig from "@/assets/responsive-config.json";
 import ResponsiveView from "@/components/ResponsiveView.vue";
 import Fuse from "fuse.js";
 
-// TODO: RIPARTI DA QUI! DEVI AGGIUSTARE QUESTO FILE ASSOLUTAMENTE!
-
+/** This view shows the details of a single patient:
+ * - Patient details (name, surname, ...)
+ * - Therapies
+ * - Adherence
+ * */
+// TODO: Check if api calls are correct.
+// Variable definition
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 const { width, height } = useWindowResize();
 const dialog = useDialog();
@@ -52,29 +57,32 @@ const selectedTherapy = ref({ therapyId: null, therapyDrug: null } as {
   therapyDrug: string | null;
 });
 
-const getId = () => {
-  console.log(`Id: ${route.query.id}`);
-  return route.query.id;
+const getId = () : string => {
+  // Get the patient id from the route and return it as a string
+  console.log(`Patient Id: ${route.query.id}`);
+  return route.query.id as string;
 };
 
 const getData = async () => {
+  // Fetch the patient data from the api
   if (getId()) {
     showSpin.value = true;
     await api.patients
         .findByUserId(getId() as string)
-        .then((value) => {
-          patientData.value = value.data;
-          userData.value.id = value.data._id;
-          userData.value.username = value.data.username;
-          userData.value.name = value.data.name;
-          userData.value.surname = value.data.surname;
-          userData.value.sex = value.data.sex;
-          userData.value.residence = value.data.residence;
-          userData.value.dob = value.data.dob;
-          userData.value.cf = value.data.cf;
-          userData.value.phone = value.data.phone;
-          userData.value.email = value.data.email;
-          therapies.value = value.data.therapies;
+        .then((response) => {
+          console.log(response.data);
+          patientData.value = response.data;
+          userData.value.id = response.data._id;
+          userData.value.username = response.data.username;
+          userData.value.name = response.data.name;
+          userData.value.surname = response.data.surname;
+          userData.value.sex = response.data.sex;
+          userData.value.residence = response.data.residence;
+          userData.value.dob = response.data.dob;
+          userData.value.cf = response.data.cf;
+          userData.value.phone = response.data.phone;
+          userData.value.email = response.data.email;
+          therapies.value = response.data.therapies;
           showSpin.value = false;
           console.log("Name: " + userData.value.name)
           console.log("Therapies: " + therapies.value)
@@ -85,11 +93,19 @@ const getData = async () => {
   }
 };
 
+onMounted(async () => {
+  // Fetch the patient data when the component is mounted
+  await getData();
+});
+
 const onSaved = () => {
+  // This function is called when the user saves the patient data
   editMode.value = false;
   getData();
 };
+
 const deletePatient = () => {
+  // This function is called when the user wants to delete the patient
   const d = dialog.warning({
     title: t("general.confirmDeletion"),
     content: t("general.confirmDeletion"),
@@ -103,17 +119,32 @@ const deletePatient = () => {
     },
   });
 };
+
 const filtered = computed(() => {
+  // This function filters the therapies based on the search input
   if (search.value) {
     const fuse = new Fuse(therapies.value, { keys: ["drug"] });
     return fuse.search(search.value as string).map((e) => e.item);
   } else return therapies.value;
 });
 
-onMounted(async () => {
-  await getData();
-});
+const isValidDate = (date: string | undefined) : boolean => {
+  // This function checks if a date is valid
+  // If the date is valid it returns true, otherwise it returns false
+  if (!date) return false;
+  else{
+    const d = new Date(date).toLocaleDateString(t("code"),
+        {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+    return d !== "Invalid Date";
+  }
+};
 
+// The following functions are used to compute the style of the components based on the screen size
 const computedContentStyle = computed(() => {
   return width.value < ResponsiveConfig.medium
       ? "max-width: 600px; margin-bottom: 10px; margin-right:0px; margin-left:0px; border-radius: 0px;"
@@ -141,19 +172,20 @@ const computedStyle = computed(() => {
             </n-icon>
           </template> </n-button
       ></template>
-<!--      <therapy-form-->
-<!--        @changed="-->
-<!--          showTherapyModal = false;-->
-<!--          getData();-->
-<!--        "-->
-<!--        :patient_id="getId()"-->
-<!--      />-->
+      <therapy-form
+        @changed="
+          showTherapyModal = false;
+          getData();
+        "
+        :patient_id="getId()"
+      />
     </n-card>
   </n-modal>
 
   <n-card class="content-wide" :style="computedContentStyle">
     <n-spin :show="showSpin">
       <responsive-view>
+        <!-- This is the large screen layout -->
         <template v-slot:large>
           <n-grid :x-gap="10" :y-gap="10" cols="2 1400:3 " item-responsive>
             <n-grid-item span="1 1400:2">
@@ -162,10 +194,10 @@ const computedStyle = computed(() => {
                   <n-card>
                     <n-space justify="space-between">
                       <n-h1
-                        ><n-text type="primary"
+                        ><n-text
                           >{{ userData.username }}
-                      </n-text></n-h1
-                      >
+                      </n-text>
+                      </n-h1>
                       <n-space justify="end">
 
                         <n-button
@@ -217,7 +249,7 @@ const computedStyle = computed(() => {
                         </n-gi>
                         <n-gi>
                           <div>
-                            <div>
+                            <div v-if="isValidDate(userData.dob)">
                               {{ t("patients.dob") }}:
                               {{
                                 new Date(userData.dob).toLocaleDateString(
@@ -230,6 +262,9 @@ const computedStyle = computed(() => {
                                     }
                                 )
                               }}
+                            </div>
+                            <div v-else>
+                              {{ t("patients.dob") }}: {{ t("patients.missingData") }}
                             </div>
                             <div>
                               {{ t("profile.phone") }}: {{ userData.phone }}
@@ -331,6 +366,7 @@ const computedStyle = computed(() => {
             </n-grid-item>
           </n-grid>
         </template>
+        <!-- This is the medium to small screen layout -->
         <template v-slot:m->
           <n-space vertical>
             <n-card>
@@ -414,7 +450,7 @@ const computedStyle = computed(() => {
                   </n-gi>
                   <n-gi>
                     <n-space vertical>
-                      <n-text>
+                      <n-text v-if="isValidDate(userData.dob)">
                         {{ t("patients.dob") }}:
                         {{
                           new Date(userData.dob).toLocaleDateString(t("code"), {
@@ -424,6 +460,9 @@ const computedStyle = computed(() => {
                             day: "numeric",
                           })
                         }}
+                      </n-text>
+                      <n-text v-else>
+                        {{ t("patients.dob") }}: {{ t("patients.missingData") }}
                       </n-text>
                       <n-text
                         >{{ t("profile.phone") }}: {{ userData.phone }}</n-text
@@ -456,10 +495,10 @@ const computedStyle = computed(() => {
               :therapyDrug="selectedTherapy.therapyDrug"
               :patientId="getId()"
             />
-            <therapy-log
-              v-if="selectedTherapy.therapyId"
-              :therapyId="selectedTherapy.therapyId"
-            />
+<!--            <therapy-log-->
+<!--              v-if="selectedTherapy.therapyId"-->
+<!--              :therapyId="selectedTherapy.therapyId"-->
+<!--            />-->
             <responsive-view>
               <template v-slot:small>
                 <n-space vertical>

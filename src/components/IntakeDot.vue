@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { computed, PropType } from "vue";
+import { IntakeDTO } from "@/classes/intake-dto";
+import { useI18n } from "vue-i18n";
+import { useThemeVars } from "naive-ui";
+
+// Define props
+const props = defineProps({
+  intake: { type: Object as PropType<IntakeDTO>, required: true }
+});
+const themeVars = useThemeVars();
+const { t } = useI18n({ useScope: "global", inheritLocale: true });
+
+const computedStyle = computed(() => {
+  let color: string = "#CCCCCC";
+  if (props.intake.status === "taken") {
+    color = themeVars.value.primaryColor;
+  } else if (props.intake.status === "programmed") {
+    color = "#CCCCCC";
+  } else if (props.intake.status === "missed") {
+    color = themeVars.value.errorColor;
+  }
+  return `margin: auto; height: 30px; width: 30px; background-color: ${color};border-radius: 50%; display: inline-block;`;
+});
+</script>
+
 <template>
   <n-popover trigger="hover">
     <template #trigger>
@@ -18,31 +44,3 @@
     </n-space>
   </n-popover>
 </template>
-
-<script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { IntakeDTO } from "@/classes/intake-dto";
-import { useI18n } from "vue-i18n";
-import { useThemeVars } from "naive-ui";
-
-export default defineComponent({
-  name: "IntakeDot",
-  props: { intake: { type: Object as PropType<IntakeDTO>, required: true } },
-  setup(props) {
-    const { t } = useI18n({ useScope: "global", inheritLocale: true });
-    const computedStyle = computed(() => {
-      var color;
-      if (props.intake.status === "taken") {
-        color = useThemeVars().value.primaryColor;
-      } else if (props.intake.status === "programmed") {
-        color = "#CCCCCC";
-      } else if (props.intake.status === "missed") {
-        color = useThemeVars().value.errorColor;
-      }
-      return `margin: auto; height: 30px; width: 30px; background-color: ${color};border-radius: 50%; display: inline-block;`;
-    });
-
-    return { t, computedStyle };
-  },
-});
-</script>
