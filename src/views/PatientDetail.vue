@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import Therapy from "@/components/Therapy.vue";
+import Therapy from "@/components/patient-details/Therapy.vue";
 import * as api from "@/api";
 import { useI18n } from "vue-i18n";
 import {
@@ -14,9 +14,9 @@ import {
 } from "@vicons/ionicons5";
 import { useDialog } from "naive-ui";
 import router from "@/router";
-import EditPatientForm from "@/components/EditPatientForm.vue";
-import TherapyForm from "@/components/TherapyForm.vue";
-import TherapyDetails from "@/components/TherapyDetails.vue";
+import EditPatientForm from "@/components/patient-details/EditPatientForm.vue";
+import TherapyForm from "@/components/patient-details/TherapyForm.vue";
+import TherapyDetails from "@/components/patient-details/TherapyDetails.vue";
 import useWindowResize from "@/use/useWindowResize";
 import ResponsiveConfig from "@/assets/responsive-config.json";
 import ResponsiveView from "@/components/ResponsiveView.vue";

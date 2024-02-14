@@ -139,7 +139,7 @@ import {
 } from "@vicons/ionicons5";
 import { Therapy } from "@/classes/therapy-dto";
 import { useI18n } from "vue-i18n";
-import TherapyForm from "@/components/TherapyForm.vue";
+import TherapyForm from "@/components/patient-details/TherapyForm.vue";
 import * as api from "@/api";
 import { useDialog } from "naive-ui";
 

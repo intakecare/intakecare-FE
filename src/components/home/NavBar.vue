@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import ResponsiveView from "../components/ResponsiveView.vue";
+import ResponsiveView from "../ResponsiveView.vue";
 import { useI18n } from "vue-i18n";
 import {useUserStore} from "@/stores/user";
 import {useLanguageStore} from "@/stores/language";
@@ -94,7 +94,7 @@ const handleSelect = (key: string) => {
           <img
             height="40"
             alt="ITC logo"
-            src="@/assets/logo.svg"
+            src="../../assets/logo.svg"
             @click="clickNav('Home')"
           />
         </n-button>
@@ -104,7 +104,7 @@ const handleSelect = (key: string) => {
           <img
             height="40"
             alt="ITC logo"
-            src="@/assets/logo-small.svg"
+            src="../../assets/logo-small.svg"
             @click="clickNav('Home')"
           />
         </n-button>

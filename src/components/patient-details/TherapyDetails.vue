@@ -6,7 +6,7 @@ import {
   computed,
   watch,
 } from "vue";
-import IntakeDot from "@/components/IntakeDot.vue";
+import IntakeDot from "@/components/patient-details/IntakeDot.vue";
 import { useI18n } from "vue-i18n";
 import { changeColor } from "seemly";
 import { useThemeVars } from "naive-ui";

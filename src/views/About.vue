@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Team from "@/components/Team.vue";
+import Team from "@/components/home/Team.vue";
 
 const team = [
     {

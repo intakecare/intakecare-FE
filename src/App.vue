@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ITCLight from "./assets/ITCLight.json"
-import Footer from "./components/Footer.vue"
-import NavBar from "@/components/NavBar.vue";
+import Footer from "./components/home/Footer.vue"
+import NavBar from "@/components/home/NavBar.vue";
 import { NConfigProvider, NGlobalStyle, NLayout, NLayoutHeader, NLayoutFooter, NMessageProvider, NDialogProvider } from "naive-ui";
 
 /**

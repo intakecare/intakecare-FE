@@ -34,7 +34,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import WeekDaySelector from "@/components/WeekDaySelector.vue";
+import WeekDaySelector from "@/components/patient-details/WeekDaySelector.vue";
 import { OptionExt } from "@/classes/therapy-dto";
 
 export default defineComponent({

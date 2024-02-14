@@ -35,19 +35,19 @@ const { t } = useI18n({ useScope: "global", inheritLocale: true });
             <img
               height="10"
               alt="playstore"
-              src="@/assets/icons/googleplay.svg"
+              src="../../assets/icons/googleplay.svg"
             /><br />
             AppStore
             <img
               height="10"
               alt="appstore"
-              src="@/assets/icons/appstore.svg"
+              src="../../assets/icons/appstore.svg"
             /><br />
             Amazon Alexa
             <img
               height="10"
               alt="amazonalexa"
-              src="@/assets/icons/amazonalexa.svg"
+              src="../../assets/icons/amazonalexa.svg"
             /><br />
           </div>
         </div>
@@ -81,19 +81,19 @@ const { t } = useI18n({ useScope: "global", inheritLocale: true });
               <img
                 height="10"
                 alt="playstore"
-                src="@/assets/icons/googleplay.svg"
+                src="../../assets/icons/googleplay.svg"
               /><br />
               AppStore
               <img
                 height="10"
                 alt="appstore"
-                src="@/assets/icons/appstore.svg"
+                src="../../assets/icons/appstore.svg"
               /><br />
               Amazon Alexa
               <img
                 height="10"
                 alt="amazonalexa"
-                src="@/assets/icons/amazonalexa.svg"
+                src="../../assets/icons/amazonalexa.svg"
               /><br />
             </div>
           </div>

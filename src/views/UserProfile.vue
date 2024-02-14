@@ -6,7 +6,7 @@ import { Save as SaveIcon } from "@vicons/ionicons5";
 import { Close as CloseIcon } from "@vicons/ionicons5";
 import {useUserStore} from "@/stores/user";
 import * as api from "@/api";
-import ChangePassword from "@/components/ChangePassword.vue";
+import ChangePassword from "@/components/user-profile/ChangePassword.vue";
 import { FormItemRule } from "naive-ui";
 import {UserUpdateDTO} from "@/classes/user-dto";
 

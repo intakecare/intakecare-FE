@@ -67,7 +67,7 @@ import {
 } from "vue";
 import { useI18n } from "vue-i18n";
 import { Add as AddIcon, Remove as RemoveIcon } from "@vicons/ionicons5";
-import Dose from "@/components/Dose.vue";
+import Dose from "@/components/patient-details/Dose.vue";
 import { Dose as Delivery } from "@/classes/therapy-dto";
 import useWindowResize from "@/use/useWindowResize";
 export default defineComponent({

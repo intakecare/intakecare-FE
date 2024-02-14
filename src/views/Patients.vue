@@ -12,7 +12,7 @@ import { useI18n } from "vue-i18n";
 import { NTag } from "naive-ui";
 import * as api from "@/api";
 import PatientDTO from "@/classes/patient-dto";
-import NewPatientForm from "@/components/NewPatientForm.vue";
+import NewPatientForm from "@/components/patient-list/NewPatientForm.vue";
 import useWindowResize from "@/use/useWindowResize";
 import ResponsiveView from "@/components/ResponsiveView.vue";
 import ResponsiveConfig from "@/assets/responsive-config.json";

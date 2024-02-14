@@ -251,7 +251,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, PropType, onMounted } from "vue";
-import DeliveryOptions from "@/components/DeliveryOptions.vue";
+import DeliveryOptions from "@/components/patient-details/DeliveryOptions.vue";
 import { useI18n } from "vue-i18n";
 import Drugs from "@/assets/Lista_farmaci_equivalenti.json";
 import titleCase from "@/use/titleCase";
