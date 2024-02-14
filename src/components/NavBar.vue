@@ -84,9 +84,8 @@ const handleSelect = (key: string) => {
 <template>
   <n-space
     justify="space-between"
-    style="max-width: 1260px; margin: auto"
-    item-style="margin: auto;
-            top: 50%;"
+    style="max-width: 1260px; margin:auto"
+    item-style="margin-top: auto; margin-bottom: auto; padding-top:4px"
   >
     <!-- HOME LOGO -->
     <responsive-view>
@@ -117,8 +116,7 @@ const handleSelect = (key: string) => {
       <template v-slot:large>
         <n-space
           justify="end"
-          item-style="margin: auto;
-            padding-bottom:4px;"
+          item-style="margin: auto;"
         >
           <n-dropdown @select="handleSelect" :options="languageOptions">
             <n-button type="primary">{{ t("language") }}</n-button>

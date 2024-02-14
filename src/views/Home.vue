@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import ResponsiveView from "@/components/ResponsiveView.vue";
 import {useI18n} from "vue-i18n";
 import {NCarousel} from "naive-ui";
@@ -27,6 +27,9 @@ const data = ref(
 // onMounted(() => {
 //   getData();
 // });
+onMounted(() => {
+  data.value = { patients: 53, therapies: 78, intakes: 200 };
+});
 
 </script>
 
@@ -65,67 +68,67 @@ const data = ref(
     </template>
   </responsive-view>
 
-<!--  &lt;!&ndash; CARD REPONSIVE &ndash;&gt;-->
-<!--  <responsive-view>-->
-<!--    <template v-slot:m+>-->
-<!--      <div v-if="data" style="padding-right: 24px; padding-left: 24px">-->
-<!--        <n-card class="content">-->
-<!--          <n-h1-->
-<!--            ><n-text type="primary">{{ t("home.reach") }}:</n-text></n-h1-->
-<!--          >-->
+  <!-- CARD REPONSIVE -->
+  <responsive-view>
+    <template v-slot:m+>
+      <div v-if="data" style="padding-right: 24px; padding-left: 24px">
+        <n-card class="content">
+          <n-h1
+            ><n-text type="primary">{{ t("home.reach") }}:</n-text></n-h1
+          >
 
-<!--          <n-space justify="space-around" size="large">-->
-<!--            <div style="text-align: center">-->
-<!--              {{ t("general.patient", data.patients) }}-->
-<!--              <n-h1-->
-<!--                ><n-text type="primary">{{ data.patients }}</n-text></n-h1-->
-<!--              >-->
-<!--            </div>-->
-<!--            <div style="text-align: center">-->
-<!--              {{ t("general.therapy", data.therapies) }}-->
-<!--              <n-h1-->
-<!--                ><n-text type="primary">{{ data.therapies }}</n-text></n-h1-->
-<!--              >-->
-<!--            </div>-->
-<!--            <div style="text-align: center">-->
-<!--              {{ t("home.reminder") }}-->
-<!--              <n-h1-->
-<!--                ><n-text type="primary">{{ data.intakes }}</n-text></n-h1-->
-<!--              >-->
-<!--            </div>-->
-<!--          </n-space>-->
-<!--        </n-card>-->
-<!--      </div>-->
-<!--    </template>-->
-<!--    <template v-slot:small>-->
-<!--      <n-card v-if="data" class="content" style="border-radius: 0px">-->
-<!--        <n-h1-->
-<!--          ><n-text type="primary">{{ t("home.reach") }}:</n-text></n-h1-->
-<!--        >-->
+          <n-space justify="space-around" size="large">
+            <div style="text-align: center">
+              {{ t("general.patient", data.patients) }}
+              <n-h1
+                ><n-text type="primary">{{ data.patients }}</n-text></n-h1
+              >
+            </div>
+            <div style="text-align: center">
+              {{ t("general.therapy", data.therapies) }}
+              <n-h1
+                ><n-text type="primary">{{ data.therapies }}</n-text></n-h1
+              >
+            </div>
+            <div style="text-align: center">
+              {{ t("home.reminder") }}
+              <n-h1
+                ><n-text type="primary">{{ data.intakes }}</n-text></n-h1
+              >
+            </div>
+          </n-space>
+        </n-card>
+      </div>
+    </template>
+    <template v-slot:small>
+      <n-card v-if="data" class="content" style="border-radius: 0px">
+        <n-h1
+          ><n-text type="primary">{{ t("home.reach") }}:</n-text></n-h1
+        >
 
-<!--        <n-space justify="space-around" vertical size="large">-->
-<!--          <div style="text-align: center">-->
-<!--            {{ t("general.patient", data.patients) }}-->
-<!--            <n-h1-->
-<!--              ><n-text type="primary">{{ data.patients }}</n-text></n-h1-->
-<!--            >-->
-<!--          </div>-->
-<!--          <div style="text-align: center">-->
-<!--            {{ t("general.therapy", data.therapies) }}-->
-<!--            <n-h1-->
-<!--              ><n-text type="primary">{{ data.therapies }}</n-text></n-h1-->
-<!--            >-->
-<!--          </div>-->
-<!--          <div style="text-align: center">-->
-<!--            {{ t("home.reminder") }}-->
-<!--            <n-h1-->
-<!--              ><n-text type="primary">{{ data.intakes }}</n-text></n-h1-->
-<!--            >-->
-<!--          </div>-->
-<!--        </n-space>-->
-<!--      </n-card>-->
-<!--    </template>-->
-<!--  </responsive-view>-->
+        <n-space justify="space-around" vertical size="large">
+          <div style="text-align: center">
+            {{ t("general.patient", data.patients) }}
+            <n-h1
+              ><n-text type="primary">{{ data.patients }}</n-text></n-h1
+            >
+          </div>
+          <div style="text-align: center">
+            {{ t("general.therapy", data.therapies) }}
+            <n-h1
+              ><n-text type="primary">{{ data.therapies }}</n-text></n-h1
+            >
+          </div>
+          <div style="text-align: center">
+            {{ t("home.reminder") }}
+            <n-h1
+              ><n-text type="primary">{{ data.intakes }}</n-text></n-h1
+            >
+          </div>
+        </n-space>
+      </n-card>
+    </template>
+  </responsive-view>
 </template>
 
 

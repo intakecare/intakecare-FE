@@ -68,7 +68,6 @@ import {
 import { useI18n } from "vue-i18n";
 import { Add as AddIcon, Remove as RemoveIcon } from "@vicons/ionicons5";
 import Dose from "@/components/Dose.vue";
-// import ResponsiveView from "@/components/ResponsiveView.vue";
 import { Dose as Delivery } from "@/classes/therapy-dto";
 import useWindowResize from "@/use/useWindowResize";
 export default defineComponent({
@@ -81,7 +80,7 @@ export default defineComponent({
   },
   emits: ["changed"],
   props: { 
-    time_place: {type: String, required: true},
+    time_place: {type: String},
     deliveries: { type: Object as PropType<Delivery> } },
   setup(props, { emit }) {
     const { t } = useI18n({ useScope: "global", inheritLocale: true });
@@ -117,10 +116,10 @@ export default defineComponent({
           label: t("doses.interval"),
           value: "interval",
         },
-        {
-          label: t("doses.once"),
-          value: "once",
-        },
+        // {
+        //   label: t("doses.once"),
+        //   value: "once",
+        // },
       ];
     });
 

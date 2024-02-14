@@ -32,8 +32,8 @@
   >
     <n-space
       justify="space-between"
-      style="margin: 0px"
-      item-style="margin: auto"
+      style="margin: 0"
+      item-style="margin: 0"
       :wrap="false"
     >
       <n-space vertical>

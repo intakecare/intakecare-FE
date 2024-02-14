@@ -27,7 +27,7 @@ import Fuse from "fuse.js";
  * - Therapies
  * - Adherence
  * */
-// TODO: Check if api calls are correct.
+
 // Variable definition
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 const { width, height } = useWindowResize();
@@ -157,6 +157,7 @@ const computedStyle = computed(() => {
 
 
 <template>
+  <!-- This is the modal that is shown when the user wants to add a new therapy -->
   <n-modal v-model:show="showTherapyModal">
     <n-card
       style="max-width: 1260px"
@@ -182,6 +183,7 @@ const computedStyle = computed(() => {
     </n-card>
   </n-modal>
 
+  <!-- This is the main content of the view -->
   <n-card class="content-wide" :style="computedContentStyle">
     <n-spin :show="showSpin">
       <responsive-view>
