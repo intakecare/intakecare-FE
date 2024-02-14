@@ -38,8 +38,8 @@ const routes: Array<RouteRecordRaw> = [
     //   component: () => import("../views/Profile.vue"),
     //},*/
     {
-        path: "/patientProfile",
-        name: "PatientProfile",
+        path: "/profile",
+        name: "Profile",
         component: () => import("../views/UserProfile.vue"),
     },
     // {
@@ -57,11 +57,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "PatientDetail",
         component: () => import("../views/PatientDetail.vue"),
     },
-    // {
-    //     path: "/showPatientTherapy",
-    //     name: "PatientTherapy",
-    //     component: () => import("../views/PatientTherapy.vue"),
-    // },
+    {
+        path: "/patientTherapies",
+        name: "PatientTherapies",
+        component: () => import("../views/PatientTherapies.vue"),
+    },
     // {
     //     path: "/showPatientTherapyDetail",
     //     name: "PatientTherapyDetail",

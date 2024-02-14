@@ -44,13 +44,13 @@ const rules = computed(() => {
   return {
     phone: {
       required: true,
-      message: t("profile.phoneRequied"),
+      message: t("profile.phoneRequired"),
       trigger: ["input", "blur"],
     },
     email: [
       {
         required: true,
-        message: t("profile.emailRequied"),
+        message: t("profile.emailRequired"),
         trigger: ["input", "blur"],
       },
     ],
@@ -116,8 +116,8 @@ const updateProfile = async () => {
       <n-space vertical>
         <n-h1>
           <n-text v-if="new_user">
-            {{t('general.greeting')}} {{ user.name }} {{ user.surname }},
-            è il tuo primo accesso, personalizza la password per poter accedere alle tue terapie</n-text>
+            {{t('general.greeting')}} {{ user.name }} {{ user.surname }}!
+            È il tuo primo accesso, personalizza la password per poter accedere alle tue terapie.</n-text>
           <n-text v-else>
           {{t('general.greeting')}} {{ user.name }} {{ user.surname }}
         </n-text></n-h1>

@@ -37,7 +37,7 @@ const menuOptions = computed(() => {
       menu.push({ label: t("navigation.dashboard"), key: "Dashboard" });
     }
     if (userType.value === "patient") {
-      menu.push({ label:  t("patientDetail.myTherapies"), key: "PatientTherapy" });
+      menu.push({ label:  t("patientDetail.myTherapies"), key: "PatientTherapies" });
     }
   }
   return menu;
@@ -46,7 +46,7 @@ const menuOptions = computed(() => {
 // Definition of the login options
 const loginOptions = computed(() => {
   const option = [
-    {label: t("navigation.myProfile"), key: "PatientProfile"},
+    {label: t("navigation.profile"), key: "Profile"},
     {label: t("navigation.logout"), key: "Logout" },
   ];
   return option
@@ -73,7 +73,7 @@ const logout = () => {
 
 const handleSelect = (key: string) => {
   // Handle the selection of the dropdowns
-  const NavElems = ["About", "Login", "PatientProfile", "Project"];
+  const NavElems = ["About", "Login", "Profile", "Project"];
   const LangElems = languageOptions.map((value) => value.key);
   if (NavElems.includes(key)) clickNav(key);
   if (LangElems.includes(key)) changeLanguage(key);
@@ -194,10 +194,10 @@ const handleSelect = (key: string) => {
               <n-divider />
               <div
                 v-for="v in languageOptions"
-                :key="v.value"
+                :key="v.key"
                 style="margin-top: 5px"
               >
-                <n-button text size="medium" @click="changeLanguage(v.value)">{{
+                <n-button text size="medium" @click="changeLanguage(v.key)">{{
                   v.label
                 }}</n-button>
               </div>

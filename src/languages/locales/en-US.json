@@ -156,7 +156,8 @@
         "expiry":"Expires by",
         "showTherapies":"Show Therapies",
         "missedIntakes":"Missed Intakes",
-        "allTherapies":"Adherence Overview"
+        "allTherapies":"Adherence Overview",
+        "myTherapies":"My Therapies"
     },
     "weekDays":{
         "MO":"Monday|M",
@@ -170,7 +171,7 @@
     "navigation":{
         "project":"Our Project",
         "menu":"Menu",
-        "myProfile":"Profile",
+        "profile":"Profile",
         "logout":"Log Out",
         "aboutUs":"About Us",
         "login":"Log In",
@@ -179,6 +180,7 @@
     "profile":{
         "cf":"Fiscal Code",
         "email":"e-Mail",
+        "AlexaEmail":"Amazon Account e-Mail",
         "phone":"Phone",
         "userType":"Type of User",
         "residence":"Residence",
