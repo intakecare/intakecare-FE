@@ -12,7 +12,11 @@ import {useUserStore} from "@/stores/user";
 
 axios.interceptors.request.use((config) => {
   const user = useUserStore();
-  const token = user.token;
+  // This is a temporary fix to use the deprecated token as key_auth
+  if (user.key_auth === ""){
+    user.key_auth = user.token;
+  }
+  const token = user.key_auth;
 
   if (token) {
     if (config.headers) {

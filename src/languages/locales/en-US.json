@@ -191,8 +191,9 @@
         "oldPwRequired":"Old Password is required",
         "newPwRequired":"Old Password is required",
         "passwordMismatch":"Password Mismatch",
-        "changeOK":"Password successfully changed",
-        "changeError":"Error during password change"
+        "changeOK":"Password successfully changed!\n Please login again with the new password",
+        "changeError":"Error during password change",
+        "requirePasswordChange": "You have the default password, please change it using the form below!"
     },
     "project":{
         "roadmap":"Project Roadmap",

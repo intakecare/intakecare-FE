@@ -8,11 +8,13 @@ export interface UserDTO { //default
     email_alexa: string
     phone: string;
     user_type: string;
+    new_user: boolean;
     endpoint: string;
     expirationTime: number;
     key_p256dh: string;
     key_auth: string
   };
+  /**@deprecated*/
   access_token: string;
 }
 

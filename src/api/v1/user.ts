@@ -1,5 +1,5 @@
 import { UserCreateDTO, UserUpdateDTO } from "@/classes/user-dto";
-import { email } from "vuelidate/lib/validators";
+// import { email } from "vuelidate/lib/validators";
 import * as fetchApi from "../fetchApi";
 
 export async function get(id: string): Promise<any> {

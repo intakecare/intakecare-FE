@@ -7,16 +7,20 @@ import { Close as CloseIcon } from "@vicons/ionicons5";
 import {useUserStore} from "@/stores/user";
 import * as api from "@/api";
 import ChangePassword from "@/components/user-profile/ChangePassword.vue";
-import { FormItemRule } from "naive-ui";
+import {FormItemRule, MessageReactive, useMessage} from "naive-ui";
 import {UserUpdateDTO} from "@/classes/user-dto";
+import {useRouter} from "vue-router";
+
+/**
+ * This view is used to display the profile of the user.
+ */
 
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 const showSpin = ref(false);
 const user = useUserStore();
-// Check if the user is a new user
-const new_user = computed(() => {
-  return user.user_type === 'patient_new';
-})
+const message = useMessage();
+const router = useRouter();
+let requirePasswordChangeMessage: MessageReactive | null = null;
 
 onMounted(() => {
   showSpin.value = true;
@@ -27,7 +31,15 @@ onMounted(() => {
     phone: user.phone as null | string,
     userType: user.user_type as null | string
   }
+  if (user.new_user){
+    createRequirePasswordChangeMessage();
+  }
 });
+
+// Check if the user is a new user
+const new_user = computed(() => {
+  return user.user_type === 'patient_new' || user.new_user;
+})
 
 const formRef = ref(null);
 
@@ -107,6 +119,31 @@ const updateProfile = async () => {
         console.log(error);
       })
 };
+
+const createRequirePasswordChangeMessage = () => {
+  if (!requirePasswordChangeMessage) {
+    requirePasswordChangeMessage = message.warning(
+      t("profile.requirePasswordChange"),{
+      duration: 0,
+      closable: true,
+    });
+  }
+}
+
+const onPasswordChanged = () => {
+  /** This function is called when the password is changed in the corresponding component.
+   * It destroys the message requiring the password change, logouts the user and redirects to the home page. */
+  // If the message is present, destroy it
+  if (requirePasswordChangeMessage) {
+    requirePasswordChangeMessage.destroy();
+    requirePasswordChangeMessage = null;
+  }
+  // Logout
+  user.logout();
+  // Redirect to home page
+  router.push({ name: "Home" });
+}
+
 </script>
 
 
@@ -115,12 +152,10 @@ const updateProfile = async () => {
     <n-space justify="center">
       <n-space vertical>
         <n-h1>
-          <n-text v-if="new_user">
-            {{t('general.greeting')}} {{ user.name }} {{ user.surname }}!
-            È il tuo primo accesso, personalizza la password per poter accedere alle tue terapie.</n-text>
-          <n-text v-else>
+          <n-text>
           {{t('general.greeting')}} {{ user.name }} {{ user.surname }}
-        </n-text></n-h1>
+          </n-text>
+        </n-h1>
 
         <n-form
           :model="formModel"
@@ -238,7 +273,7 @@ const updateProfile = async () => {
           </n-button>
         </n-space>
         <n-divider />
-        <change-password />
+        <change-password @password-changed="onPasswordChanged"/>
       </n-space>
     </n-space>
   </n-card>

@@ -102,10 +102,10 @@ const router = createRouter({
 const canUserAccess = (to: RouteLocationNormalized): boolean => {
     /* Check if the user is logged in and if the route is protected */
     // Define the protected routes
-    const protectedRoutes = ["PatientProfile"];
+    const protectedRoutes = ["Profile"];
     const doctorReserved = ["Patients", "PatientDetail"];
     const adminReserved = ["Dashboard", "DashboardUsers", "DashboardDoctors", "DashboardStructures"];
-    const patientReserved = ["PatientTherapy", "PatientTherapyDetail"]
+    const patientReserved = ["PatientTherapies", "PatientTherapyDetail"]
     // Get the user store
     const user = useUserStore();
 

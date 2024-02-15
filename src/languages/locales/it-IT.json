@@ -134,8 +134,9 @@
         "oldPwRequired":"La Vecchia Password è Obbligatoria",
         "newPwRequired":"La Nuova Password è Obbligatoria",
         "passwordMismatch":"Le Password non Corrispondono",
-        "changeOK":"Password modificata con successo",
-        "changeError":"Errore nella modifica della password"
+        "changeOK":"Password modificata con successo!\n Effettua nuovamente il login con la nuova password.",
+        "changeError":"Errore nella modifica della password",
+        "requirePasswordChange": "Hai la password di default, cambiala usando il form qui sotto!"
     },
     "project":{
         "roadmap":"Sviluppi Futuri",

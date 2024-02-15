@@ -72,14 +72,15 @@ const login = async () => {
           modelRef.value.password as string
       )
       .then((value) => {
-        value.data.user['token'] = value.data.access_token
+        value.data.user['key_auth'] = value.data.key_auth
         user.set_user(value.data.user);
 
         showSpin.value = false;
         showError.value = false;
 
-        if (user.user_type === 'new_patient') {
-          router.push({ name: "PatientProfile" });
+        // Check if user is new
+        if (user.new_user) {
+          router.push({ name: "Profile" });
         } else if (user.user_type === 'admin_itc'){
           router.push({ name: "Dashboard" });
         } else {
