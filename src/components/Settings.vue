@@ -15,6 +15,17 @@ import { UserDTO } from "@/classes/user-dto";
 // TODO: RIPARTI DA QUI. Refactor totale del codice.
 // TODO: Metti Alexa di default.
 
+/**
+ * @name Settings
+ * @description This component displays and allows the user to change the default setting for
+ * the confirmation of intakes.
+ *
+ * @param {String} patient_id The id of the patient.
+ *
+ * @example
+ * <Settings patient_id="1234" />
+ */
+
 const props = defineProps({
   patient_id: {
     type: String,
@@ -27,19 +38,21 @@ const user = useUserStore();
 const showSpin = ref(false);
 const data = ref({} as PatientDTO);//{} as PatientDTO
 
-
 const getData = async () => {
   if(user._id) {
-    await api.patients.findByUserId(user._id)
+    await api.patients.findByUserId(user._id as string)
         .then((value) => {
           data.value.validationAlexaDefault = value.data.validationAlexaDefault;
           data.value.validationPhoneDefault = value.data.validationPhoneDefault;
           data.value.validationWebDefault = value.data.validationWebDefault;
+          console.log(data.value)
 
           //showSpin.value = true;
         })
-        .catch(() => {
+        .catch((error) => {
           showSpin.value = false;
+          console.log(user._id as string)
+          console.log(error)
         });
   }
 }
@@ -49,11 +62,7 @@ const emailAlexa = computed(() => {
 })
 
 const alexaDisable = computed(() => {
-  if (emailAlexa.value) {
-    return false
-  } else {
-    return true
-  }
+  return !emailAlexa.value;
 })
 
 const phone = computed(() => {
@@ -61,35 +70,19 @@ const phone = computed(() => {
 })
 
 const phoneDisable = computed(() => {
-  if ((phone.value)) {
-    return false
-  } else {
-    return true
-  }
+  return (!user.phone);
 })
 
 const alexaState = computed(() => {
-  if (data.value.validationAlexaDefault === true){
-    return true
-  } else {
-    return false
-  }
+  return data.value.validationAlexaDefault === true;
 })
 
 const phoneState = computed(() => {
-  if (data.value.validationPhoneDefault === true){
-    return true
-  } else {
-    return false
-  }
+  return data.value.validationPhoneDefault === true;
 })
 
 const webState = computed(() => {
-  if (data.value.validationWebDefault === true){
-    return true
-  } else {
-    return false
-  }
+  return data.value.validationWebDefault === true;
 })
 
 const alexaChanged = () => {

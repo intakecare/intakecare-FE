@@ -72,8 +72,9 @@ const login = async () => {
           modelRef.value.password as string
       )
       .then((value) => {
-        value.data.user['key_auth'] = value.data.key_auth
+        value.data.user['access_token'] = value.data.access_token
         user.set_user(value.data.user);
+        console.log(user)
 
         showSpin.value = false;
         showError.value = false;

@@ -12,15 +12,11 @@ import {useUserStore} from "@/stores/user";
 
 axios.interceptors.request.use((config) => {
   const user = useUserStore();
-  // This is a temporary fix to use the deprecated token as key_auth
-  if (user.key_auth === ""){
-    user.key_auth = user.token;
-  }
-  const token = user.key_auth;
+  const access_token = user.access_token;
 
-  if (token) {
+  if (access_token) {
     if (config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${access_token}`;
     } else {
       console.log("No headers in the request");
     }

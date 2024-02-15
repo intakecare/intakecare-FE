@@ -72,16 +72,16 @@ const getData = async () => {
         .then((response) => {
           console.log(response.data);
           patientData.value = response.data;
-          userData.value.id = response.data._id;
-          userData.value.username = response.data.username;
-          userData.value.name = response.data.name;
-          userData.value.surname = response.data.surname;
-          userData.value.sex = response.data.sex;
-          userData.value.residence = response.data.residence;
-          userData.value.dob = response.data.dob;
-          userData.value.cf = response.data.cf;
-          userData.value.phone = response.data.phone;
-          userData.value.email = response.data.email;
+          userData.value.id = response.data.user._id;
+          userData.value.username = response.data.user.username;
+          userData.value.name = response.data.user.name;
+          userData.value.surname = response.data.user.surname;
+          userData.value.sex = response.data.user.sex;
+          userData.value.residence = response.data.user.residence;
+          userData.value.dob = response.data.user.dob;
+          userData.value.cf = response.data.user.cf;
+          userData.value.phone = response.data.user.phone;
+          userData.value.email = response.data.user.email;
           therapies.value = response.data.therapies;
           showSpin.value = false;
           console.log("Name: " + userData.value.name)

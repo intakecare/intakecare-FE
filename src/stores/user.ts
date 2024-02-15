@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', {
         phone: '',
         user_type: '',
         new_user: '',
-        token: '',
+        access_token: '',
         endpoint: '',
         expirationTime: '',
         key_p256dh: '',
@@ -36,7 +36,7 @@ export const useUserStore = defineStore('user', {
                     this.phone = stored.phone;
                     this.user_type = stored.user_type;
                     this.new_user = stored.new_user;
-                    this.token = stored.token;
+                    this.access_token = stored.token;
                     this.endpoint = stored.endpoint;
                     this.expirationTime = stored.expirationTime;
                     this.key_p256dh = stored.key_p256dh;
@@ -59,7 +59,7 @@ export const useUserStore = defineStore('user', {
             this.phone = user.phone;
             this.user_type = user.user_type;
             this.new_user = user.new_user;
-            this.token = user.token;
+            this.access_token = user.access_token;
             this.endpoint = user.endpoint;
             this.expirationTime = user.expirationTime;
             this.key_p256dh = user.key_p256dh;
