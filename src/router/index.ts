@@ -42,6 +42,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "Profile",
         component: () => import("../views/UserProfile.vue"),
     },
+    {
+        path: "/completeProfile",
+        name: "CompleteProfile",
+        component: () => import("../views/CompleteProfile.vue"),
+    },
     // {
     //     path: "/signup",
     //     name: "Signup",
@@ -92,6 +97,11 @@ const routes: Array<RouteRecordRaw> = [
     //     name: "DashboardReport",
     //     component: () => import("../components/DashboardReport.vue"),
     // },
+    {
+        path: "/test",
+        name: "Test",
+        component: () => import("../../tests/Test.vue"),
+    }
 ];
 
 const router = createRouter({
@@ -102,7 +112,7 @@ const router = createRouter({
 const canUserAccess = (to: RouteLocationNormalized): boolean => {
     /* Check if the user is logged in and if the route is protected */
     // Define the protected routes
-    const protectedRoutes = ["Profile"];
+    const protectedRoutes = ["Profile", "CompleteProfile"];
     const doctorReserved = ["Patients", "PatientDetail"];
     const adminReserved = ["Dashboard", "DashboardUsers", "DashboardDoctors", "DashboardStructures"];
     const patientReserved = ["PatientTherapies", "PatientTherapyDetail"]

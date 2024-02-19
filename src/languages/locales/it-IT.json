@@ -92,7 +92,20 @@
         "aboutUs":"Su di Noi",
         "login":"Accedi",
         "signup":"Registrati",
-        "dashboard":"Dashboard"
+        "dashboard":"Dashboard",
+        "completeProfile":"Completa il profilo"
+    },
+    "newPatient": {
+        "welcome": "Benvenuto! Per procedere devi prima completare il tuo profilo!",
+        "insertData": "Inserisci la email del tuo account Amazon.",
+        "changePassword": "Cambia la tua password di default.",
+        "emailPlaceholder":"esempio{'@'}prova.it",
+        "phonePlaceholder":"es. 1234567890",
+        "emailRequired":"L' e-Mail è necessaria",
+        "emailNotMatch":"Le e-Mail non corrispondono",
+        "formSaved":"Form salvato con successo",
+        "formError":"Errore nel completamento del form"
+
     },
     "OTP":{
         "setExpiration":"Imposta la Scadenza",
@@ -124,6 +137,7 @@
         "cf":"Codice Fiscale",
         "email":"e-Mail",
         "AlexaEmail":"e-Mail Account Amazon",
+        "repeatEmail": "Ripeti l' e-Mail",
         "phone":"Numero di Telefono",
         "userType":"Tipo di Utente",
         "residence": "Residenza",

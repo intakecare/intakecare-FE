@@ -7,7 +7,7 @@ import {useLanguageStore} from "@/stores/language";
 import { Menu as MenuIcon } from "@vicons/ionicons5";
 import {useRouter} from "vue-router";
 
-
+// i18n and router setup
 const { t, locale } = useI18n({ useScope: "global", inheritLocale: true });
 const router = useRouter();
 
@@ -17,8 +17,10 @@ const languageModel = useLanguageStore();
 const isLogged = computed(() => userModule.username);
 const firstName = computed(() => userModule.name);
 const userType = computed(() => userModule.user_type);
+const newUser = computed(() => userModule.new_user);
 const languageOptions = languageModel.getLocaleNames();
 
+// Variable to show the mobile menu
 const show = ref(false);
 
 // Definition of the menu options
@@ -27,9 +29,16 @@ const menuOptions = computed(() => {
     { label: t("navigation.aboutUs"), key: "About" },
     { label: t("navigation.project"), key: "Project" },
   ];
+  // If the user is not logged, add login
   if (!isLogged.value) {
     menu.push({ label: t("navigation.login"), key: "Login" });
-  } else {
+  }
+  // If the user is logged but is a new user, do not add anything else
+  else if (newUser.value){
+    return menu;
+  }
+  // If the user is logged and not new, add the relevant buttons
+  else {
     if (userType.value === "doctor") {
       menu.push({ label: t("general.patient", 2), key: "Patients" });
     }
@@ -45,15 +54,23 @@ const menuOptions = computed(() => {
 
 // Definition of the login options
 const loginOptions = computed(() => {
-  const option = [
-    {label: t("navigation.profile"), key: "Profile"},
-    {label: t("navigation.logout"), key: "Logout" },
-  ];
+  const option: ({ label: string; key: string })[] = [];
+  // If the user is new, add the complete profile button
+  // Otherwise, add the normal profile button
+  if (newUser.value){
+    option.push({label: t("navigation.completeProfile"), key: "CompleteProfile"});
+  }
+  else {
+    option.push({label: t("navigation.profile"), key: "Profile"});
+  }
+  // Add the logout button
+  option.push({label: t("navigation.logout"), key: "Logout" });
   return option
 })
 
 const clickNav = (destination: string) => {
   // Redirect to the selected page
+  console.log("click")
   router.push({ name: destination });
   console.log(destination)
 };
@@ -73,7 +90,7 @@ const logout = () => {
 
 const handleSelect = (key: string) => {
   // Handle the selection of the dropdowns
-  const NavElems = ["About", "Login", "Profile", "Project"];
+  const NavElems = ["About", "Login", "Profile", "CompleteProfile", "Project"];
   const LangElems = languageOptions.map((value) => value.key);
   if (NavElems.includes(key)) clickNav(key);
   if (LangElems.includes(key)) changeLanguage(key);
@@ -164,12 +181,22 @@ const handleSelect = (key: string) => {
               <div v-if="isLogged">
                 <n-space vertical>
                   <n-button
+                    v-if="newUser"
+                    text
+                    size="medium"
+                    @click="handleSelect('CompleteProfile')"
+                    style="margin-top: 5px">
+                    {{ t("navigation.completeProfile") }}
+                  </n-button>
+
+                  <n-button
+                      v-else
                     text
                     size="medium"
                     @click="handleSelect('PatientProfile')"
-                    style="margin-top: 5px"
-                    >{{ t("navigation.profile") }}</n-button
-                  >
+                    style="margin-top: 5px">
+                    {{ t("navigation.profile") }}
+                  </n-button>
 
                   <n-button
                     text

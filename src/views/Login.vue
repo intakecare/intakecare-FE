@@ -81,7 +81,7 @@ const login = async () => {
 
         // Check if user is new
         if (user.new_user) {
-          router.push({ name: "Profile" });
+          router.push({ name: "CompleteProfile" });
         } else if (user.user_type === 'admin_itc'){
           router.push({ name: "Dashboard" });
         } else {
