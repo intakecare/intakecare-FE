@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: "/completeProfile",
         name: "CompleteProfile",
-        component: () => import("../views/CompleteProfile.vue"),
+        component: () => import("../views/SetupWizard.vue"),
     },
     // {
     //     path: "/signup",
@@ -100,7 +100,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: "/test",
         name: "Test",
-        component: () => import("../../tests/Test.vue"),
+        component: () => import("../views/SetupWizard.vue"),
     }
 ];
 

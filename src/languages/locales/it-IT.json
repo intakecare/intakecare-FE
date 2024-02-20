@@ -43,6 +43,8 @@
         "save":"Salva",
         "undo":"Annulla",
         "send":"Invia",
+        "next":"Avanti",
+        "back":"Indietro",
         "select":"Seleziona",
         "filter":"Filtra per",
         "delete":"Elimina",
@@ -175,6 +177,12 @@
     "settings":{
         "setDefaultValidation":"Imposta la ricezione della notifica di default",
         "message":"Per poter usufruire di questa modalità inserisci il dato mancante sul tuo Profilo"
+    },
+    "setupWizard": {
+        "welcome": "Benvenuto/a in InTakeCare!",
+        "intro": "Per poter usufruire di tutte le funzionalità del nostro servizio, ti chiediamo di completare il tuo profilo.",
+        "OTPMessage": "Crea un codice OTP per collegare il tuo dispositivo Alexa al tuo account.\n Dì \"Alexa, apri Medico Virtuale\" e segui le istruzioni che ti verranno dettate.",
+        "changePassword": "Cambia la tua password di default. Una volta cambiata, dovrai effettuare nuovamente il login."
     },
     "signup":{
         "password":"Password",

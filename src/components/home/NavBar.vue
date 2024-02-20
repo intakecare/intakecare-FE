@@ -193,7 +193,7 @@ const handleSelect = (key: string) => {
                       v-else
                     text
                     size="medium"
-                    @click="handleSelect('PatientProfile')"
+                    @click="handleSelect('Profile')"
                     style="margin-top: 5px">
                     {{ t("navigation.profile") }}
                   </n-button>

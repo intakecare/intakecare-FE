@@ -22,6 +22,8 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(["generated"]);
+
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 const value = ref(1);
 const OTP = ref({

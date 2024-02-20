@@ -21,6 +21,8 @@ import * as api from "@/api";
  *
  * @emits passwordChanged - When the password is changed, this event is emitted.
  *
+ * @example
+ * <change-password @password-changed="onPasswordChanged"/>
  */
 
 interface ModelType {
