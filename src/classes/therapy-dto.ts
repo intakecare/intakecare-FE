@@ -1,10 +1,9 @@
 export interface Therapy {
   _id?: string;
   adherence: number;
-  //validation: "alexa" | "phone" | "web";//"photo" | "band";
   validation_alexa: boolean;
-  validation_phone: boolean;
-  validation_web: boolean;
+  validation_phone?: boolean;
+  validation_web?: boolean;
   edit?: "saved" | "new" | "updated" | "todelete" | "deleted";
   state: boolean;
   posology: string;

@@ -63,15 +63,15 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/PatientDetail.vue"),
     },
     {
-        path: "/patientTherapies",
-        name: "PatientTherapies",
-        component: () => import("../views/PatientTherapies.vue"),
+        path: "/patientPage",
+        name: "PatientPage",
+        component: () => import("../views/PatientPage.vue"),
     },
-    // {
-    //     path: "/showPatientTherapyDetail",
-    //     name: "PatientTherapyDetail",
-    //     component: () => import("../views/PatientTherapyDetail1.vue"),
-    // },
+    {
+        path: "/showPatientTherapyDetail",
+        name: "PatientTherapyDetail",
+        component: () => import("../views/PatientTherapyDetail.vue"),
+    },
     // {
     //     path: "/dashboard",
     //     name: "Dashboard",

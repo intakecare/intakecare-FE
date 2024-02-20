@@ -46,7 +46,7 @@ const menuOptions = computed(() => {
       menu.push({ label: t("navigation.dashboard"), key: "Dashboard" });
     }
     if (userType.value === "patient") {
-      menu.push({ label:  t("patientDetail.myTherapies"), key: "PatientTherapies" });
+      menu.push({ label:  t("patientDetail.myTherapies"), key: "PatientPage" });
     }
   }
   return menu;

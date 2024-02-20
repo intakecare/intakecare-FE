@@ -39,6 +39,8 @@
         "confirmMessage":"Attenzione! L'azione è irreversibile!",
         "confirmDeletion":"Conferma Eliminazione",
         "greeting":"Ciao",
+        "start": "Inizio",
+        "end": "Fine",
         "edit":"Modifica",
         "save":"Salva",
         "undo":"Annulla",
@@ -234,7 +236,12 @@
         "hiringTime":"Orario di Assunzione",
         "morning":"Mattina",
         "afternoon":"Pomeriggio",
-        "evening":"Sera"
+        "evening":"Sera",
+        "mealTiming":{
+            "before":"Prima",
+            "during":"Durante",
+            "after":"Dopo"
+        }
     },
     "therapyLogs":{
         "delivery":"Somministrazioni",
