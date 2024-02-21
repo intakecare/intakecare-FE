@@ -24,7 +24,7 @@ export interface Dose {
 }
 
 export interface Option {
-  cadence: number | string[];
+  cadence: string[];
   max_delay: number;
   time: string;
 }

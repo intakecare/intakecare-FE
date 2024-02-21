@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
+import {computed, ref, onMounted, onBeforeMount} from "vue";
 import { useI18n } from "vue-i18n";
 import {
   Pencil as PencilIcon,
@@ -8,7 +8,7 @@ import {Therapy} from "@/classes/therapy-dto";
 import {useRouter} from "vue-router";
 import * as api from "@/api";
 import ResponsiveView from "@/components/ResponsiveView.vue";
-import DaySelector from "@/components/DaySelector.vue";
+import TherapyDetailDose from "@/components/TherapyDetailDose.vue";
 
 /**
  * This view is used to display details of a therapy of a user.
@@ -23,9 +23,13 @@ const router = useRouter();
 const editMode = ref(false);
 const data = ref({} as Therapy);
 const showSpin = ref(false);
-
 const value = ref("monday");
-
+const schedule = ref({
+      "cadence": ["MO", "FR"],
+      "max_delay": 30,
+      "time": "12:10"
+    });
+const trueRef = ref(true); //This is for debugging purpose ONLY
 // Computed variables
 const posology = computed(() => {
   let mealsSection = ""
@@ -72,6 +76,7 @@ const getData = async () => {
           data.value.patient_id = value.data.patient_id;
           showSpin.value = false;
           console.log(data.value)
+          console.log(data.value.delivery.options)
         })
         .catch(() => {
           showSpin.value = false;
@@ -157,7 +162,10 @@ const dateFormatter = (date: any) => {
 
       <!-- Therapy delivery -->
       <n-divider>{{ t("therapies.delivery") }}</n-divider>
-      <day-selector :disabled="editMode" :time=1400 :value="value"/>
+      <therapy-detail-dose
+          v-model:schedule="schedule"
+          :disabled="trueRef"
+      />
 
     </n-scrollbar>
 
