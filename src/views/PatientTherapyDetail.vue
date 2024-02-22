@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {computed, ref, onMounted, onBeforeMount} from "vue";
+import {computed, ref, onMounted, onBeforeMount, PropType} from "vue";
 import { useI18n } from "vue-i18n";
 import {
   Pencil as PencilIcon,
   Close as CloseIcon } from "@vicons/ionicons5";
-import {Therapy} from "@/classes/therapy-dto";
+import {Option, Therapy} from "@/classes/therapy-dto";
 import {useRouter} from "vue-router";
 import * as api from "@/api";
 import ResponsiveView from "@/components/ResponsiveView.vue";
@@ -29,6 +29,7 @@ const schedule = ref({
       "max_delay": 30,
       "time": "12:10"
     });
+const effectiveSchedule = ref([] as Option[]);
 const trueRef = ref(true); //This is for debugging purpose ONLY
 // Computed variables
 const posology = computed(() => {
@@ -75,8 +76,9 @@ const getData = async () => {
           data.value.delivery = value.data.delivery;
           data.value.patient_id = value.data.patient_id;
           showSpin.value = false;
+          effectiveSchedule.value = data.value.delivery.options
           console.log(data.value)
-          console.log(data.value.delivery.options)
+          console.log(effectiveSchedule.value)
         })
         .catch(() => {
           showSpin.value = false;
@@ -100,6 +102,31 @@ const dateFormatter = (date: any) => {
         day: 'numeric'
       }
   );
+}
+
+const onScheduleChanged = async (value: Option[]) => {
+  /**
+   * This function is used to update the schedule of the therapy.
+   */
+  // Create an object with the updated schedule
+  const therapyToUpdate: Partial<Therapy> = {
+    delivery: {
+      scheduling_type: "weekly", // The scheduling type is cast to weekly due to how the options are defined.
+      options: value
+    }
+  };
+  // Call the api to update the therapy
+  if (data.value._id) {
+    await api.therapies
+      .update(data.value._id, therapyToUpdate)
+      .then((value) => {
+        console.log("Data updated!")
+        console.log(value.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  }
 }
 </script>
 
@@ -159,12 +186,12 @@ const dateFormatter = (date: any) => {
           <n-tag round>{{posology}}</n-tag>
         </n-descriptions-item>
       </n-descriptions>
-
       <!-- Therapy delivery -->
       <n-divider>{{ t("therapies.delivery") }}</n-divider>
       <therapy-detail-dose
-          v-model:schedule="schedule"
-          :disabled="trueRef"
+          v-model:schedule="effectiveSchedule"
+          :disabled="!editMode"
+          @schedule-changed="onScheduleChanged"
       />
 
     </n-scrollbar>
