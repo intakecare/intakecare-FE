@@ -164,18 +164,8 @@ const createColumns = computed(() => {
 });
 
 </script>
-
-
 <template>
-  <n-modal style="max-width: 1260px" v-model:show="showSettingsModal" preset="dialog">
-    <template #header>
-      <div>{{ t("general.settings") }}</div>
-    </template>
-      <div>
-        <Settings :patient_id="PatientId"/>
-      </div>
-  </n-modal>
-
+  <!-- Modal Windows -->
   <n-modal style="max-width: 1260px" v-model:show="showOTPModal" preset="dialog">
     <template #header>
       <div>{{ t("general.genOTP") }}</div>
@@ -223,13 +213,6 @@ const createColumns = computed(() => {
               style="max-width: 320px"
             />
             <n-space justify="end">
-              <n-button type="primary" secondary circle @click="showSettingsModal = true">
-                <template #icon>
-                  <n-icon>
-                    <settings-icon />
-                  </n-icon> </template
-              ></n-button>
-
               <n-button type="primary" @click="showOTPModal = true">
                         <template #icon>
                           <img

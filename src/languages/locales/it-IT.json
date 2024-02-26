@@ -233,10 +233,17 @@
         "from":"Dal",
         "lastWeek":"Ultima Settimana",
         "lastMonth":"Ultimi 28 Giorni",
-        "hiringTime":"Orario di Assunzione",
-        "morning":"Mattina",
-        "afternoon":"Pomeriggio",
-        "evening":"Sera",
+        "changeableWithin": "Modificabile tra",
+        "template": "Modelli",
+        "errorTimeRange": "L'orario scelto non è compreso nell'intervallo selezionato.",
+        "timeRange": {
+            "morning":"Mattina",
+            "lunch":"Pranzo",
+            "afternoon":"Pomeriggio",
+            "dinner":"Cena",
+            "evening":"Sera",
+            "fixed":"Fisso"
+        },
         "mealTiming":{
             "before":"Prima",
             "during":"Durante",

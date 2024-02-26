@@ -132,56 +132,6 @@ const isDayInSchedule = (day: string) => {
   return editableTherapies.value.some((e) => e.weekday === day);
 }
 
-
-// const errorMessage = () => {
-//   if ( props.data?.hiring_time === 'morning' && (parseInt(props.value.time) < 5 || parseInt(props.value.time) > 12)) { //props.schedule === 'daily' &&
-//     emit('saveDisabledTrue')
-//     return alert('Questa terapia è impostata per la Mattina, imposta un orario tra le 5:00 e le 11:59')
-//   } else if (props.data?.hiring_time === 'morning' && (parseInt(props.value.time) >= 5 || parseInt(props.value.time) <= 12)) {
-//     emit('saveDisabledFalse')
-//     //console.log(time.value)
-//     //console.log('props.time '+props.value.time)
-//     props.data.delivery.options.map((e) => {
-//       return {
-//         time: e.time,
-//         weekdays: typeof e.cadence === "number" ? ["MO"] : e.cadence,
-//         cadence: typeof e.cadence === "number" ? e.cadence : 1,
-//       };
-//     });
-//     /*console.log(`${time.value.getHours().toLocaleString("en-US", {
-//     minimumIntegerDigits: 2,
-//     useGrouping: false,
-//   })}:${time.getMinutes().toLocaleString("en-US", {
-//     minimumIntegerDigits: 2,
-//     useGrouping: false,
-//   })}`)*/
-//   } else if (props.data?.hiring_time === 'afternoon' && (parseInt(props.value.time) < 12 || parseInt(props.value.time) > 18)) {
-//     emit('saveDisabledTrue')
-//     return alert('Questa terapia è impostata per il Pomeriggio, imposta un orario tra le 12:00 e le 17:59')
-//   } else if (props.data?.hiring_time === 'afternoon' && (parseInt(props.value.time) >= 12 || parseInt(props.value.time) <= 18)) {
-//     emit('saveDisabledFalse')
-//     props.data.delivery.options.map((e) => {
-//       return {
-//         time: e.time,
-//         weekdays: typeof e.cadence === "number" ? ["MO"] : e.cadence,
-//         cadence: typeof e.cadence === "number" ? e.cadence : 1,
-//       };
-//     });
-//   } else if (props.data?.hiring_time === 'evening' && (parseInt(props.value.time) < 18 || parseInt(props.value.time) > 23.59)) {
-//     emit('saveDisabledTrue')
-//     return alert('Questa terapia è impostata per la Sera, imposta un orario tra le 18:00 e le 23:59')
-//   } else if (props.data?.hiring_time === 'evening' && (parseInt(props.value.time) >= 18 || parseInt(props.value.time) <= 23.59)) {
-//     emit('saveDisabledFalse')
-//     props.data.delivery.options.map((e) => {
-//       return {
-//         time: e.time,
-//         weekdays: typeof e.cadence === "number" ? ["MO"] : e.cadence,
-//         cadence: typeof e.cadence === "number" ? e.cadence : 1,
-//       };
-//     });
-//   }
-// }
-
 const onTimeValueChanged = (dayArray) => {
   /**
    * Function called when the user confirms the change in the time picker.

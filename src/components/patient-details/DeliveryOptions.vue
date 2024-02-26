@@ -1,13 +1,103 @@
+<script setup lang="ts">
+import {
+  computed,
+  onMounted,
+  ref,
+  PropType, watch,
+} from "vue";
+import { useI18n } from "vue-i18n";
+import { Add as AddIcon, Remove as RemoveIcon } from "@vicons/ionicons5";
+import Dose from "@/components/patient-details/Dose.vue";
+import { Dose as Delivery } from "@/classes/therapy-dto";
+import useWindowResize from "@/use/useWindowResize";
+
+/**
+ * @component DeliveryOptions
+ * @description Component to manage the delivery options of a therapy.
+ *
+ * @param {Object} delivery - The delivery options of the therapy.
+ *
+ * @emits {Object} changed - Emits the updated delivery options.
+ *
+ * @example
+ * <delivery-options :delivery="delivery" @changed="updateDelivery" />
+ */
+
+// Props and emits
+const props = defineProps({
+  delivery: { type: Object as PropType<Delivery> }, // It is called deliveries to avoid conflict with the Dose component
+})
+const emits = defineEmits(["changed"]);
+
+// Window and i18n initialization
+const { t } = useI18n({ useScope: "global", inheritLocale: true });
+const { width, height } = useWindowResize();
+
+// Reactive variables
+const scheduling_type = ref("weekly");
+const intakes = ref([
+  {
+    cadence: ["MO"],
+    time: "10:00",
+  },
+]);
+
+const add = () => {
+  intakes.value.push({
+    cadence: ["MO"],
+    time: "10:00",
+  });
+};
+
+const doseOptions = computed(() => {
+  return [
+    // {
+    //   label: t("doses.daily"),
+    //   value: "daily",
+    // },
+    // {
+    //   label: t("doses.weekly"),
+    //   value: "weekly",
+    // },
+    // {
+    //   label: t("doses.interval"),
+    //   value: "interval",
+    // },
+    // {
+    //   label: t("doses.once"),
+    //   value: "once",
+    // },
+  ];
+});
+
+onMounted(() => {
+  if (!props.delivery) {
+    emits("changed", {
+      scheduling_type: scheduling_type.value,
+      options: intakes.value,
+    });
+  }
+});
+
+watch ([scheduling_type, intakes], () => {
+  emits("changed", {
+    scheduling_type: scheduling_type.value,
+    options: intakes.value,
+  });
+});
+
+</script>
+
 <template>
   <n-space justify="center" vertical>
     <n-space justify="center" align="center" vertical>
       <n-radio-group
         v-if="width > 600"
-        v-model:value="scheduling"
+        v-model:value="scheduling_type"
         name="radiobuttongroup1"
       >
         <n-radio-button
-          v-for="option in options"
+          v-for="option in doseOptions"
           :key="option.value"
           :value="option.value"
         >
@@ -18,16 +108,16 @@
       <n-select
         style="width: 100%"
         v-else
-        v-model:value="scheduling"
-        :options="options"
+        v-model:value="scheduling_type"
+        :options="doseOptions"
       />
     </n-space>
 
     <dose
       v-for="(intake, index) in intakes"
       v-bind:key="index"
-      :schedule="scheduling"
-      v-model:value="intakes[index]"
+      :scheduling_type="scheduling_type"
+      v-model:option="intakes[index]"
     />
 
     <n-space justify="end">
@@ -55,109 +145,3 @@
   </n-space>
 </template>
 
-<script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  watch,
-  PropType,
-  watchEffect,
-} from "vue";
-import { useI18n } from "vue-i18n";
-import { Add as AddIcon, Remove as RemoveIcon } from "@vicons/ionicons5";
-import Dose from "@/components/patient-details/Dose.vue";
-import { Dose as Delivery } from "@/classes/therapy-dto";
-import useWindowResize from "@/use/useWindowResize";
-export default defineComponent({
-  name: "DeliveryOptions",
-  components: {
-    AddIcon,
-    RemoveIcon,
-    Dose,
-    //ResponsiveView
-  },
-  emits: ["changed"],
-  props: { 
-    time_place: {type: String},
-    deliveries: { type: Object as PropType<Delivery> } },
-  setup(props, { emit }) {
-    const { t } = useI18n({ useScope: "global", inheritLocale: true });
-    const { width, height } = useWindowResize();
-    const scheduling = ref("daily");
-    
-    const add = () => {
-      intakes.value.push({
-        weekdays: ["MO"],
-        time: "12:00",
-        cadence: 1,
-      });
-    };
-    const intakes = ref([
-      {
-        weekdays: ["MO"],
-        time: "12:00",
-        cadence: 1,
-      },
-    ]);
-
-    const options = computed(() => {
-      return [
-        {
-          label: t("doses.daily"),
-          value: "daily",
-        },
-        {
-          label: t("doses.weekly"),
-          value: "weekly",
-        },
-        {
-          label: t("doses.interval"),
-          value: "interval",
-        },
-        // {
-        //   label: t("doses.once"),
-        //   value: "once",
-        // },
-      ];
-    });
-
-    watchEffect(() => {
-      intakes.value.forEach((e) => {
-        if (scheduling.value === "daily") e.cadence = 1;
-        else if (scheduling.value === "interval" && e.cadence < 2)
-          e.cadence = 2;
-      });
-
-      emit("changed", {
-        scheduling_type: scheduling.value,
-        options: intakes.value,
-      });
-    });
-
-    onMounted(() => {
-      if (!props.deliveries) {
-        emit("changed", {
-          scheduling_type: scheduling.value,
-          options: intakes.value,
-        });
-      }
-    });
-
-    watch(props, () => {
-      if (props.deliveries) {
-        scheduling.value = props.deliveries.scheduling_type;
-        intakes.value = props.deliveries.options.map((e) => {
-          return {
-            time: e.time,
-            weekdays: typeof e.cadence === "number" ? ["MO"] : e.cadence,
-            cadence: typeof e.cadence === "number" ? e.cadence : 1,
-          };
-        });
-      }
-    });
-    return { scheduling, options, intakes, add, width, height };
-  },
-});
-</script>

@@ -59,7 +59,6 @@ const selectedTherapy = ref({ therapyId: null, therapyDrug: null } as {
 
 const getId = () : string => {
   // Get the patient id from the route and return it as a string
-  console.log(`Patient Id: ${route.query.id}`);
   return route.query.id as string;
 };
 
@@ -84,8 +83,6 @@ const getData = async () => {
           userData.value.email = response.data.user.email;
           therapies.value = response.data.therapies;
           showSpin.value = false;
-          console.log("Name: " + userData.value.name)
-          console.log("Therapies: " + therapies.value)
         })
         .catch(() => {
           showSpin.value = false;

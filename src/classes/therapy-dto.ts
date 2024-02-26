@@ -7,7 +7,6 @@ export interface Therapy {
   edit?: "saved" | "new" | "updated" | "todelete" | "deleted";
   state: boolean;
   posology: string;
-  hiring_time: "morning" | "afternoon" | "evening" | "no";
   meals?: "before" | "during" | "after" | "no";
   end_date?: Date;
   duration?: number;
@@ -27,12 +26,8 @@ export interface Option {
   cadence: string[];
   max_delay: number;
   time: string;
-}
-
-export interface OptionExt {
-  cadence: number;
-  weekdays: string[];
-  time: string;
+  rangeStartTime?: string;
+  rangeEndTime?: string;
 }
 
 export interface TherapyLog {

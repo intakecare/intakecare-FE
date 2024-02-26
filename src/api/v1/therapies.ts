@@ -3,7 +3,6 @@ import { Therapy } from "@/classes/therapy-dto";
 
 export async function save(therapy: Partial<Therapy>) {
   return await fetchApi.postHttp("/api/therapies", {
-    patient_id: therapy.patient_id,
     therapy: therapy,
   });
 }

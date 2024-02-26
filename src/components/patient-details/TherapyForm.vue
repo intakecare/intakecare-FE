@@ -51,19 +51,35 @@ const drugValue = ref(null as string | null);
 const posology = ref(null as string | null);
 const delay = ref(120);
 const timeEnd = ref("range");
+const meals = ref("before");
 
+const delivery = ref({
+  scheduling_type: "weekly",
+  options: [
+    {
+      time: "10:00",
+      max_delay: 30,
+      cadence: ["MO"],
+    },
+  ],
+});
+
+// Error variables
+const errorStartDatePast = ref(false);
+const errorEndDateBeforeStart = ref(false);
+const errorDrugNotSelected = ref(false);
+const errorPosologyNotSelected = ref(false);
 
 onMounted(() => {
   if (props.therapy) {
     drugValue.value = props.therapy.drug;
-    intakes.value = props.therapy.delivery;
+    delivery.value = props.therapy.delivery;
     intakeNumber.value = props.therapy.duration
         ? props.therapy.duration
         : 1;
     state.value = props.therapy.state;
     posology.value = props.therapy.posology;
     meals.value = props.therapy.meals ? props.therapy.meals : "no ";
-    hiringTime.value = props.therapy.hiring_time ? props.therapy.hiring_time : "morning";
     dateRange.value = [
       new Date(props.therapy.start_date).getTime() +
       new Date().getTimezoneOffset() * 60000,
@@ -78,8 +94,9 @@ onMounted(() => {
 const substance = Object.keys(Drugs).map((e) => {
   return { label: e, value: e };
 });
+
 const drug = computed(() => {
-  var tmp: { label: string; value: string }[] = [];
+  let tmp: { label: string; value: string }[] = [];
   if (!selectedSubstance.value) {
     Object.values(Drugs).forEach((e) => {
       e.forEach((v) => {
@@ -158,66 +175,35 @@ const mealsOptions = computed(() => [
     label: "X",
   },
 ]);
-const meals = ref("before");
-
-const hiringTimeOptions = computed(() => [
-  {
-    value: "morning",
-    label: t("therapies.morning"),
-  },
-  {
-    value: "afternoon",
-    label: t("therapies.afternoon"),
-  },
-  {
-    value: "evening",
-    label: t("therapies.evening"),
-  },
-  {
-    value: "no",
-    label: "X",
-  },
-]);
-const hiringTime = ref("no");
-
-const h = computed(() => {
-  if ( hiringTime.value === "morning" ) {
-    return "10:00"
-  } else if ( hiringTime.value === "afternoon" ) {
-    return "13:00"
-  } else {
-    return "20:00"
-  }
-})
 
 const disableSave = computed(() => {
-  if (!drugValue.value) return true;
-  if (!posology.value) return true;
-  if (!delay.value) return true;
-  if (
-      !props.therapy &&
-      dateRange.value.length &&
-      dateRange.value[0] < Date.now() - 24 * 60 * 60 * 1000
-  )
+  /**
+   * This function is used to disable the save button if some fields are not filled or correct
+   */
+  // Check if drug is selected
+  if (!drugValue.value) {
+    errorDrugNotSelected.value = true;
     return true;
-  if (timeEnd.value === "range" && !dateRange.value[1]) return true;
-  if (timeEnd.value === "range" && dateRange.value[1] < dateRange.value[0])
+  }
+  // Check if posology is filled
+  if (!posology.value) {
+    errorPosologyNotSelected.value = true;
     return true;
-  if (timeEnd.value === "intakes" && !intakeNumber.value) return true;
-  if (!intakesOutput.value) return true;
-
+  }
+  // Check if the start date is in the past
+  if (dateRange.value[0] < Date.now() - 24 * 60 * 60 * 1000){
+    errorStartDatePast.value = true;
+    return true;
+  }
+  // Check if the end date is before the start date
+  if (timeEnd.value === "range" && dateRange.value[1] < dateRange.value[0]){
+    errorEndDateBeforeStart.value = true;
+    return true;
+  }
+  // If all the checks are passed, enable the save button
   return false;
 });
-const intakes = ref(
-    null as null | {
-      scheduling_type: string;
-      options: {
-        time: string;
-        max_delay: number;
-        cadence: number | string[];
-      }[];
-    }
-);
+
 const intakesOutput = ref(
     null as null | {
       scheduling_type: string;
@@ -228,42 +214,7 @@ const intakesOutput = ref(
       }[];
     }
 );
-const intakesChange = (data: {
-  scheduling_type: string;
-  options: {
-    weekdays: string[];
-    time: string;
-    cadence: number;
-  }[];
-}) => {
-  intakesOutput.value = {
-    scheduling_type: data.scheduling_type,
-    options: data.options.map((e) => {
 
-      if ( hiringTime.value === "morning" ) {
-        e.time = "10:00"
-      } else if ( hiringTime.value === "afternoon" ) {
-        e.time = "13:00"
-      } else if ( hiringTime.value === "evening" ){
-        e.time = "20:00"
-      }
-
-      if (
-          data.scheduling_type === "daily" ||
-          data.scheduling_type === "once"
-      )
-        return { cadence: 1, max_delay: delay.value, time: e.time};//e.time
-      else if (data.scheduling_type === "weekly")
-        return {
-          cadence: e.weekdays,
-          max_delay: delay.value,
-          time: e.time,
-        };
-      else
-        return { cadence: e.cadence, max_delay: delay.value, time: e.time };
-    }),
-  };
-};
 const delayChange = (value: number) => {
   if (intakesOutput.value)
     intakesOutput.value.options.forEach((e) => {
@@ -271,12 +222,39 @@ const delayChange = (value: number) => {
     });
 };
 const state = ref(true);
+
+const fakeSave = () => {
+  const therapyToSave: Partial<Therapy> = {
+    patient_id: props.patient_id,
+    drug: drugValue.value as string,
+    posology: posology.value as string,
+    validation_alexa: true,
+    start_date: new Date(
+        dateRange.value[0] - new Date().getTimezoneOffset() * 60000
+    ),
+    delivery: intakesOutput.value as Dose,
+    state: state.value,
+  };
+  if (meals.value !== "no")
+    therapyToSave.meals = meals.value as "before" | "during" | "after";
+  if (timeEnd.value === "range") {
+    therapyToSave.end_date = new Date(
+        dateRange.value[1] - new Date().getTimezoneOffset() * 60000
+    );
+  }
+  if (timeEnd.value === "intakes") {
+    therapyToSave.duration = intakeNumber.value;
+  }
+  showSpin.value = true;
+  console.log(therapyToSave)
+  emits("changed");
+};
+
 const saveTherapy = () => {
   const therapyToSave: Partial<Therapy> = {
     patient_id: props.patient_id,
     drug: drugValue.value as string,
     posology: posology.value as string,
-    hiring_time: hiringTime.value as "morning" | "afternoon" | "evening",
     validation_alexa: true,
     start_date: new Date(
         dateRange.value[0] - new Date().getTimezoneOffset() * 60000
@@ -323,21 +301,27 @@ const saveTherapy = () => {
 const computedStyle = computed(() => {
   return `max-height: ${height.value - 170}px`;
 });
+
+const onDeliveryChanged = (value: { scheduling_type: string; options: any[] }) => {
+  intakesOutput.value = value;
+  console.log(value)
+};
 </script>
 
 
 <template>
   <n-spin :show="showSpin">
     <n-grid :x-gap="10" :y-gap="10" cols="1 1000:2" item-responsive>
-      <!-- Delivery options (daily, weekly, timing) -->
+      <!-- First Column: delivery options (daily, weekly, timing) -->
       <n-gi>
         <n-scrollbar :style="computedStyle">
           <n-card :title="t('doses.doses')">
-            <delivery-options 
-            :deliveries="intakes" @changed="intakesChange" />
+            <delivery-options
+                :deliveries="delivery" @changed="onDeliveryChanged"/>
           </n-card>
         </n-scrollbar>
       </n-gi>
+      <!-- Second Column: everything else -->
       <n-gi>
         <n-space vertical>
           <n-scrollbar :style="computedStyle">
@@ -541,25 +525,6 @@ const computedStyle = computed(() => {
                 <n-gi span="1 450:2">
                   <n-divider />
                 </n-gi>
-
-                <!-- General Timing -->
-                <n-gi>
-                  <n-space align="center">
-                    <n-text>{{ t("therapies.hiringTime") }}</n-text>
-                    <n-radio-group
-                      v-model:value="hiringTime"
-                      name="radiobuttongroup2"
-                    >
-                      <n-radio-button
-                        v-for="hiringTimeOption in hiringTimeOptions"
-                        :key="hiringTimeOption.value"
-                        :value="hiringTimeOption.value"
-                      >
-                        {{ hiringTimeOption.label }}
-                      </n-radio-button>
-                    </n-radio-group>
-                  </n-space>
-                </n-gi>
               </n-grid>
             </n-card>
           </n-scrollbar>
@@ -574,7 +539,7 @@ const computedStyle = computed(() => {
         <template #unchecked>{{ t("therapies.suspended") }}</template>
       </n-switch>
       <!-- Save Button -->
-      <n-button type="primary" @click="saveTherapy">
+      <n-button type="primary" @click="saveTherapy" :disabled="disableSave">
         <template #icon>
           <n-icon>
             <save-icon />
