@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, PropType, onMounted } from "vue";
+import {ref, computed, PropType, onMounted, onUpdated} from "vue";
 import DeliveryOptions from "@/components/patient-details/DeliveryOptions.vue";
 import { useI18n } from "vue-i18n";
 import Drugs from "@/assets/Lista_farmaci_equivalenti.json";
@@ -14,7 +14,7 @@ import {
 import useWindowResize from "@/use/useWindowResize";
 
 /**
- * @name TherapyForm
+ * @component TherapyForm
  * @description This component is used to create or edit a therapy
  * @param {Therapy} therapy - The therapy to edit
  * @param {string} patient_id - The patient id
@@ -51,18 +51,22 @@ const drugValue = ref(null as string | null);
 const posology = ref(null as string | null);
 const delay = ref(120);
 const timeEnd = ref("range");
-const meals = ref("before");
+const meals = ref("indifferent");
 
-const delivery = ref({
+let delivery = ref({
   scheduling_type: "weekly",
   options: [
     {
-      time: "10:00",
-      max_delay: 30,
-      cadence: ["MO"],
+      time: "12:00",
+      max_delay: 120,
+      cadence: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"],
+      rangeStartTime: null as string | null,
+      rangeEndTime: null as string | null,
     },
   ],
-});
+} as Dose);
+
+// let delivery = computed(() => props.therapy?.delivery);
 
 // Error variables
 const errorStartDatePast = ref(false);
@@ -71,6 +75,27 @@ const errorDrugNotSelected = ref(false);
 const errorPosologyNotSelected = ref(false);
 
 onMounted(() => {
+  if (props.therapy) {
+    drugValue.value = props.therapy.drug;
+    delivery.value = props.therapy.delivery;
+    intakeNumber.value = props.therapy.duration
+        ? props.therapy.duration
+        : 1;
+    state.value = props.therapy.state;
+    posology.value = props.therapy.posology;
+    meals.value = props.therapy.meals ? props.therapy.meals : "no ";
+    dateRange.value = [
+      new Date(props.therapy.start_date).getTime() +
+      new Date().getTimezoneOffset() * 60000,
+      props.therapy.end_date
+          ? new Date(props.therapy.end_date).getTime() +
+          new Date().getTimezoneOffset() * 60000
+          : Date.now(),
+    ];
+  }
+});
+
+onUpdated(() => {
   if (props.therapy) {
     drugValue.value = props.therapy.drug;
     delivery.value = props.therapy.delivery;
@@ -152,6 +177,7 @@ const endOptions = computed(() => [
 ]);
 
 const dateRange = ref([Date.now(), Date.now() + 24 * 60 * 60 * 1000]);
+
 const disablePreviousDate = (ts: number): boolean => {
   return !props.therapy && ts < Date.now() - 24 * 60 * 60 * 1000;
 };
@@ -160,19 +186,19 @@ const intakeNumber = ref(1);
 const mealsOptions = computed(() => [
   {
     value: "before",
-    label: t("therapies.before"),
+    label: t("therapies.mealTiming.before"),
   },
   {
     value: "during",
-    label: t("therapies.during"),
+    label: t("therapies.mealTiming.during"),
   },
   {
     value: "after",
-    label: t("therapies.after"),
+    label: t("therapies.mealTiming.after"),
   },
   {
-    value: "no",
-    label: "X",
+    value: "indifferent",
+    label: t("therapies.mealTiming.indifferent"),
   },
 ]);
 
@@ -223,32 +249,6 @@ const delayChange = (value: number) => {
 };
 const state = ref(true);
 
-const fakeSave = () => {
-  const therapyToSave: Partial<Therapy> = {
-    patient_id: props.patient_id,
-    drug: drugValue.value as string,
-    posology: posology.value as string,
-    validation_alexa: true,
-    start_date: new Date(
-        dateRange.value[0] - new Date().getTimezoneOffset() * 60000
-    ),
-    delivery: intakesOutput.value as Dose,
-    state: state.value,
-  };
-  if (meals.value !== "no")
-    therapyToSave.meals = meals.value as "before" | "during" | "after";
-  if (timeEnd.value === "range") {
-    therapyToSave.end_date = new Date(
-        dateRange.value[1] - new Date().getTimezoneOffset() * 60000
-    );
-  }
-  if (timeEnd.value === "intakes") {
-    therapyToSave.duration = intakeNumber.value;
-  }
-  showSpin.value = true;
-  console.log(therapyToSave)
-  emits("changed");
-};
 
 const saveTherapy = () => {
   const therapyToSave: Partial<Therapy> = {
@@ -273,7 +273,7 @@ const saveTherapy = () => {
     therapyToSave.duration = intakeNumber.value;
   }
   showSpin.value = true;
-  console.log(therapyToSave)
+
   if (props.therapy && props.therapy._id) {
     api.therapies
         .update(props.therapy._id, therapyToSave)
@@ -304,7 +304,6 @@ const computedStyle = computed(() => {
 
 const onDeliveryChanged = (value: { scheduling_type: string; options: any[] }) => {
   intakesOutput.value = value;
-  console.log(value)
 };
 </script>
 
@@ -317,7 +316,7 @@ const onDeliveryChanged = (value: { scheduling_type: string; options: any[] }) =
         <n-scrollbar :style="computedStyle">
           <n-card :title="t('doses.doses')">
             <delivery-options
-                :deliveries="delivery" @changed="onDeliveryChanged"/>
+                :delivery="delivery" @changed="onDeliveryChanged"/>
           </n-card>
         </n-scrollbar>
       </n-gi>

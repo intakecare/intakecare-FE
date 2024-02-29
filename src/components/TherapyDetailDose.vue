@@ -2,14 +2,15 @@
 import { computed, PropType, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Option } from "@/classes/therapy-dto";
+import {edit} from "@/api/v1/patients";
 
 /**
  * Component to manage the delivery options of a therapy.
- * TODO: CONTINUA DA QUI. Definisci emits e valida il nuovo orario.
  * @param schedule The delivery options of the therapy.
  * @param disabled Whether the component is disabled or not.
  */
 
+// Define props and emits
 const props = defineProps({
   schedule: {
     type: Array as PropType<Option[]>,
@@ -20,10 +21,19 @@ const props = defineProps({
     required: true,
   },
 })
-const emits = defineEmits(["scheduleChanged"])
-const { t } = useI18n({ useScope: "global", inheritLocale: true });
-const days = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+const emits = defineEmits(["scheduleChanged"]);
 
+// i18n initialization
+const { t } = useI18n({ useScope: "global", inheritLocale: true });
+
+// Constants and types
+const days = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+type Range = {
+  startTime: string | null,
+  endTime: string | null,
+}
+
+// Reactive variables
 const showSpin = ref(false);
 const disabled = ref(true);
 
@@ -35,6 +45,7 @@ const timeFR = ref([] as string[]);
 const timeSA = ref([] as string[]);
 const timeSU = ref([] as string[]);
 
+// Computed variables
 const editableTherapies = computed(() => {
   /**
    * Function to transform the therapy delivery options to the editable format.
@@ -42,25 +53,46 @@ const editableTherapies = computed(() => {
    * {
    *   weekday: string, // The day of the week.
    *   times: string[], // The times of the day formatted as HH:mm.
+   *   range: Object[] // The range of hours in which the therapy can be delivered.
    * }
    */
 
   const temp_result: {
     weekday: string,
     times: string[],
+    range: Range[],
   }[] = [];
   for (const day of days) {
     for (const singleSchedule of props.schedule) {
       if (singleSchedule.cadence.includes(day)) {
-        // If the day is in the schedule, add the time to the array of times.
+        // If the day is in the schedule, add the time to the array of times and the range to the array of ranges.
         const index = temp_result.findIndex((e) => e.weekday === day);
         if (index !== -1) {
           temp_result[index].times.push(singleSchedule.time);
+          // If the range is defined, add it to the range array.
+          if (singleSchedule.rangeStartTime && singleSchedule.rangeEndTime) {
+            temp_result[index].range.push({
+              startTime: singleSchedule.rangeStartTime,
+              endTime: singleSchedule.rangeEndTime,
+            });
+          } else {
+            temp_result[index].range.push({
+              startTime: null,
+              endTime: null,
+            });
+          }
         } else {
-          // Else create a new object with the day and the time.
+          // Else create a new object with the day, time and range (if available).
           temp_result.push({
             weekday: day,
             times: [singleSchedule.time],
+            range: singleSchedule.rangeStartTime && singleSchedule.rangeEndTime ? [{
+              startTime: singleSchedule.rangeStartTime,
+              endTime: singleSchedule.rangeEndTime,
+            }] : [{
+              startTime: null,
+              endTime: null,
+            }],
           });
         }
       }
@@ -139,6 +171,50 @@ const onTimeValueChanged = (dayArray) => {
    */
   console.log('Updated time: ' + dayArray)
 }
+
+function isHourDisabled(hour: number, day: string, index: number): boolean {
+  /**
+   * This function disables the hours that are outside the range given by the physician.
+   * Returns true if the hour is disabled, false otherwise.
+   *
+   */
+  // Convert the hour string to a number
+  console.log(hour)
+  // Fetch the range of hours for the day
+  if (editableTherapies.value.find(e => e.weekday === day)) {
+    let t = editableTherapies.value.find(e => e.weekday === day).range[index];
+
+    if (t) {
+      console.log(t)
+    }
+    // If the range is NOT defined, disable all the hours and minutes but the current one.
+    if (t.startTime === null || t.endTime === null) {
+      return hour !== parseInt(editableTherapies.value.find(e => e.weekday === day).times[index].split(":")[0]);
+    } else {
+      // If the range is defined, check if the hour is outside the range.
+      return hour < parseInt(t.startTime.split(":")[0]) || hour > parseInt(t.endTime.split(":")[0]);
+    }
+  }
+}
+
+function isMinuteDisabled(minute: number, selectedHour: number, day: string, index: number): boolean {
+  /**
+   * This function disables the minutes that are outside the range given by the physician.
+   * Returns true if the minute is disabled, false otherwise.
+   */
+  // If no hour is selected, return false
+  if (selectedHour === null) return false;
+  // Fetch the range of hours for the day
+  let t = editableTherapies.value.find(e => e.weekday === day).range[index];
+  // If the range is NOT defined, disable all the hours and minutes but the current one.
+  if (t.startTime === null || t.endTime === null) {
+    return minute !== parseInt(editableTherapies.value.find(e => e.weekday === day).times[index].split(":")[1]);
+  } else {
+    // If the range is defined the minute is not important, always return false.
+    return false;
+  }
+}
+
 </script>
 
 <template>
@@ -152,6 +228,8 @@ const onTimeValueChanged = (dayArray) => {
         v-model:formatted-value="timeMO[index]"
         value-format="HH:mm"
         :disabled="disabledMode"
+        :is-hour-disabled="hour => isHourDisabled(hour, 'MO', index)"
+        :is-minute-disabled="(minute, selectedHour) => isMinuteDisabled(minute, selectedHour, 'MO', index)"
         @confirm="onTimeValueChanged(timeMO)"
     />
   </n-space>
@@ -165,6 +243,8 @@ const onTimeValueChanged = (dayArray) => {
         v-model:formatted-value="timeTU[index]"
         value-format="HH:mm"
         :disabled="disabledMode"
+        :is-hour-disabled="hour => isHourDisabled(hour, 'TU', index)"
+        :is-minute-disabled="(minute, selectedHour) => isMinuteDisabled(minute, selectedHour, 'TU', index)"
         @confirm="onTimeValueChanged(timeTU)"
     />
   </n-space>
@@ -178,6 +258,8 @@ const onTimeValueChanged = (dayArray) => {
         v-model:formatted-value="timeWE[index]"
         value-format="HH:mm"
         :disabled="disabledMode"
+        :is-hour-disabled="hour => isHourDisabled(hour, 'WE', index)"
+        :is-minute-disabled="(minute, selectedHour) => isMinuteDisabled(minute, selectedHour, 'WE', index)"
         @confirm="onTimeValueChanged(timeWE)"
     />
   </n-space>
@@ -191,6 +273,8 @@ const onTimeValueChanged = (dayArray) => {
         v-model:formatted-value="timeTH[index]"
         value-format="HH:mm"
         :disabled="disabledMode"
+        :is-hour-disabled="hour => isHourDisabled(hour, 'TH', index)"
+        :is-minute-disabled="(minute, selectedHour) => isMinuteDisabled(minute, selectedHour, 'TH', index)"
         @confirm="onTimeValueChanged(timeTH)"
     />
   </n-space>
@@ -204,6 +288,8 @@ const onTimeValueChanged = (dayArray) => {
         v-model:formatted-value="timeFR[index]"
         value-format="HH:mm"
         :disabled="disabledMode"
+        :is-hour-disabled="hour => isHourDisabled(hour, 'FR', index)"
+        :is-minute-disabled="(minute, selectedHour) => isMinuteDisabled(minute, selectedHour, 'FR', index)"
         @confirm="onTimeValueChanged(timeFR)"
     />
   </n-space>
@@ -217,6 +303,8 @@ const onTimeValueChanged = (dayArray) => {
         v-model:formatted-value="timeSA[index]"
         value-format="HH:mm"
         :disabled="disabledMode"
+        :is-hour-disabled="hour => isHourDisabled(hour, 'SA', index)"
+        :is-minute-disabled="(minute, selectedHour) => isMinuteDisabled(minute, selectedHour, 'SA', index)"
         @confirm="onTimeValueChanged(timeSA)"
     />
   </n-space>
@@ -230,6 +318,8 @@ const onTimeValueChanged = (dayArray) => {
         v-model:formatted-value="timeSU[index]"
         value-format="HH:mm"
         :disabled="disabledMode"
+        :is-hour-disabled="hour => isHourDisabled(hour, 'SU', index)"
+        :is-minute-disabled="(minute, selectedHour) => isMinuteDisabled(minute, selectedHour, 'SU', index)"
         @confirm="onTimeValueChanged(timeSU)"
     />
   </n-space>

@@ -247,7 +247,8 @@
         "mealTiming":{
             "before":"Prima",
             "during":"Durante",
-            "after":"Dopo"
+            "after":"Dopo",
+            "indifferent":"Indifferente"
         }
     },
     "therapyLogs":{

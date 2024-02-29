@@ -132,37 +132,9 @@ const onScheduleChanged = async (value: Option[]) => {
 
 <template>
   <n-card class="content-wide">
-    <!-- Top bar with therapy name and edit button-->
+    <!-- Top bar with therapy name -->
     <n-space justify="space-between">
       <n-h1><n-text type="primary">{{data.drug}}</n-text></n-h1>
-      <n-button
-        v-if="!editMode"
-        secondary
-        type="primary"
-        @click="editMode = true">
-        <template #icon>
-          <n-icon>
-            <pencil-icon />
-          </n-icon>
-        </template>
-        <responsive-view> <!-- For medium and large screens shows also the writing in the button -->
-          <template v-slot:m+>{{ t("general.edit") }}</template>
-        </responsive-view>
-      </n-button>
-      <n-button
-        v-else
-        secondary
-        type="primary"
-        @click="undoEdits">
-        <template #icon>
-          <n-icon>
-            <close-icon />
-          </n-icon>
-        </template>
-        <responsive-view> <!-- For medium and large screens shows also the writing in the button -->
-          <template v-slot:m+>{{ t("general.undo") }}</template>
-        </responsive-view>
-      </n-button>
     </n-space>
     <!-- Therapy details -->
     <n-divider>{{ t("therapies.detail") }}</n-divider>
@@ -186,20 +158,43 @@ const onScheduleChanged = async (value: Option[]) => {
           <n-tag round>{{posology}}</n-tag>
         </n-descriptions-item>
       </n-descriptions>
-      <!-- Therapy delivery -->
       <n-divider>{{ t("therapies.delivery") }}</n-divider>
+      <!-- Therapy delivery -->
+      <n-button
+          v-if="!editMode"
+          secondary
+          type="primary"
+          @click="editMode = true">
+        <template #icon>
+          <n-icon>
+            <pencil-icon />
+          </n-icon>
+        </template>
+        <responsive-view> <!-- For medium and large screens shows also the writing in the button -->
+          <template v-slot:m+>{{ t("general.edit") }}</template>
+        </responsive-view>
+      </n-button>
+      <n-button
+          v-else
+          secondary
+          type="primary"
+          @click="undoEdits">
+        <template #icon>
+          <n-icon>
+            <close-icon />
+          </n-icon>
+        </template>
+        <responsive-view> <!-- For medium and large screens shows also the writing in the button -->
+          <template v-slot:m+>{{ t("general.undo") }}</template>
+        </responsive-view>
+      </n-button>
       <therapy-detail-dose
           v-model:schedule="effectiveSchedule"
           :disabled="!editMode"
           @schedule-changed="onScheduleChanged"
       />
-
     </n-scrollbar>
-
-
-
   </n-card>
 </template>
-
 <style>
 </style>

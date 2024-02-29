@@ -8,7 +8,7 @@ import {
 import { useI18n } from "vue-i18n";
 import { Add as AddIcon, Remove as RemoveIcon } from "@vicons/ionicons5";
 import Dose from "@/components/patient-details/Dose.vue";
-import { Dose as Delivery } from "@/classes/therapy-dto";
+import { Dose as Delivery, Option } from "@/classes/therapy-dto";
 import useWindowResize from "@/use/useWindowResize";
 
 /**
@@ -25,7 +25,7 @@ import useWindowResize from "@/use/useWindowResize";
 
 // Props and emits
 const props = defineProps({
-  delivery: { type: Object as PropType<Delivery> }, // It is called deliveries to avoid conflict with the Dose component
+  delivery: { type: Object as PropType<Delivery>, required: true }, // It is called deliveries to avoid conflict with the Dose component
 })
 const emits = defineEmits(["changed"]);
 
@@ -35,17 +35,15 @@ const { width, height } = useWindowResize();
 
 // Reactive variables
 const scheduling_type = ref("weekly");
-const intakes = ref([
-  {
-    cadence: ["MO"],
-    time: "10:00",
-  },
-]);
+let intakes = ref([] as Option[]);
 
 const add = () => {
   intakes.value.push({
     cadence: ["MO"],
     time: "10:00",
+    max_delay: props.delivery.options[0].max_delay,
+    rangeStartTime: undefined,
+    rangeEndTime: undefined,
   });
 };
 
@@ -71,12 +69,8 @@ const doseOptions = computed(() => {
 });
 
 onMounted(() => {
-  if (!props.delivery) {
-    emits("changed", {
-      scheduling_type: scheduling_type.value,
-      options: intakes.value,
-    });
-  }
+  intakes.value = props.delivery.options;
+  console.log("intakes", intakes.value);
 });
 
 watch ([scheduling_type, intakes], () => {

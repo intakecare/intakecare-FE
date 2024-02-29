@@ -28,6 +28,8 @@ import Fuse from "fuse.js";
  * - Adherence
  * */
 
+// TODO: Fix a bug that does not correctly update the DeliveryOptions of a therapy when it is selected to be modified.
+
 // Variable definition
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 const { width, height } = useWindowResize();
@@ -150,6 +152,12 @@ const computedContentStyle = computed(() => {
 const computedStyle = computed(() => {
   return `max-height: ${height.value - 150}px`;
 });
+
+const isTherapySelected = (item: any) => {
+  // This function is called when the user selects a therapy
+  console.log("selectedTherapy", selectedTherapy.value);
+  return selectedTherapy.value.therapyId === item._id
+};
 </script>
 
 
@@ -357,7 +365,7 @@ const computedStyle = computed(() => {
                     <therapy
                       @changed="getData()"
                       :therapy="item"
-                      :isSelected="selectedTherapy.therapyId === item._id"
+                      :isSelected="isTherapySelected(item)"
                     />
                   </div>
                 </n-scrollbar>
@@ -365,6 +373,7 @@ const computedStyle = computed(() => {
             </n-grid-item>
           </n-grid>
         </template>
+
         <!-- This is the medium to small screen layout -->
         <template v-slot:m->
           <n-space vertical>
@@ -593,20 +602,12 @@ const computedStyle = computed(() => {
                     <div
                       v-for="item in filtered"
                       v-bind:key="item"
-                      @click="
-                        if (selectedTherapy.therapyId === item._id) {
-                          selectedTherapy.therapyId = null;
-                          selectedTherapy.therapyDrug = null;
-                        } else {
-                          selectedTherapy.therapyId = item._id;
-                          selectedTherapy.therapyDrug = item.drug.split('-')[0];
-                        }
-                      "
+                      @click="onTherapySelected(item._id)"
                     >
                       <therapy
                         @changed="getData()"
                         :therapy="item"
-                        :isSelected="selectedTherapy.therapyId === item._id"
+                        :isSelected="onTherapySelected(item._id)"
                       />
                     </div>
                   </n-space>

@@ -7,7 +7,7 @@ export interface Therapy {
   edit?: "saved" | "new" | "updated" | "todelete" | "deleted";
   state: boolean;
   posology: string;
-  meals?: "before" | "during" | "after" | "no";
+  meals: "before" | "during" | "after" | "indifferent";
   end_date?: Date;
   duration?: number;
   start_date: Date;
