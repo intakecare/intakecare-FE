@@ -179,7 +179,7 @@ const computedAdherenceStyle = computed(() => {
         @changed="
           showTherapyModal = false;
           handleEdit();"
-        v-bind:therapy="therapy"
+        :therapy="therapy"
         :patient_id="therapy.patient_id"
       />
     </n-card>

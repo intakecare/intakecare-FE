@@ -153,10 +153,20 @@ const computedStyle = computed(() => {
   return `max-height: ${height.value - 150}px`;
 });
 
-const isTherapySelected = (item: any) => {
+const isTherapySelected = (id: string) => {
+  // This function checks if a therapy is selected
+  return selectedTherapy.value.therapyId === id
+};
+
+const onTherapySelected = (item: any) => {
   // This function is called when the user selects a therapy
-  console.log("selectedTherapy", selectedTherapy.value);
-  return selectedTherapy.value.therapyId === item._id
+  if (selectedTherapy.value.therapyId === item._id) {
+    selectedTherapy.value.therapyId = null;
+    selectedTherapy.value.therapyDrug = null;
+  } else {
+    selectedTherapy.value.therapyId = item._id;
+    selectedTherapy.value.therapyDrug = item.drug.split('-')[0];
+  }
 };
 </script>
 
@@ -352,20 +362,12 @@ const isTherapySelected = (item: any) => {
                   <div
                     v-for="item in filtered"
                     v-bind:key="item"
-                    @click="
-                      if (selectedTherapy.therapyId === item._id) {
-                        selectedTherapy.therapyId = null;
-                        selectedTherapy.therapyDrug = null;
-                      } else {
-                        selectedTherapy.therapyId = item._id;
-                        selectedTherapy.therapyDrug = item.drug.split('-')[0];
-                      }
-                    "
+                    @click="onTherapySelected(item)"
                   >
                     <therapy
                       @changed="getData()"
                       :therapy="item"
-                      :isSelected="isTherapySelected(item)"
+                      :isSelected="isTherapySelected(item._id)"
                     />
                   </div>
                 </n-scrollbar>
@@ -507,6 +509,7 @@ const isTherapySelected = (item: any) => {
 <!--              v-if="selectedTherapy.therapyId"-->
 <!--              :therapyId="selectedTherapy.therapyId"-->
 <!--            />-->
+            <!-- Small screen layout -->
             <responsive-view>
               <template v-slot:small>
                 <n-space vertical>
@@ -602,12 +605,12 @@ const isTherapySelected = (item: any) => {
                     <div
                       v-for="item in filtered"
                       v-bind:key="item"
-                      @click="onTherapySelected(item._id)"
+                      @click="onTherapySelected(item)"
                     >
                       <therapy
                         @changed="getData()"
                         :therapy="item"
-                        :isSelected="onTherapySelected(item._id)"
+                        :isSelected="isTherapySelected(item._id)"
                       />
                     </div>
                   </n-space>

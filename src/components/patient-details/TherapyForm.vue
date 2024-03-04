@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {ref, computed, PropType, onMounted, onUpdated} from "vue";
-import DeliveryOptions from "@/components/patient-details/DeliveryOptions.vue";
 import { useI18n } from "vue-i18n";
 import Drugs from "@/assets/Lista_farmaci_equivalenti.json";
 import titleCase from "@/use/titleCase";
-import { Dose, Therapy } from "@/classes/therapy-dto";
+import { Delivery, Therapy } from "@/classes/therapy-dto";
+import Dose from "@/components/patient-details/Dose.vue";
 import * as api from "@/api";
 import {
   Add as AddIcon,
@@ -52,6 +52,7 @@ const posology = ref(null as string | null);
 const delay = ref(120);
 const timeEnd = ref("range");
 const meals = ref("indifferent");
+const scheduling_type = ref("weekly");
 
 let delivery = ref({
   scheduling_type: "weekly",
@@ -64,9 +65,20 @@ let delivery = ref({
       rangeEndTime: null as string | null,
     },
   ],
-} as Dose);
+} as Delivery);
 
-// let delivery = computed(() => props.therapy?.delivery);
+const deliveryComputed = computed({
+  get() {
+    if (props.therapy) {
+      return props.therapy.delivery;
+    } else {
+      return delivery.value;
+    }
+  },
+  set(value: Delivery){
+    delivery.value = value;
+  }
+})
 
 // Error variables
 const errorStartDatePast = ref(false);
@@ -216,10 +228,12 @@ const disableSave = computed(() => {
     errorPosologyNotSelected.value = true;
     return true;
   }
-  // Check if the start date is in the past
-  if (dateRange.value[0] < Date.now() - 24 * 60 * 60 * 1000){
-    errorStartDatePast.value = true;
-    return true;
+  // Check if the start date is in the past -> ONLY FOR NEW THERAPIES
+  if (!props.therapy) {
+    if (dateRange.value[0] < Date.now() - 24 * 60 * 60 * 1000){
+      errorStartDatePast.value = true;
+      return true;
+    }
   }
   // Check if the end date is before the start date
   if (timeEnd.value === "range" && dateRange.value[1] < dateRange.value[0]){
@@ -259,7 +273,7 @@ const saveTherapy = () => {
     start_date: new Date(
         dateRange.value[0] - new Date().getTimezoneOffset() * 60000
     ),
-    delivery: intakesOutput.value as Dose,
+    delivery: deliveryComputed.value as Delivery,
     state: state.value,
   };
   if (meals.value !== "no")
@@ -273,6 +287,7 @@ const saveTherapy = () => {
     therapyToSave.duration = intakeNumber.value;
   }
   showSpin.value = true;
+  console.log(therapyToSave);
 
   if (props.therapy && props.therapy._id) {
     api.therapies
@@ -311,15 +326,23 @@ const onDeliveryChanged = (value: { scheduling_type: string; options: any[] }) =
 <template>
   <n-spin :show="showSpin">
     <n-grid :x-gap="10" :y-gap="10" cols="1 1000:2" item-responsive>
+
       <!-- First Column: delivery options (daily, weekly, timing) -->
       <n-gi>
         <n-scrollbar :style="computedStyle">
           <n-card :title="t('doses.doses')">
-            <delivery-options
-                :delivery="delivery" @changed="onDeliveryChanged"/>
+            <n-space justify="center" align="center" vertical>
+              <dose
+                  v-for="(intake, index) in deliveryComputed.options"
+                  v-bind:key="index"
+                  :scheduling_type="scheduling_type"
+                  v-model:option="deliveryComputed.options[index]"
+              />
+            </n-space>
           </n-card>
         </n-scrollbar>
       </n-gi>
+
       <!-- Second Column: everything else -->
       <n-gi>
         <n-space vertical>

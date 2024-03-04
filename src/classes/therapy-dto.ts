@@ -11,13 +11,13 @@ export interface Therapy {
   end_date?: Date;
   duration?: number;
   start_date: Date;
-  delivery: Dose;
+  delivery: Delivery;
   drug: string;
   patient_id: string;
   __v?: number;
 }
 
-export interface Dose {
+export interface Delivery {
   scheduling_type: "daily" | "interval" | "weekly" | "once";
   options: Option[];
 }

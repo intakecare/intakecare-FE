@@ -8,12 +8,13 @@ import {
 import { useI18n } from "vue-i18n";
 import { Add as AddIcon, Remove as RemoveIcon } from "@vicons/ionicons5";
 import Dose from "@/components/patient-details/Dose.vue";
-import { Dose as Delivery, Option } from "@/classes/therapy-dto";
+import { Delivery, Option } from "@/classes/therapy-dto";
 import useWindowResize from "@/use/useWindowResize";
 
 /**
  * @component DeliveryOptions
  * @description Component to manage the delivery options of a therapy.
+ * @deprecated
  *
  * @param {Object} delivery - The delivery options of the therapy.
  *
