@@ -31,3 +31,6 @@ coverage
 
 # Test files
 tests
+
+# Local Netlify folder
+.netlify

@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+    base: '',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -16,7 +17,7 @@ export default defineConfig({
   server: {
       proxy: {
       '/api': {
-          target: 'https://intake-care-de7b20968242.herokuapp.com/',
+          target: 'https://intake-care-de7b20968242.herokuapp.com',
           //target: 'http://localhost:3000',
           changeOrigin: true,
           ws: true,

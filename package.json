@@ -13,6 +13,7 @@
     "axios": "^1.6.7",
     "fuse.js": "^7.0.0",
     "naive-ui": "^2.37.3",
+    "netlify-cli": "^17.18.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "vue": "^3.4.15",
