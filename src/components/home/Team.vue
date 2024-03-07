@@ -7,7 +7,7 @@ const props = defineProps({
     qualification: String,
 })
 const getImgUrl = () => {
-  return `../src/assets/team_img/${props.image}.jpg`;
+  return `/team_img/${props.image}.jpg`;
 };
 </script>
 
@@ -17,7 +17,7 @@ const getImgUrl = () => {
     content-style="text-align: center"
     style="min-height: 375px"
   >
-    <img height="128" :src="getImgUrl()" style="border-radius: 50%" />
+    <img alt="" height="128" :src="getImgUrl()" style="border-radius: 50%" />
     <n-h1 style="margin: 0; padding: 0"
       ><n-text>{{ name }}</n-text></n-h1
     >

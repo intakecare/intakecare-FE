@@ -11,7 +11,7 @@ import {NCarousel} from "naive-ui";
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 
 function getImgUrl(slide: string) {
-  return `../src/assets/carousel/${t("home.carouselPath")}${slide}.png`
+  return `/carousel/${t("home.carouselPath")}${slide}.png`
 }
 
 const data = ref(
