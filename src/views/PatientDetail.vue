@@ -74,7 +74,7 @@ const getData = async () => {
           console.log(response.data);
           patientData.value = response.data;
           userData.value.id = response.data.user._id;
-          userData.value.username = response.data.user.username;
+          userData.value.username = response.data.credential.username;
           userData.value.name = response.data.user.name;
           userData.value.surname = response.data.user.surname;
           userData.value.sex = response.data.user.sex;
