@@ -320,6 +320,16 @@ const computedStyle = computed(() => {
 const onDeliveryChanged = (value: { scheduling_type: string; options: any[] }) => {
   intakesOutput.value = value;
 };
+
+const addDelivery = () => {
+  deliveryComputed.value.options.push({
+    time: "12:00",
+    max_delay: 120,
+    cadence: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"],
+    rangeStartTime: undefined,
+    rangeEndTime: undefined,
+  });
+};
 </script>
 
 
@@ -338,6 +348,13 @@ const onDeliveryChanged = (value: { scheduling_type: string; options: any[] }) =
                   :scheduling_type="scheduling_type"
                   v-model:option="deliveryComputed.options[index]"
               />
+              <n-button ghost circle type="primary" @click="addDelivery()">
+                <template #icon>
+                  <n-icon>
+                    <add-icon />
+                  </n-icon>
+                </template>
+              </n-button>
             </n-space>
           </n-card>
         </n-scrollbar>
