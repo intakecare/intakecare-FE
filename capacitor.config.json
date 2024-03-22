@@ -1,0 +1,13 @@
+{
+  "appId": "com.intakecare.app",
+  "appName": "intakecare-fe-2024",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}

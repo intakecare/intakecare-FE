@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">intakecare-fe-2024</string>
+    <string name="title_activity_main">intakecare-fe-2024</string>
+    <string name="package_name">com.intakecare.app</string>
+    <string name="custom_url_scheme">com.intakecare.app</string>
+</resources>
