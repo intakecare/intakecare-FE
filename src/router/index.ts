@@ -72,6 +72,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "PatientTherapyDetail",
         component: () => import("../views/PatientTherapyDetail.vue"),
     },
+    {
+        path: "/patientDiary",
+        name: "PatientDiary",
+        component: () => import("../views/PatientDiary.vue"),
+    },
     // {
     //     path: "/dashboard",
     //     name: "Dashboard",
@@ -150,9 +155,14 @@ const canUserAccess = (to: RouteLocationNormalized): boolean => {
     return true;
 };
 
-router.beforeEach(async (to) => {
-    const canAccess = canUserAccess(to);
-    if (!canAccess) return "/login";
+router.beforeEach(async (to, from, next) => {
+    const canAccess = await canUserAccess(to);
+    if (!canAccess) {
+        next("/login"); // Redirect the user to the login page
+    } else {
+        next(); // Proceed with navigation
+    }
 });
+
 
 export default router;

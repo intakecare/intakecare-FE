@@ -54,7 +54,10 @@
         "therapy":"Therapy | Therapies",
         "patient": "Patient | Patients",
         "doctor": "Doctor | Doctors",
-        "genOTP":"Generate OTP"
+        "genOTP":"Generate OTP",
+        "start": "Start",
+        "end": "End",
+        "send": "Send"
     },
     "OTP":{
         "setExpiration":"Set Expiration",
@@ -80,7 +83,7 @@
         "once":"Once",
         "every":"Every"
     },
-    "therapyLogs":{
+    "therapyLogs": {
         "delivery":"Delivery",
         "start_date":"Start Date",
         "end_date":"End Date",
@@ -113,9 +116,11 @@
         "TH":"Thursday",
         "FR":"Friday",
         "SA":"Saturday",
-        "SU":"Sunday"
+        "SU":"Sunday",
+        "diary": "Diary"
     },
     "therapies":{
+        "delivery":"Delivery",
         "therapyHistory":"Therapy History",
         "active":"Active",
         "suspended":"Suspended",
@@ -142,7 +147,15 @@
         "maxDelay":"Max Delay",
         "at":"At",
         "lastWeek":"Last Week",
-        "lastMonth":"Last 28 Days"
+        "lastMonth":"Last 28 Days",
+        "detail": "Therapy Details",
+        "therapydiary": "Therapy Diary",
+        "mealTiming":{
+            "before":"Before",
+            "during":"During",
+            "after":"After",
+            "indifferent":"Indifferent"
+        }
     },
     "intakes":{
         "missed":"Missed",

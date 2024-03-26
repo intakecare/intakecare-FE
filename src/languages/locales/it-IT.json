@@ -115,7 +115,7 @@
         "setExpiration":"Imposta la Scadenza",
         "OTPWarning":"Attenzione! La generazione di un nuovo OTP rimuoverà quello gia presente"
     },
-    
+
     "patientDetail":{
         "detail":"Dettagli Paziente",
         "expiry":"Scadenza",
@@ -235,6 +235,7 @@
         "lastMonth":"Ultimi 28 Giorni",
         "changeableWithin": "Modificabile tra",
         "template": "Modelli",
+        "therapydiary": "Diario della Terapia",
         "errorTimeRange": "L'orario scelto non è compreso nell'intervallo selezionato.",
         "timeRange": {
             "morning":"Mattina",
@@ -284,7 +285,8 @@
         "TH":"Giovedì",
         "FR":"Venerdì",
         "SA":"Sabato",
-        "SU":"Domenica"
+        "SU":"Domenica",
+        "diary":"Diario"
     },
     "users":{
         "user_info": "Informazioni Utente",
@@ -301,5 +303,5 @@
         "FR":"Venerdì|V",
         "SA":"Sabato|S",
         "SU":"Domenica|D"
-    }  
+    }
 }

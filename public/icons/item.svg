@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="2151.69 1020.74 3000 3000" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<radialGradient cx="0" cy="0" gradientTransform="matrix(2231.11 -122.402 144.279 2231.11 3651.69 2520.74)" gradientUnits="userSpaceOnUse" id="RadialGradient" r="1">
+<stop offset="0.00262164" stop-color="#006666"/>
+<stop offset="0.214818" stop-color="#007474"/>
+<stop offset="1" stop-color="#00c5c5"/>
+</radialGradient>
+</defs>
+<clipPath id="ArtboardFrame">
+<rect height="3000" width="3000" x="2151.69" y="1020.74"/>
+</clipPath>
+<g clip-path="url(#ArtboardFrame)" id="Layer" vectornator:layerName="Layer">
+<path d="M2151.69 2520.74C2151.69 1692.32 2823.26 1020.74 3651.69 1020.74C4480.12 1020.74 5151.69 1692.32 5151.69 2520.74C5151.69 3349.17 4480.12 4020.75 3651.69 4020.75C2823.26 4020.75 2151.69 3349.17 2151.69 2520.74Z" fill="url(#RadialGradient)" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Oval 1"/>
+</g>
+</svg>
