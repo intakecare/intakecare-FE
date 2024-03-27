@@ -1,169 +1,294 @@
-<script setup lang="ts">
-import { computed, ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
-// Import your api, ResponsiveView, Option, Therapy, etc.
-import { CashOutline as CashIcon } from '@vicons/ionicons5';
-
-const { t } = useI18n({ useScope: "global", inheritLocale: true });
-
-// Vue Router
-const router = useRouter();
-
-// Refs
-const therapyName = ref("");
-const inputContent = ref("");
-const timelineItems = ref([]);
-
-// Computed property for current date
-const currentDate = computed(() => {
-  const today = new Date();
-  return today.toLocaleDateString(t('code'), { year: 'numeric', month: 'long', day: 'numeric' });
-});
-
-// Function to get therapy ID from router query
-const getId = () => {
-  const id = router.currentRoute.value.query.id;
-  console.log("Raw ID:", id); // Debugging output
-  return id;
-};
-
-// Function to send message and add it to timeline
-const sendMessage = () => {
-  if (inputContent.value.trim() !== "") {
-    timelineItems.value.push(inputContent.value.trim());
-    inputContent.value = ""; // Pulisce il contenuto dell'input dopo l'aggiunta alla timeline
-  }
-};
-
-// Fetch therapy data
-const getData = async () => {
-  if (getId()) {
-    try {
-      const response = await api.therapies.get(getId() as string);
-      const fetchedData = response.data;
-      therapyName.value = fetchedData.drug;
-    } catch (error) {
-      console.error("Error fetching therapy data:", error);
-    }
-  }
-};
-
-// Fetch data on component mount
-getData();
-</script>
-
 <template>
+  <!-- Card component containing upper and lower sections -->
   <n-card class="content-wide">
-    <!-- Page heading -->
-    <div class="page-heading">
-      <n-h1><n-text type="primary">{{ t("therapies.therapydiary") }}</n-text></n-h1>
-      <h2 class="subheading">{{ therapyName }}</h2>
+    <!-- Upper section - Fixed header -->
+    <div class="upper-section">
+      <!-- Page heading -->
+      <div class="page-heading">
+        <!-- Therapy Diary heading -->
+        <n-h1><n-text type="primary">{{ t("therapies.therapydiary") }}</n-text></n-h1>
+        <!-- Therapy name subheading -->
+        <h2 class="subheading">{{ therapyName }}</h2>
+      </div>
+
+      <!-- First section -->
+      <div class="first-section">
+        <div class="therapy-info justify-between items-center">
+          <!-- Display current date -->
+          <p class="current-date large-font">{{ currentDate }}</p>
+        </div>
+        <!-- Input section for entering therapy information -->
+        <div class="input-section">
+          <!-- Adjustable input field -->
+          <n-input v-model:value="inputContent" placeholder="Miao" :autosize="true" type="textarea" class="autosizable-input" />
+          <!-- Send button -->
+          <div class="send-button-container">
+            <n-button type="primary" class="send-button" @click="sendMessage" :disabled="inputContent.trim().length === 0">
+              <!-- Send icon -->
+              <img height="18" alt="Send" src="/icons/send.svg" />
+              &nbsp;
+              {{ t("general.send") }}
+            </n-button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Top section -->
-    <div class="top-section">
-      <!-- Therapy info -->
-      <div class="therapy-info justify-between items-center">
-        <!-- Increase font size for the current date -->
-        <p class="current-date large-font">{{ currentDate }}</p>
-      </div>
+    <!-- Add space between upper and lower section -->
+    <div class="separator"></div>
 
-      <!-- Input section -->
-      <div class="input-section">
-        <n-input v-model="inputContent" placeholder="Ciao Ric" autosize type="textarea" class="autosizable-input" />
-      </div>
-
-      <!-- Send button -->
-      <div class="send-button-container">
-        <n-button
-            type="primary"
-            @click="sendMessage"
-            class="send-button"
-        >
-          <!-- Icona di invio -->
-          <img
-              height="18"
-              alt="Send"
-              src="/icons/send.svg"
-          />
-          <!-- Testo del pulsante -->
-          {{ t("general.send") }}
-        </n-button>
-      </div>
-
+    <!-- Lower section - make this section scrollable -->
+    <div class="lower-section" :style="{ maxHeight: maxTimelineHeight, height: cardHeight }">
       <!-- Timeline -->
-      <div class="timeline">
-        <h3>{{ t('ItemList') }}</h3>
-        <n-timeline>
-          <n-timeline-item
-              title="Primo Item"
-              time="2018-04-03 20:46"
-          >
+      <n-timeline>
+        <!-- Loop through timeline items -->
+        <template v-for="(item, index) in reversedTimelineItems" :key="index">
+          <!-- Timeline item -->
+          <n-timeline-item class="timeline-item">
+            <!-- Item header with date and edit button -->
+            <div class="item-header">
+              <!-- Date tag -->
+              <n-tag round>{{ formatDate(item.date) }}</n-tag>
+              <!-- Edit button -->
+              <n-button secondary type="primary" @click="editMode = true" class="edit-button">
+                <!-- Edit icon -->
+                <template #icon>
+                  <n-icon class="edit-icon">
+                    <PencilIcon />
+                  </n-icon>
+                </template>
+              </n-button>
+            </div>
+            <!-- Message content -->
+            <div class="message-container">
+              <!-- Display message content -->
+              <div class="message-content">"{{ item.msg }}"</div>
+            </div>
+            <!-- Icon placeholder -->
             <template #icon>
               <n-icon>
+                <!-- Item icon -->
                 <img src="/icons/item.svg" />
               </n-icon>
             </template>
           </n-timeline-item>
-          <n-timeline-item
-              title="Secondo Item"
-          >
-            <template #icon>
-              <n-icon>
-                <img src="/icons/item.svg" />
-              </n-icon>
-            </template>
-          </n-timeline-item>
-          <n-timeline-item
-              title="Terzo Item"
-              time="2018-04-03 20:46"
-          >
-            <template #icon>
-              <n-icon>
-                <img src="/icons/item.svg" />
-              </n-icon>
-            </template>
-          </n-timeline-item>
-          <n-timeline-item
-              title="Quarto Item"
-              time="2018-04-03 20:46"
-          >
-            <template #icon>
-              <n-icon>
-                <img src="/icons/item.svg" />
-              </n-icon>
-            </template>
-          </n-timeline-item>
-        </n-timeline>
-
-      </div>
+        </template>
+      </n-timeline>
     </div>
   </n-card>
 </template>
 
+<script setup lang="ts">
+// Import necessary libraries and components
+import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import * as api from '@/api';
+import axios from 'axios';
+import { Pencil as PencilIcon } from "@vicons/ionicons5";
+
+// Use global i18n instance
+const { t } = useI18n({ useScope: 'global', inheritLocale: true });
+
+// Initialize router
+const router = useRouter();
+
+// Reference variables for reactive data
+const therapyName = ref('');
+const inputContent = ref('');
+const timelineItems = ref([]);
+
+// Function to format date
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString(t('code'), options);
+};
+
+// Computed property for current date
+const currentDate = computed(() => {
+  const today = new Date();
+  return formatDate(today);
+});
+
+// Function to get therapy ID from router
+const getId = () => router.currentRoute.value.query.id;
+
+// Function to fetch data from API
+const getData = async () => {
+  const therapyId = getId();
+  if (therapyId) {
+    try {
+      // Fetch therapy logs
+      const response = await axios.get('/local-api/therapylogs/');
+      const therapyLogs = response.data;
+      const filteredLogs = therapyLogs.filter(log => log.therapy_id === therapyId);
+      timelineItems.value = filteredLogs;
+
+      // Fetch therapy information
+      const therapyResponse = await api.therapies.get(therapyId);
+      if (therapyResponse && therapyResponse.data) {
+        therapyName.value = therapyResponse.data.drug;
+      } else {
+        console.error('Failed to fetch therapy information');
+      }
+
+      updateCardHeight();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+};
+
+// Function to send message
+// Function to send message
+const sendMessage = async () => {
+  try {
+    const trimmedInput = inputContent.value.trim();
+    if (!trimmedInput) {
+      console.error('Input content cannot be empty.');
+      return;
+    }
+
+    const newMessage = {
+      therapy_id: getId(),
+      msg: trimmedInput,
+      date: new Date().toISOString()
+    };
+
+    await axios.post('/local-api/therapylogs', newMessage);
+
+    // Refresh data after sending message
+    await getData();
+
+    // Clear input content after successful message send
+    inputContent.value = '';
+
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
+};
+
+
+// Initialize data retrieval
+getData();
+
+// Reference for card height
+const cardHeight = ref('auto');
+const maxTimelineHeight = ref('');
+
+// Function to calculate max height
+const calculateMaxHeight = () => {
+  const viewportHeight = window.innerHeight;
+  maxTimelineHeight.value = `${viewportHeight * 0.8 - 140}px`;
+};
+
+// Call calculateMaxHeight
+calculateMaxHeight();
+
+// Function to update card height
+const updateCardHeight = () => {
+  cardHeight.value = timelineItems.value.length > 0 ? 'auto' : maxTimelineHeight.value;
+};
+
+// Watch for changes in timelineItems
+watch(timelineItems, () => {
+  updateCardHeight();
+});
+
+// Computed property for reversed timeline items
+const reversedTimelineItems = computed(() => {
+  return timelineItems.value.slice().reverse();
+});
+</script>
+
+<!-- Styles -->
 <style scoped>
-/* Scoped styles */
-.subheading {
-  margin-top: 1px;
-  color: #666; /* Adjust color as needed */
+/* Styles for upper section */
+.upper-section {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
 }
 
-.current-date {
-  margin-top: 20px; /* Add space between input and button */
-  font-size: 16px; /* Set font size to 24px */
+/* Styles for lower section */
+.lower-section {
+  max-height: calc(80vh - 140px);
+  overflow-y: auto;
+  padding-left: 10px;
 }
 
-.autosizable-input {
-  width: calc(100%); /* Input width 100% minus width of the button and margin */
-  resize: vertical; /* Allow vertical resizing */
-  min-height: 100px; /* Minimum height */
-  max-height: 100px; /* Maximum height */
-  margin-bottom: 10px; /* Add space between input and button */
+/* Separator style */
+.separator {
+  height: 0px;
 }
 
-.send-button-container {
+/* Page heading style */
+.page-heading {
+  margin-bottom: 20px;
+}
+
+/* Input section style */
+.input-section {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+}
+
+/* Styles for autosizable input */
+.autosizable-input {
+  height: 80px;
+}
+
+/* Styles for send button container */
+.send-button-container {
+  margin-top: 10px;
+  align-self: flex-end;
+}
+
+/* Send button style */
+.send-button {
+  margin-left: 10px;
+}
+
+/* Current date style */
+.current-date {
+  font-size: 17px;
+}
+
+/* Message container style */
+.message-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Message content style */
+.message-content {
+  margin-left: 10px;
+}
+
+/* Item header style */
+.item-header {
+  display: flex;
+  align-items: center;
+}
+
+/* Edit button style */
+.edit-button {
+  margin-left: 10px;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
+/* Edit icon style */
+.edit-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Edit icon container style */
+.edit-icon {
+  display: flex;
+  align-items: center;
 }
 </style>
