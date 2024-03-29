@@ -1,166 +1,76 @@
 {
   "therapylogs": [
     {
-      "_id": "60a5c8426f586d38a7b11e73",
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Terzo messaggio di prova per la seconda terapia",
-      "date": "2024-03-26"
+      "msg": "Ciao, oggi mi sento un po' confuso riguardo alla mia terapia. Ho avuto alcuni pensieri che vorrei condividere.",
+      "date": "2024-03-26T00:00:00.000Z",
+      "id": "767f"
     },
     {
-      "_id": "60a5c8486f586d38a7b11e75",
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Quarto messaggio di prova",
-      "date": "2024-03-27"
+      "msg": "Stamattina ho riflettuto su quanto sia importante per me questo percorso terapeutico. Mi sento grato di poter esplorare queste emozioni.",
+      "date": "2024-03-27T00:00:00.000Z",
+      "id": "8286"
     },
     {
-      "_id": "60a5c84e6f586d38a7b11e77",
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Quarto messaggio di prova per la seconda terapia",
-      "date": "2024-03-27"
+      "msg": "Ho avuto una giornata impegnativa, ma sono contento di avere questo spazio per esprimere i miei pensieri. Mi sento più leggero.",
+      "date": "2024-03-27T00:00:00.000Z",
+      "id": "7af5"
     },
     {
-      "_id": "60a5c8546f586d38a7b11e79",
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Quinto messaggio di prova",
-      "date": "2024-03-28"
+      "msg": "Oggi mi sono reso conto di alcuni schemi di pensiero che vorrei lavorare durante le nostre sessioni. Sono motivato a fare progressi.",
+      "date": "2024-03-28T00:00:00.000Z",
+      "id": "fb22"
     },
     {
-      "_id": "60a5c85a6f586d38a7b11e7b",
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Quinto messaggio di prova per la seconda terapia",
-      "date": "2024-03-28"
+      "msg": "Stasera mi sento un po' triste e non riesco a capire esattamente il motivo. Spero di poter discutere di questo durante la nostra prossima sessione.",
+      "date": "2024-03-28T00:00:00.000Z",
+      "id": "9724"
     },
     {
-      "_id": "60a5c8606f586d38a7b11e7d",
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Sesto messaggio di prova",
-      "date": "2024-03-29"
+      "msg": "Ho avuto una discussione stressante con un familiare oggi. Mi rendo conto che ci sono dinamiche relazionali che vorrei esplorare in terapia.",
+      "date": "2024-03-19T23:00:00.000Z",
+      "id": "960e"
     },
     {
-      "_id": "60a5c8666f586d38a7b11e7f",
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Sesto messaggio di prova per la seconda terapia",
-      "date": "2024-03-29"
+      "msg": "Mi sento ansioso riguardo al futuro e alle decisioni da prendere. Vorrei trovare modi per gestire meglio questo stress.",
+      "date": "2024-03-29T00:00:00.000Z",
+      "id": "0032"
     },
     {
-      "_id": "60a5c86c6f586d38a7b11e81",
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Settimo messaggio di prova",
-      "date": "2024-03-30"
+      "msg": "Mi sento positivo riguardo al mio percorso di crescita personale. Oggi ho fatto un passo avanti nel comprendere alcuni dei miei comportamenti passati. Già",
+      "date": "2024-03-30T00:00:00.000Z",
+      "id": "8fe1"
     },
     {
-      "_id": "60a5c8726f586d38a7b11e83",
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Settimo messaggio di prova per la seconda terapia",
-      "date": "2024-03-30"
+      "msg": "Ho avuto una giornata tranquilla e riflessiva. Sono grato per gli strumenti che sto imparando in terapia per affrontare le sfide quotidiane.",
+      "date": "2024-03-11T00:00:00.000Z",
+      "id": "a3c6"
     },
     {
-      "_id": "60a5c8786f586d38a7b11e85",
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Ottavo messaggio di prova",
-      "date": "2024-03-31"
+      "msg": "Stasera mi sento ispirato dopo aver letto un articolo sulla crescita personale. Voglio portare queste nuove idee nelle nostre sessioni.",
+      "date": "2024-03-03T23:00:00.000Z",
+      "id": "ac86"
     },
     {
-      "_id": "60a5c87e6f586d38a7b11e87",
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Ottavo messaggio di prova per la seconda terapia",
-      "date": "2024-03-31"
+      "msg": "Ho avuto una giornata difficile e mi sento emotivamente esausto. Apprezzo molto il supporto che ricevo durante le nostre sessioni di terapia.",
+      "date": "2024-03-16T00:00:00.000Z",
+      "id": "eee6"
     },
     {
-      "_id": "60a5c8846f586d38a7b11e89",
+      "id": "d510",
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Nono messaggio di prova",
-      "date": "2024-02-01"
-    },
-    {
-      "_id": "60a5c88a6f586d38a7b11e8b",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Nono messaggio di prova per la seconda terapia",
-      "date": "2024-02-01"
-    },
-    {
-      "_id": "60a5c8906f586d38a7b11e8d",
-      "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Decimo messaggio di prova",
-      "date": "2024-02-02"
-    },
-    {
-      "_id": "60a5c8966f586d38a7b11e8f",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Decimo messaggio di prova per la seconda terapia",
-      "date": "2024-02-02"
-    },
-    {
-      "_id": "60a5c89c6f586d38a7b11e91",
-      "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Undicesimo messaggio di prova",
-      "date": "2024-02-03"
-    },
-    {
-      "_id": "60a5c8a26f586d38a7b11e93",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Undicesimo messaggio di prova per la seconda terapiagweyifhqeiwu",
-      "date": "2024-02-03"
-    },
-    {
-      "_id": "60a5c8a86f586d38a7b11e95",
-      "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Dodicesimo messaggio di prova",
-      "date": "2024-02-04"
-    },
-    {
-      "_id": "60a5c8ae6f586d38a7b11e97",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Dodicesimo messaggio di prova per la seconda terapia",
-      "date": "2024-02-04"
-    },
-    {
-      "_id": "60a5c8b46f586d38a7b11e99",
-      "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Tredicesimo messaggio di prova",
-      "date": "2024-02-05"
-    },
-    {
-      "id": "4e43",
-      "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Ciao",
-      "date": "2024-03-27T16:02:17.386Z"
-    },
-    {
-      "id": "7c29",
-      "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Diudiu",
-      "date": "2024-03-27T16:02:51.960Z"
-    },
-    {
-      "id": "4585",
-      "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Miao",
-      "date": "2024-03-27T16:06:03.984Z"
-    },
-    {
-      "id": "2a3b",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "ciao",
-      "date": "2024-03-27T16:13:35.671Z"
-    },
-    {
-      "id": "3d1b",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Diu",
-      "date": "2024-03-27T16:14:16.199Z"
-    },
-    {
-      "id": "c485",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Miao",
-      "date": "2024-03-27T16:14:33.122Z"
-    },
-    {
-      "id": "d9de",
-      "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Poi",
-      "date": "2024-03-27T16:14:38.872Z"
+      "msg": "Ciao!",
+      "date": 1710111600000
     }
   ]
 }

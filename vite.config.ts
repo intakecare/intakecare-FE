@@ -16,14 +16,14 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            /*
+
            '/local-api': {
                target: 'http://localhost:3000',
                changeOrigin: true,
                ws: true,
                rewrite: path => path.replace(/^\/local-api/, '')
            },
-            */
+
             '/api': {
                 target: 'https://intake-care-de7b20968242.herokuapp.com',
                 changeOrigin: true,
