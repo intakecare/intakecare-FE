@@ -33,6 +33,7 @@
     },
     "general":{
         "confirm":"Confirm",
+        "cancel": "Cancel",
         "refresh":"Refresh",
         "confirmMessage":"Are you sure you want to do this? The Action is irreversible",
         "confirmDeletion":"Confirm Deletion",
@@ -150,6 +151,8 @@
         "lastMonth":"Last 28 Days",
         "detail": "Therapy Details",
         "therapydiary": "Therapy Diary",
+        "newmessage": "Write here your thoughs about the therapy",
+        "editnote": "Edit your note",
         "mealTiming":{
             "before":"Before",
             "during":"During",

@@ -1,76 +1,130 @@
 {
-  "therapylogs": [
+  "therapymessagelogs": [
     {
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Ciao, oggi mi sento un po' confuso riguardo alla mia terapia. Ho avuto alcuni pensieri che vorrei condividere.",
+      "msg": "Ogni giorno è una sfida, ma la terapia mi dà la forza per affrontare la mia ipertensione con determinazione e ottimismo.",
+      "date": "2024-04-01T00:00:00.000Z",
+      "id": "8912"
+    },
+    {
+      "therapy_id": "65fc4ae866359674a4c62ffa",
+      "msg": "Sto riflettendo su come lo stress influenzi la mia pressione sanguigna. Voglio imparare tecniche per gestire meglio la tensione quotidiana.",
+      "date": "2024-04-02T00:00:00.000Z",
+      "id": "4567"
+    },
+    {
+      "therapy_id": "6602aa08387172c183b14408",
+      "msg": "Oggi ho avuto una conversazione approfondita con il mio terapeuta sulla dieta e l'esercizio fisico per controllare l'ipertensione. Sono motivato a fare cambiamenti positivi.",
+      "date": "2024-04-02T00:00:00.000Z",
+      "id": "3452"
+    },
+    {
+      "therapy_id": "65fc4ae866359674a4c62ffa",
+      "msg": "Sto esplorando il ruolo del sonno nella gestione dell'ipertensione. Vorrei sviluppare una routine per migliorare la qualità del mio riposo.",
+      "date": "2024-04-01T22:00:00.000Z",
+      "id": "1234"
+    },
+    {
+      "therapy_id": "65fc4ae866359674a4c62ffa",
+      "msg": "Cerco di ridurre il consumo di sodio nella mia dieta per aiutare a gestire meglio la mia ipertensione. È una piccola ma importante azione che posso fare ogni giorno.",
+      "date": "2024-04-01T00:00:00.000Z",
+      "id": "2468"
+    },
+    {
+      "therapy_id": "6602aa08387172c183b14408",
+      "msg": "Ho iniziato a tenere un diario della pressione sanguigna per monitorare i miei progressi. Mi aiuta a comprendere meglio come le mie azioni influenzano la mia salute.",
+      "date": "2024-04-01T00:00:00.000Z",
+      "id": "1357"
+    },
+    {
+      "therapy_id": "65fc4ae866359674a4c62ffa",
+      "msg": "La mindfulness mi sta aiutando a gestire lo stress legato all'ipertensione. Ogni respiro profondo mi porta più vicino al benessere.",
+      "date": "2024-03-30T00:00:00.000Z",
+      "id": "8024"
+    },
+    {
+      "therapy_id": "6602aa08387172c183b14408",
+      "msg": "Mi rendo conto che il supporto emotivo è fondamentale nella gestione dell'ipertensione. Sono grato per il sostegno della mia famiglia e del mio terapeuta.",
+      "date": "2024-04-02T22:00:00.000Z",
+      "id": "9012"
+    },
+    {
+      "therapy_id": "65fc4ae866359674a4c62ffa",
+      "msg": "Ho integrato l'esercizio fisico regolare nella mia routine quotidiana per migliorare la mia salute cardiovascolare. Ogni passo mi porta più vicino al mio obiettivo.",
+      "date": "2024-04-01T22:00:00.000Z",
+      "id": "3456"
+    },
+    {
+      "therapy_id": "6602aa08387172c183b14408",
+      "msg": "Oggi inizio la terapia per l'ipertensione. Sono ottimista riguardo al prendere il controllo della mia pressione sanguigna e migliorare il mio benessere generale.",
       "date": "2024-03-26T00:00:00.000Z",
       "id": "767f"
     },
     {
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Stamattina ho riflettuto su quanto sia importante per me questo percorso terapeutico. Mi sento grato di poter esplorare queste emozioni.",
+      "msg": "Sto contemplando l'importanza di iniziare la terapia per l'ipertensione. Sono grato per l'opportunità di affrontare proattivamente questa problematica di salute.",
       "date": "2024-03-27T00:00:00.000Z",
       "id": "8286"
     },
     {
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Ho avuto una giornata impegnativa, ma sono contento di avere questo spazio per esprimere i miei pensieri. Mi sento più leggero.",
-      "date": "2024-03-27T00:00:00.000Z",
+      "msg": "La giornata è stata impegnativa, ma avere questo spazio per discutere i miei pensieri sulla gestione dell'ipertensione mi conforta. Mi sento più leggero.",
+      "date": "2024-03-11T23:00:00.000Z",
       "id": "7af5"
     },
     {
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Oggi mi sono reso conto di alcuni schemi di pensiero che vorrei lavorare durante le nostre sessioni. Sono motivato a fare progressi.",
-      "date": "2024-03-28T00:00:00.000Z",
+      "msg": "Ho riconosciuto alcuni schemi di pensiero legati alla gestione dell'ipertensione che intendo affrontare durante le sedute di terapia. Sono motivato a fare progressi. Apprezzo i tuoi suggerimenti.",
+      "date": "2024-03-27T23:00:00.000Z",
       "id": "fb22"
     },
     {
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Stasera mi sento un po' triste e non riesco a capire esattamente il motivo. Spero di poter discutere di questo durante la nostra prossima sessione.",
-      "date": "2024-03-28T00:00:00.000Z",
+      "msg": "Stasera mi sento un po' giù e sto faticando a individuare la causa esatta. Spero di esplorare questo argomento più a fondo nella prossima sessione.",
+      "date": "2024-03-26T23:00:00.000Z",
       "id": "9724"
     },
     {
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Ho avuto una discussione stressante con un familiare oggi. Mi rendo conto che ci sono dinamiche relazionali che vorrei esplorare in terapia.",
+      "msg": "Oggi ho avuto un litigio stressante con un membro della famiglia. Mi rendo conto che ci sono dinamiche relazionali da esplorare in terapia, soprattutto in relazione alla gestione dell'ipertensione.",
       "date": "2024-03-19T23:00:00.000Z",
       "id": "960e"
     },
     {
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Mi sento ansioso riguardo al futuro e alle decisioni da prendere. Vorrei trovare modi per gestire meglio questo stress.",
+      "msg": "Mi sento ansioso riguardo al futuro e alle decisioni da prendere. Cerco modi per gestire meglio questo stress.",
       "date": "2024-03-29T00:00:00.000Z",
       "id": "0032"
     },
     {
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Mi sento positivo riguardo al mio percorso di crescita personale. Oggi ho fatto un passo avanti nel comprendere alcuni dei miei comportamenti passati. Già",
-      "date": "2024-03-30T00:00:00.000Z",
+      "msg": "Sono positivo riguardo al mio percorso di crescita personale. Oggi ho fatto progressi nell'analizzare alcuni dei miei comportamenti passati, compreso il loro impatto sull'ipertensione.",
+      "date": "2024-03-22T00:00:00.000Z",
       "id": "8fe1"
     },
     {
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Ho avuto una giornata tranquilla e riflessiva. Sono grato per gli strumenti che sto imparando in terapia per affrontare le sfide quotidiane.",
+      "msg": "Ho trascorso una giornata calma e riflessiva. Sono grato per le strategie che sto imparando in terapia per affrontare le sfide quotidiane, inclusa la gestione dell'ipertensione.",
       "date": "2024-03-11T00:00:00.000Z",
       "id": "a3c6"
     },
     {
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Stasera mi sento ispirato dopo aver letto un articolo sulla crescita personale. Voglio portare queste nuove idee nelle nostre sessioni.",
+      "msg": "Questa sera mi sento ispirato dopo aver letto un articolo sulla crescita personale. Non vedo l'ora di integrare queste nuove idee nelle nostre sessioni di terapia, specialmente per quanto riguarda la gestione dell'ipertensione.",
       "date": "2024-03-03T23:00:00.000Z",
       "id": "ac86"
     },
     {
       "therapy_id": "6602aa08387172c183b14408",
-      "msg": "Ho avuto una giornata difficile e mi sento emotivamente esausto. Apprezzo molto il supporto che ricevo durante le nostre sessioni di terapia.",
+      "msg": "Ho avuto una giornata impegnativa e mi sento emotivamente esausto. Sono grato per il supporto ricevuto durante le sessioni di terapia, specialmente mentre affronto la gestione dell'ipertensione.",
       "date": "2024-03-16T00:00:00.000Z",
       "id": "eee6"
     },
     {
-      "id": "d510",
+      "id": "09ff",
       "therapy_id": "65fc4ae866359674a4c62ffa",
-      "msg": "Ciao!",
-      "date": 1710111600000
+      "msg": "Rifletto sulla mia tendenza a procrastinare compiti importanti nella mia vita. Ammetto di ritardare spesso azioni necessarie per paura del fallimento o del successo, il che potrebbe influenzare la gestione dell'ipertensione.",
+      "date": "2024-03-29T23:00:00.000Z"
     }
   ]
 }

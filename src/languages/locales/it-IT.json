@@ -35,6 +35,7 @@
     },
     "general":{
         "confirm":"Conferma",
+        "cancel": "Annulla",
         "refresh":"Aggiorna",
         "confirmMessage":"Attenzione! L'azione è irreversibile!",
         "confirmDeletion":"Conferma Eliminazione",
@@ -236,6 +237,8 @@
         "changeableWithin": "Modificabile tra",
         "template": "Modelli",
         "therapydiary": "Diario della Terapia",
+        "newmessage": "Scrivi qui i tuoi pensieri sulla terapia",
+        "editnote": "Modifica la tua nota",
         "errorTimeRange": "L'orario scelto non è compreso nell'intervallo selezionato.",
         "timeRange": {
             "morning":"Mattina",
