@@ -1,109 +1,75 @@
-
-<script lang="ts">
+<script setup lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Save as SaveIcon } from "@vicons/ionicons5";
 import * as api from "@/api";
 
-export default defineComponent({
-  name: "EditPatientForm",
-  components: { SaveIcon },
-  props: {
-    id: String,
-    name: String,
-    surname: String,
-    cf: String,
-    email: String,
-    phone: String,
-    sex: String,
-    dob: String,
-    residence: String,
-  },
-  emits: ["saved"],
-  setup(props, context) {
-    const { t } = useI18n({ useScope: "global", inheritLocale: true });
-    const showSpin = ref(false);
-    const formRef = ref(null);
-    const model = ref({
-      name: props.name,
-      surname: props.surname,
-      cf: props.cf,
-      email: props.email,
-      phone: props.phone,
-      sex: props.sex,
-      dob: props.dob
-          ? new Date(props.dob).getTime() - new Date().getTimezoneOffset() * 60000
-          : null,
-      residence: props.residence,
-    });
-    const revertChanges = () => {
-      model.value = {
-        name: props.name,
-        surname: props.surname,
-        cf: props.cf,
-        email: props.email,
-        phone: props.phone,
-        sex: props.sex,
-        dob: props.dob
-            ? new Date(props.dob).getTime() -
-            new Date().getTimezoneOffset() * 60000
-            : null,
-        residence: props.residence,
-      };
-    };
-    const disableSave = computed(() => {
-      return !model.value.email;
-    });
-    const save = () => {
-      showSpin.value = true;
-      api.patients
-          .edit(props.id ? props.id : "", {
-            user: {
-              name: model.value.name,
-              surname: model.value.surname,
-              cf: model.value.cf,
-              email: model.value.email as string,
-              phone: model.value.phone,
-            },
-            patient: {
-              dob: model.value.dob
-                  ? new Date(
-                      model.value.dob - new Date().getTimezoneOffset() * 60000
-                  ).toISOString()
-                  : undefined,
-              sex: model.value.sex,
-              residence: model.value.residence,
-            },
-          })
-          .then(() => {
-            showSpin.value = false;
-            context.emit("saved");
-          });
-    };
-    const rules = computed(() => {
-      return {
-        email: [
-          {
-            required: true,
-            message: t("patients.emailValidation"),
-            trigger: ["input", "blur"],
-          },
-        ],
-      };
-    });
-    return {
-      t,
-      save,
-      disableSave,
-      model,
-      rules,
-      formRef,
-      showSpin,
-    };
-  },
+const { t } = useI18n({ useScope: "global", inheritLocale: true });
+const showSpin = ref(false);
+const formRef = ref(null);
+const props = defineProps({
+  id: String,
+  name: String,
+  surname: String,
+  cf: String,
+  email: String,
+  phone: String,
+  sex: String,
+  dob: Date,
+  residence: String,
+});
+const emits = defineEmits(["saved"]);
+const model = ref({
+  name: props.name,
+  surname: props.surname,
+  cf: props.cf,
+  email: props.email,
+  phone: props.phone,
+  sex: props.sex,
+  dob: props.dob
+      ? new Date(props.dob).getTime() - new Date().getTimezoneOffset() * 60000
+      : null,
+  residence: props.residence,
+});
+
+const disableSave = computed(() => {
+  return !model.value.email;
+});
+
+const onSave = () => {
+  showSpin.value = true;
+  const updateModel = {
+    user: {
+      name: model.value.name,
+      surname: model.value.surname,
+      cf: model.value.cf,
+      email: model.value.email as string,
+      phone: model.value.phone,
+      dob: model.value.dob? new Date(model.value.dob) : undefined,
+      sex: model.value.sex,
+      residence: model.value.residence
+    }
+  };
+  console.log(props.id, updateModel);
+  api.patients
+      .edit(props.id ? props.id : "", updateModel)
+      .then(() => {
+        showSpin.value = false;
+        emits("saved");
+      });
+};
+const rules = computed(() => {
+  return {
+    email: [
+      {
+        required: true,
+        message: t("patients.emailValidation"),
+        trigger: ["input", "blur"],
+      },
+    ],
+  };
 });
 </script>
-
 
 <template>
   <n-spin :show="showSpin">
@@ -172,7 +138,7 @@ export default defineComponent({
     </n-form>
 
     <n-space justify="end">
-      <n-button type="primary" @click="save" :disabled="disableSave">
+      <n-button type="primary" @click="onSave" :disabled="disableSave">
         <template #icon>
           <n-icon>
             <save-icon />
@@ -182,5 +148,4 @@ export default defineComponent({
       </n-button>
     </n-space>
   </n-spin>
-  .
 </template>

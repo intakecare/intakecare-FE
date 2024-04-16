@@ -37,11 +37,14 @@ export default defineComponent({
         residence: undefined,
       };
     };
+
     const disableSave = computed(() => {
       return !model.value.username || !model.value.email;
     });
+
     const save = () => {
       showSpin.value = true;
+      console.log("Creating patient");
       api.administration
           .createPatient({
             username: model.value.username as string,
@@ -51,18 +54,23 @@ export default defineComponent({
               cf: model.value.cf,
               email: model.value.email,
               phone: model.value.phone,
-            },
-            patient: {
               dob: model.value.dob as Date,
               sex: model.value.sex,
               residence: model.value.residence,
             },
+            patient: {}
           })
           .then(() => {
             showSpin.value = false;
+            console.log("Patient created")
             context.emit("saved");
+          })
+          .catch((error) => {
+            showSpin.value = false;
+            console.error(error);
           });
     };
+
     const rules = computed(() => {
       return {
         username: [
@@ -158,6 +166,7 @@ export default defineComponent({
             :options="[
               { label: t('patients.male'), value: 'Male' },
               { label: t('patients.female'), value: 'Female' },
+              { label: t('patients.other'), value: 'Other' },
             ]"
           />
         </n-form-item-gi>

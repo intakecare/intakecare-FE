@@ -63,7 +63,6 @@ const getData = async () => {
           data.value._id = value.data._id;
           data.value.drug = value.data.drug;
           data.value.adherence = value.data.adherence;
-          data.value.hiring_time = value.data.hiring_time;
           data.value.validation_alexa = value.data.validation_alexa;
           data.value.validation_phone = value.data.validation_phone;
           data.value.validation_web = value.data.validation_web;

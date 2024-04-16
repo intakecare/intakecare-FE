@@ -1,5 +1,6 @@
 import { patientUpdateDTO } from "@/classes/patient-dto";
 import { patients } from "..";
+import { UserUpdateDTO } from "@/classes/user-dto";
 import * as fetchApi from "../fetchApi";
 
 export async function find() {
@@ -14,7 +15,7 @@ export async function findOne(id: string) {
   return await fetchApi.getHttp(`/api/patients?${id}`);
 }
 
-export async function edit(id: string, update: Partial<patientUpdateDTO>) {
+export async function edit(id: string, update: Partial<UserUpdateDTO>) {
   return await fetchApi.patchHttp(`/api/patients/${id}`, update);
 }
 

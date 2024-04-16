@@ -19,14 +19,21 @@ export interface UserDTO { //default
 }
 
 export interface UserUpdateDTO {
-  email?: string;
-  email_alexa?: string;
-  phone?: string;
-  user_type?: string;
-  endpoint?: string;
-  expirationTime?: number;
-  key_p256dh?: string;
-  key_auth?: string
+  user:{
+    name?: string;
+    surname?: string;
+    cf?: string;
+    sex?: string;
+    dob?: Date;
+    residence?: string;
+    email?: string;
+    email_alexa?: string;
+    phone?: string;
+    endpoint?: string;
+    expirationTime?: number;
+    key_p256dh?: string;
+    key_auth?: string
+  }
 }
 
 export interface UserCreateDTO {
@@ -34,6 +41,9 @@ export interface UserCreateDTO {
     name?: string;
     surname?: string;
     cf?: string;
+    sex?: string;
+    dob?: Date;
+    residence?: string;
     email?: string;
     email_alexa?: string;
     phone?: string;
@@ -43,17 +53,7 @@ export interface UserCreateDTO {
     key_auth?: string
   };
   username: string;
-  patient: {
-    sex?: string;
-    dob?: Date;
-    residence?: string;
-  };
-}
-
-export interface UserAnonymousDTO {
-  id: string;
-  username: string;
-  user_type: string;
+  patient: {}
 }
 
 export interface CreateDoctorDto {
@@ -70,9 +70,4 @@ export interface CreateDoctorDto {
   doctor: {
     user_id?: string;
   };
-}
-
-export interface DoctorDto {
-  _id: string
-  user_id: string
 }

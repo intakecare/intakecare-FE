@@ -134,6 +134,7 @@
         "dob":"Data di Nascita",
         "male":"Maschio",
         "female":"Femmina",
+        "other":"Altro",
         "emailValidation":"L' e-Mail è necessaria",
         "missingData":"Dati Mancanti"
     },

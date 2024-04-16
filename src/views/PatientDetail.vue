@@ -99,6 +99,7 @@ onMounted(async () => {
 
 const onSaved = () => {
   // This function is called when the user saves the patient data
+  console.log("Changed Patient Data")
   editMode.value = false;
   getData();
 };
