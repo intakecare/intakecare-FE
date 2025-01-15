@@ -39,7 +39,7 @@ export default defineComponent({
     };
 
     const disableSave = computed(() => {
-      return !model.value.username || !model.value.email;
+      return !model.value.username;
     });
 
     const save = () => {
@@ -77,13 +77,6 @@ export default defineComponent({
           {
             required: true,
             message: t("login.usernameValidation"),
-            trigger: ["input", "blur"],
-          },
-        ],
-        email: [
-          {
-            required: true,
-            message: t("patients.emailValidation"),
             trigger: ["input", "blur"],
           },
         ],

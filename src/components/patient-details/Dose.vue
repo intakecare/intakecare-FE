@@ -17,6 +17,7 @@ const { t } = useI18n({ useScope: "global", inheritLocale: true });
 
 // Reactive variables
 const selectedTime = ref(props.option.time);
+const maxDelay = ref(props.option.max_delay);
 const rangeStartTime = ref(props.option?.rangeStartTime);
 const rangeEndTime = ref(props.option?.rangeEndTime);
 const errorTimeNotInRange = ref(false);
@@ -28,7 +29,7 @@ const cadence = computed({
     const temp: Option = {
       cadence: value.length > 0 ? value : ["MO"],
       time: selectedTime.value,
-      max_delay: props.option.max_delay,
+      max_delay: maxDelay.value,
     };
     emits("update:value", temp);
     console.log(temp);
@@ -119,6 +120,12 @@ watch([selectedTime, rangeStartTime, rangeEndTime], ([newTime, newRangeStartTime
           <n-text> {{ t("therapies.at") }}: </n-text>
           <n-time-picker format="HH:mm" value-format="HH:mm" v-model:formatted-value="selectedTime"/>
         </n-space>
+      </span>
+      <span>
+        <n-text> {{ t("therapies.maxDelay") }}: </n-text>
+        <n-input-number v-model:value="maxDelay" :min="1" style="width: 200px">
+        <template #suffix>{{ t("general.minute", 2)}}</template>
+        </n-input-number>
       </span>
       <span>
         <n-text> {{ t("therapies.changeableWithin") }}: </n-text>

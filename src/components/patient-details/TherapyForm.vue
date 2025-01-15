@@ -49,7 +49,6 @@ const selectedSubstance = ref(null);
 const selectedDrug = ref(null as string | null);
 const drugValue = ref(null as string | null);
 const posology = ref(null as string | null);
-const delay = ref(120);
 const timeEnd = ref("range");
 const meals = ref("indifferent");
 const scheduling_type = ref("weekly");
@@ -178,17 +177,17 @@ const endOptions = computed(() => [
     value: "range",
     label: t("therapies.dateRange"),
   },
-  {
-    value: "intakes",
-    label: t("therapies.numberIntakes"),
-  },
-  {
-    value: "no",
-    label: t("therapies.endless"),
-  },
+  // {
+  //   value: "intakes",
+  //   label: t("therapies.numberIntakes"),
+  // },
+  // {
+  //   value: "no",
+  //   label: t("therapies.endless"),
+  // },
 ]);
 
-const dateRange = ref([Date.now(), Date.now() + 24 * 60 * 60 * 1000]);
+const dateRange = ref([Date.now() + 24 * 60 * 60 * 1000, Date.now() + (14 + 1) * 24 * 60 * 60 * 1000]);
 
 const disablePreviousDate = (ts: number): boolean => {
   return !props.therapy && ts < Date.now() - 24 * 60 * 60 * 1000;
@@ -317,10 +316,6 @@ const computedStyle = computed(() => {
   return `max-height: ${height.value - 170}px`;
 });
 
-const onDeliveryChanged = (value: { scheduling_type: string; options: any[] }) => {
-  intakesOutput.value = value;
-};
-
 const addDelivery = () => {
   deliveryComputed.value.options.push({
     time: "12:00",
@@ -337,10 +332,10 @@ const addDelivery = () => {
   <n-spin :show="showSpin">
     <n-grid :x-gap="10" :y-gap="10" cols="1 1000:2" item-responsive>
 
-      <!-- First Column: delivery options (daily, weekly, timing) -->
+      <!-- First Column: delivery options (daily, weekly, timing) + Max Delay -->
       <n-gi>
         <n-scrollbar :style="computedStyle">
-          <n-card :title="t('doses.doses')">
+          <n-card :title="t('therapyForm.insertDoses')">
             <n-space justify="center" align="center" vertical>
               <dose
                   v-for="(intake, index) in deliveryComputed.options"
@@ -364,207 +359,45 @@ const addDelivery = () => {
       <n-gi>
         <n-space vertical>
           <n-scrollbar :style="computedStyle">
-            <!-- Drug selection -->
-            <n-card :title="t('therapies.drug')">
-              <n-collapse-transition :show="showAddDrug">
-                <n-space vertical item-style="margin-top:5px">
-                  <div>
-                    <n-text>
-                      {{ t("general.select") }}
-                      {{ t("therapies.drug") }}:</n-text
-                    >
-                    <n-select
-                      v-model:value="selectedDrug"
-                      filterable
+            <n-card :bordered="false">
+              <!-- Drug selection -->
+              <n-card :bordered="false" :title="t('therapyForm.insertDrug')">
+                  <n-gi span="4 500:9">
+                    <n-input
+                      :placeholder="t('therapies.drug')"
+                      type="textarea"
+                      size="medium"
                       clearable
-                      :placeholder="`${t('general.select')} ${t(
-                        'therapies.drug'
-                      )}`"
-                      :options="drug"
-                      @update:value="handleUpdateValue()"
+                      v-model:value="drugValue"
+                      :autosize="{
+                        minRows: 1,
+                        maxRows: 3,
+                      }"
                     />
-                  </div>
-                  <div>
-                    <n-text>
-                      {{ t("general.filter") }}
-                      {{ t("therapies.activeSubstance") }}:</n-text
-                    >
-                    <n-select
-                      v-model:value="selectedSubstance"
-                      filterable
-                      clearable
-                      :placeholder="`${t('general.filter')} ${t(
-                        'therapies.activeSubstance'
-                      )}`"
-                      :options="substance"
-                    />
-                  </div>
-                </n-space>
-              </n-collapse-transition>
-              <n-grid
-                cols="5 500:10"
-                :x-gap="10"
-                :y-gap="10"
-                style="margin-top: 10px"
-              >
-                <n-gi>
-                  <n-space align="center">
-                    <n-button
-                      v-if="!showAddDrug"
-                      circle
-                      type="primary"
-                      @click="showAddDrug = true"
-                    >
-                      <template #icon>
-                        <n-icon>
-                          <add-icon />
-                        </n-icon> </template
-                    ></n-button>
-                    <n-button
-                      v-else
-                      circle
-                      ghost
-                      type="primary"
-                      @click="showAddDrug = false"
-                    >
-                      <template #icon>
-                        <n-icon>
-                          <close-icon />
-                        </n-icon> </template
-                    ></n-button>
-                  </n-space>
-                </n-gi>
+                  </n-gi>
+              </n-card>
+              <n-divider />
+              <!-- Posology -->
+              <n-card :bordered="false" :title="t('therapyForm.insertPosology')">
                 <n-gi span="4 500:9">
                   <n-input
-                    :placeholder="t('therapies.drug')"
-                    type="textarea"
-                    size="medium"
+                    style="width: 100%"
                     clearable
-                    v-model:value="drugValue"
-                    :autosize="{
-                      minRows: 1,
-                      maxRows: 3,
-                    }"
+                    v-model:value="posology"
+                    :placeholder="t('therapies.posology')"
                   />
                 </n-gi>
-              </n-grid>
-            </n-card>
-            <n-card :bordered="false">
-              <n-grid cols="1 450:2" :x-gap="10" :y-gap="10">
-                <!-- Posology -->
-                <n-gi>
-                  <n-space align="center" vertical style="width: 100%">
-                    <n-text> {{ t("therapies.posology") }} </n-text>
-                    <n-input
-                      style="width: 100%"
-                      clearable
-                      v-model:value="posology"
-                      :placeholder="t('therapies.posology')"
-                    />
-                  </n-space>
-                </n-gi>
-                <!-- Max Delay -->
-                <n-gi>
-                  <n-space align="center" vertical style="width: 100%">
-                    <n-text> {{ t("therapies.maxDelay") }} </n-text>
-                    <n-input-number
-                      style="width: 100%"
-                      @update:value="delayChange"
-                      v-model:value="delay"
-                      :min="1"
-                    >
-                      <template #suffix>
-                        {{ t("general.minute", delay) }}
-                      </template>
-                    </n-input-number>
-                  </n-space>
-                </n-gi>
-                <n-gi span="1 450:2">
-                  <n-divider />
-                </n-gi>
-                <!-- Date Picker (start and end | number of administrations | endless) -->
-                <n-gi span="1 450:2">
-                  <n-space justify="center" align="center" vertical>
-                    <n-radio-group
-                      v-model:value="timeEnd"
-                      name="radiobuttongroup1"
-                      v-if="width > 600"
-                    >
-                      <n-radio-button
-                        v-for="endOption in endOptions"
-                        :key="endOption.value"
-                        :value="endOption.value"
-                      >
-                        {{ endOption.label }}
-                      </n-radio-button>
-                    </n-radio-group>
-
-                    <n-select
-                      style="width: 100%"
-                      v-else
-                      v-model:value="timeEnd"
-                      :options="endOptions"
-                    />
-                  </n-space>
-                </n-gi>
-                <n-gi span="1 450:2" v-if="timeEnd === 'range'">
-                  <n-date-picker
+              </n-card>
+              <n-divider />
+            <!-- Date Picker (start and end) -->
+              <n-card :bordered="false" :title="t('therapyForm.insertDateInterval')">
+                <n-date-picker
                     v-model:value="dateRange"
                     type="daterange"
                     clearable
                     :is-date-disabled="disablePreviousDate"
-                  />
-                </n-gi>
-                <n-gi span="1 450:2" v-else-if="timeEnd === 'intakes'">
-                  <n-space justify="space-between" align="center">
-                    <n-date-picker
-                      v-model:value="dateRange[0]"
-                      type="date"
-                      clearable
-                      :is-date-disabled="disablePreviousDate"
-                    />
-                    <n-input-number
-                      style="max-width: 100px"
-                      v-model:value="intakeNumber"
-                      placeholder="Min"
-                      :min="1"
-                    />
-                  </n-space>
-                </n-gi>
-                <n-gi span="1 450:2" v-else>
-                  <n-date-picker
-                    v-model:value="dateRange[0]"
-                    type="date"
-                    clearable
-                    :is-date-disabled="disablePreviousDate"
-                  />
-                </n-gi>
-                <n-gi span="1 450:2">
-                  <n-divider />
-                </n-gi>
-                <!-- Meals -->
-                <n-gi>
-                  <n-space align="center">
-                    <n-text>{{ t("therapies.meals") }}</n-text>
-                    <n-radio-group
-                      v-model:value="meals"
-                      name="radiobuttongroup2"
-                    >
-                      <n-radio-button
-                        v-for="mealsOption in mealsOptions"
-                        :key="mealsOption.value"
-                        :value="mealsOption.value"
-                      >
-                        {{ mealsOption.label }}
-                      </n-radio-button>
-                    </n-radio-group>
-                  </n-space>
-                </n-gi>
-
-                <n-gi span="1 450:2">
-                  <n-divider />
-                </n-gi>
-              </n-grid>
+                />
+              </n-card>
             </n-card>
           </n-scrollbar>
         </n-space>

@@ -302,5 +302,11 @@
         "FR":"Venerdì|V",
         "SA":"Sabato|S",
         "SU":"Domenica|D"
-    }  
+    },
+    "therapyForm":{
+        "insertDrug":"1. Inserisci il nome del farmaco",
+        "insertPosology": "2. Inserisci la posologia (1 cp, 20 mg, ...)",
+        "insertDateInterval": "3. Seleziona la data di inizio e di fine dei promemoria per la terapia",
+        "insertDoses": "4. Inserisci gli orari di somministrazione"
+    }
 }

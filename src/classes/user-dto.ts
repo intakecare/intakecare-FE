@@ -62,7 +62,7 @@ export interface CreateDoctorDto {
     surname?: string;
     credentials_id?: string;
     cf?: string;
-    email: string;
+    email?: string;
     user_type?: string;
     phone?: string;
   };
