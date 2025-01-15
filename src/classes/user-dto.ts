@@ -12,7 +12,8 @@ export interface UserDTO { //default
     endpoint: string;
     expirationTime: number;
     key_p256dh: string;
-    key_auth: string
+    key_auth: string;
+    persona_id: number;
   };
   /**@deprecated*/
   access_token: string;
@@ -32,7 +33,8 @@ export interface UserUpdateDTO {
     endpoint?: string;
     expirationTime?: number;
     key_p256dh?: string;
-    key_auth?: string
+    key_auth?: string;
+    persona_id?: number;
   }
 }
 
@@ -50,7 +52,8 @@ export interface UserCreateDTO {
     endpoint?: string;
     expirationTime?: number;
     key_p256dh?: string;
-    key_auth?: string
+    key_auth?: string;
+    persona_id?: number;
   };
   username: string;
   patient: {}

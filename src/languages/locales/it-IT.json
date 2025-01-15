@@ -122,7 +122,9 @@
         "showTherapies":"Mostra Terapie",
         "missedIntakes":"Assunzioni Mancate",
         "allTherapies":"Aderenza Globale",
-        "myTherapies":"Le Mie Terapie"
+        "myTherapies":"Le Mie Terapie",
+        "changePersona": "Modifica Persona",
+        "changePersonaMessage": "Seleziona la Persona da assegnare al paziente"
     },
     "patients":{
         "username": "Nome Utente",

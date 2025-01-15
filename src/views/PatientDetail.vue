@@ -11,6 +11,7 @@ import {
   Trash as TrashIcon,
   Pencil as PencilIcon,
   Eye as EyeIcon,
+  PersonSharp as PersonaIcon,
 } from "@vicons/ionicons5";
 import { useDialog } from "naive-ui";
 import router from "@/router";
@@ -47,12 +48,15 @@ const userData = ref({
   cf: undefined as string | undefined,
   phone: undefined as string | undefined,
   email: undefined as string | undefined,
+  persona_id: undefined as string | undefined
 });
 const patientData = ref();
 const therapies = ref([]);
+const patientPersona = ref(null as string | null);
 const editMode = ref(false);
 const showDrawer = ref(false);
 const showTherapyModal = ref(false);
+const showPersonaModal = ref(false);
 const showSpin = ref(false);
 const selectedTherapy = ref({ therapyId: null, therapyDrug: null } as {
   therapyId: string | null;
@@ -83,6 +87,7 @@ const getData = async () => {
           userData.value.cf = response.data.user.cf;
           userData.value.phone = response.data.user.phone;
           userData.value.email = response.data.user.email;
+          userData.value.persona_id = response.data.persona_id;
           therapies.value = response.data.therapies;
           showSpin.value = false;
         })
@@ -119,6 +124,23 @@ const deletePatient = () => {
     },
   });
 };
+
+/**
+ * This function updates the persona of the patient
+ *
+ */
+const updatePersona = () => {
+  // This function updates the persona of the patient
+  if (patientPersona.value) {
+    console.log("Patient Persona: ", patientPersona.value);
+    api.patients.edit(userData.value.id as string, {"user":
+          {"persona_id": patientPersona.value.toString() }
+    }).then(() => {
+      showPersonaModal.value = false;
+      getData();
+    });
+  }
+}
 
 const filtered = computed(() => {
   // This function filters the therapies based on the search input
@@ -199,6 +221,38 @@ const onTherapySelected = (item: any) => {
     </n-card>
   </n-modal>
 
+  <!-- This is the modal that is shown when the doctor wants to change the user's persona -->
+  <n-modal v-model:show="showPersonaModal">
+    <n-card
+      style="max-width: 1260px"
+      :title="`${t('patientDetail.changePersonaMessage')}`"
+      :bordered="false"
+      size="huge"
+    >
+      <template #header-extra>
+        <n-button ghost circle type="primary" @click="showPersonaModal = false">
+          <template #icon>
+            <n-icon>
+              <close-icon />
+            </n-icon>
+          </template>
+        </n-button>
+      </template>
+      <n-space vertical>
+        <n-radio-group v-model:value="patientPersona" style="width: 100%">
+          <n-radio-button value="1">Persona 1</n-radio-button>
+          <n-radio-button value="2">Persona 2</n-radio-button>
+          <n-radio-button value="3">Persona 3</n-radio-button>
+        </n-radio-group>
+        <n-space justify="space-between">
+          <n-button type="primary" @click="updatePersona()">
+            {{ t("general.confirm") }}
+          </n-button>
+        </n-space>
+      </n-space>
+    </n-card>
+  </n-modal>
+
   <!-- This is the main content of the view -->
   <n-card class="content-wide" :style="computedContentStyle">
     <n-spin :show="showSpin">
@@ -217,6 +271,15 @@ const onTherapySelected = (item: any) => {
                       </n-text>
                       </n-h1>
                       <n-space justify="end">
+                        <n-button
+                          secondary
+                          type="primary"
+                          @click="showPersonaModal = true">
+                          <template #icon >
+                            <persona-icon />
+                          </template>
+                          {{ t("patientDetail.changePersona") }}
+                        </n-button>
 
                         <n-button
                           v-if="!editMode"
@@ -392,6 +455,15 @@ const onTherapySelected = (item: any) => {
 
                     <n-grid :x-gap="10" :y-gap="10" cols="2 540:3 750:4">
                       <n-gi>
+                        <n-button
+                            secondary
+                            type="primary"
+                            @click="showPersonaModal = true">
+                          <template #icon >
+                            <persona-icon />
+                          </template>
+                          {{ t("patientDetail.changePersona") }}
+                        </n-button>
                         <n-button
                           v-if="!editMode"
                           secondary
