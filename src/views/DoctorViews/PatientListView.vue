@@ -12,7 +12,7 @@ import { useI18n } from "vue-i18n";
 import { NTag } from "naive-ui";
 import * as api from "@/api";
 import PatientDTO from "@/classes/patient-dto";
-import NewPatientForm from "@/components/patient-list/NewPatientForm.vue";
+import NewPatientForm from "@/components/PatientList/NewPatientForm.vue";
 import useWindowResize from "@/use/useWindowResize";
 import ResponsiveView from "@/components/ResponsiveView.vue";
 import ResponsiveConfig from "@/assets/responsive-config.json";
@@ -22,7 +22,7 @@ import { Refresh as RefreshIcon } from "@vicons/ionicons5";
 import router from "@/router";
 import {useUserStore} from "@/stores/user";
 
-/** This view is used to display the list of patients of a certain physician. */
+/* This view is used to display the list of patients of a physician. */
 
 // Variables definition
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
@@ -36,26 +36,6 @@ const pagination = {
   pageSize: 10
 }
 
-const getData = () => {
-  /** This function fetches the data from the api related to all patients of a certain physician. */
-  showSpin.value = true;
-  console.log(user);
-  api.patients
-      .find()
-      .then((value) => {
-        data.value = value.data;
-        console.log(data.value);
-        showSpin.value = false;
-      })
-      .catch(() => {
-        showSpin.value = false;
-      });
-};
-
-onMounted(() => {
-  getData();
-});
-
 type Row = {
   _id: string;
   name: string;
@@ -64,13 +44,34 @@ type Row = {
   adherence: number;
 };
 
+/**
+ * This function fetches the data from the api related to all patients of a physician.
+ */
+const getData = async () => {
+  showSpin.value = true;
+  try{
+    const response = await api.patients.find()
+    data.value = response.data
+  } catch (error) {
+    console.log(error)
+  } finally {
+    showSpin.value = false;
+  }
+};
+
+/**
+ *  This function defines what happens when the user clicks on a row.
+ */
 const open = (row: Row) => {
-  /** This function defines what happens when the user clicks on a row. */
+
   router.push({ name: "PatientDetail", query: { id: row._id } });
 };
 
+/**
+ * This function defines what happens when the user hovers over a row.
+ */
 const rowProps = (row: Row) => {
-  /** This function defines what happens when the user hovers over a row. */
+
   return {
     style: "cursor: pointer;",
     onClick: () => {
@@ -79,9 +80,10 @@ const rowProps = (row: Row) => {
   };
 };
 
-
+/**
+ * This function creates the columns of the table.
+ */
 const createColumns = computed(() => {
-  /** This function creates the columns of the table. */
   const columns = [
     {
       title: t("patients.username"),
@@ -138,8 +140,11 @@ const createColumns = computed(() => {
   return columns;
 });
 
+/* ################### LIFECYCLE HOOKS ################### */
+onMounted(() => {
+  getData();
+});
 </script>
-
 
 <template>
 <n-modal v-model:show="showModal">
@@ -158,7 +163,7 @@ const createColumns = computed(() => {
         </template> </n-button
     ></template>
     <new-patient-form
-      @saved="
+      @onSaved="
         showModal = false;
         getData();
       "

@@ -3,6 +3,7 @@ import {computed, PropType, ref, watch} from "vue";
 import { useI18n } from "vue-i18n";
 import WeekDaySelector from "@/components/patient-details/WeekDaySelector.vue";
 import { Option } from "@/classes/therapy-dto";
+import {RemoveCircle as MinusIcon} from "@vicons/ionicons5";
 
 
 // Props and emits
@@ -10,7 +11,7 @@ const props = defineProps({
   scheduling_type: { type: String, required: true },
   option: {type: Object as PropType<Option>, required: true},
 })
-const emits = defineEmits(["update:value"]);
+const emits = defineEmits(["update:value", "delete"]);
 
 // i18n initialization
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
@@ -58,6 +59,11 @@ const rangeOptions = [
     key: "evening"
   }
 ];
+
+const onDeletePressed = () => {
+  console.log("Delete pressed");
+  emits("delete");
+};
 
 
 const onSelectTimeRangeTemplate = (value: string | number) => {
@@ -136,6 +142,13 @@ watch([selectedTime, rangeStartTime, rangeEndTime], ([newTime, newRangeStartTime
           <n-dropdown trigger="hover" :options="rangeOptions" @select="onSelectTimeRangeTemplate">
             <n-button>{{t("therapies.template")}}</n-button>
           </n-dropdown>
+          <n-button ghost circle type="error" @click="onDeletePressed">
+            <template #icon>
+              <n-icon>
+                <minus-icon />
+              </n-icon>
+            </template>
+          </n-button>
         </n-space>
         <n-text v-if="errorTimeNotInRange" style="color: #510045FF">{{t('therapies.errorTimeRange')}}</n-text>
       </span>

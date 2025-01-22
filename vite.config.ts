@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
       proxy: {
       '/api': {
-          target: 'https://intake-care-de7b20968242.herokuapp.com',
+          target: 'https://intakecare-rct-1ac91b26c754.herokuapp.com/',
           // target: 'http://localhost:3000',
           changeOrigin: true,
           ws: true,

@@ -12,7 +12,7 @@ import { useI18n } from "vue-i18n";
 import { NTag } from "naive-ui";
 import * as api from "@/api";
 import { Therapy } from "@/classes/therapy-dto";
-import NewPatientForm from "@/components/patient-list/NewPatientForm.vue";
+import NewPatientForm from "@/components/PatientList/NewPatientForm.vue";
 import OTP from "@/components/OTP.vue";
 import useWindowResize from "@/use/useWindowResize";
 import ResponsiveView from "@/components/ResponsiveView.vue";

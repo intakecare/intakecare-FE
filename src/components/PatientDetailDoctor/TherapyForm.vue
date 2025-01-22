@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 import Drugs from "@/assets/Lista_farmaci_equivalenti.json";
 import titleCase from "@/use/titleCase";
 import { Delivery, Therapy } from "@/classes/therapy-dto";
-import Dose from "@/components/patient-details/Dose.vue";
+import Dose from "@/components/PatientDetailDoctor/Dose.vue";
 import * as api from "@/api";
 import {
   Add as AddIcon,
@@ -127,50 +127,6 @@ onUpdated(() => {
   }
 });
 
-const substance = Object.keys(Drugs).map((e) => {
-  return { label: e, value: e };
-});
-
-const drug = computed(() => {
-  let tmp: { label: string; value: string }[] = [];
-  if (!selectedSubstance.value) {
-    Object.values(Drugs).forEach((e) => {
-      e.forEach((v) => {
-        tmp.push({
-          label: titleCase(
-              `${v["Farmaco"]} - ${
-                  v["Confezione di riferimento"].split("-")[0]
-              }`
-          ),
-          value: titleCase(
-              `${v["Farmaco"]}  - ${v["Confezione di riferimento"]} - ${v["AIC"]}`
-          ),
-        });
-      });
-    });
-  } else {
-    // eslint-disable-next-line
-    (Drugs as Record<string, any[]>)[
-        selectedSubstance.value as unknown as string
-        ].forEach((v) => {
-      tmp.push({
-        label: titleCase(
-            `${v["Farmaco"]} - ${
-                v["Confezione di riferimento"].split("-")[0]
-            }`
-        ),
-        value: titleCase(
-            `${v["Farmaco"]} - ${v["Confezione di riferimento"]} - ${v["AIC"]}`
-        ),
-      });
-    });
-  }
-  return tmp;
-});
-
-const handleUpdateValue = () => {
-  drugValue.value = selectedDrug.value;
-};
 
 const endOptions = computed(() => [
   {
@@ -187,7 +143,8 @@ const endOptions = computed(() => [
   // },
 ]);
 
-const dateRange = ref([Date.now() + 24 * 60 * 60 * 1000, Date.now() + (14 + 1) * 24 * 60 * 60 * 1000]);
+// Set the date range from tomorrow to 90 days from tomorrow
+const dateRange = ref([Date.now() + 24 * 60 * 60 * 1000, Date.now() + (90 + 1) * 24 * 60 * 60 * 1000]);
 
 const disablePreviousDate = (ts: number): boolean => {
   return !props.therapy && ts < Date.now() - 24 * 60 * 60 * 1000;
@@ -237,6 +194,10 @@ const disableSave = computed(() => {
   // Check if the end date is before the start date
   if (timeEnd.value === "range" && dateRange.value[1] < dateRange.value[0]){
     errorEndDateBeforeStart.value = true;
+    return true;
+  }
+  // Check if there is at least one delivery option
+  if (deliveryComputed.value.options.length === 0){
     return true;
   }
   // If all the checks are passed, enable the save button
@@ -331,7 +292,6 @@ const addDelivery = () => {
 <template>
   <n-spin :show="showSpin">
     <n-grid :x-gap="10" :y-gap="10" cols="1 1000:2" item-responsive>
-
       <!-- First Column: delivery options (daily, weekly, timing) + Max Delay -->
       <n-gi>
         <n-scrollbar :style="computedStyle">
@@ -342,6 +302,7 @@ const addDelivery = () => {
                   v-bind:key="index"
                   :scheduling_type="scheduling_type"
                   v-model:option="deliveryComputed.options[index]"
+                  @delete="deliveryComputed.options.splice(index, 1)"
               />
               <n-button ghost circle type="primary" @click="addDelivery()">
                 <template #icon>

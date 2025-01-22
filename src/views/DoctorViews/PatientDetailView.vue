@@ -16,7 +16,7 @@ import {
 import { useDialog } from "naive-ui";
 import router from "@/router";
 import EditPatientForm from "@/components/patient-details/EditPatientForm.vue";
-import TherapyForm from "@/components/patient-details/TherapyForm.vue";
+import TherapyForm from "@/components/PatientDetailDoctor/TherapyForm.vue";
 import TherapyDetails from "@/components/patient-details/TherapyDetails.vue";
 import useWindowResize from "@/use/useWindowResize";
 import ResponsiveConfig from "@/assets/responsive-config.json";

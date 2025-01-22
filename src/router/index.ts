@@ -55,12 +55,12 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: "/patients",
         name: "Patients",
-        component: () => import("../views/Patients.vue"),
+        component: () => import("../views/DoctorViews/PatientListView.vue"),
     },
     {
         path: "/showPatient",
         name: "PatientDetail",
-        component: () => import("../views/PatientDetail.vue"),
+        component: () => import("../views/DoctorViews/PatientDetailView.vue"),
     },
     {
         path: "/patientPage",
@@ -96,12 +96,7 @@ const routes: Array<RouteRecordRaw> = [
     //     path: "/dashboard/report",
     //     name: "DashboardReport",
     //     component: () => import("../components/DashboardReport.vue"),
-    // },
-    {
-        path: "/test",
-        name: "Test",
-        component: () => import("../views/SetupWizard.vue"),
-    }
+    // }
 ];
 
 const router = createRouter({
