@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from "vue";
 import ResponsiveView from "@/components/ResponsiveView.vue";
-import router from "@/router/index";
+import router from "@/router";
 import {useUserStore} from "@/stores/user";
 import { useI18n } from "vue-i18n";
 import * as api from "@/api";
@@ -50,7 +50,7 @@ const rules = computed(() => {
   };
 });
 
-// Redirect to home page if user is already logged in
+// Redirect to Home page if user is already logged in
 onMounted(() => {
   if (user.username) {
     router.push({ name: "Home" });
@@ -110,7 +110,7 @@ const login = async () => {
         <template #cover>
           <img
             height="100"
-            src="@/assets/logo-round-bow.svg"
+            src="../../assets/logo-round-bow.svg"
             style="margin-top: 20px"
           />
         </template>
@@ -172,7 +172,7 @@ const login = async () => {
         <template #cover>
           <img
             height="100"
-            src="@/assets/logo-round-bow.svg"
+            src="../../assets/logo-round-bow.svg"
             style="margin-top: 20px"
           />
         </template>

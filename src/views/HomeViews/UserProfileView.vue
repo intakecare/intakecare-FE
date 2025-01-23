@@ -132,7 +132,7 @@ const createRequirePasswordChangeMessage = () => {
 
 const onPasswordChanged = () => {
   /** This function is called when the password is changed in the corresponding component.
-   * It destroys the message requiring the password change, logouts the user and redirects to the home page. */
+   * It destroys the message requiring the password change, logouts the user and redirects to the Home page. */
   // If the message is present, destroy it
   if (requirePasswordChangeMessage) {
     requirePasswordChangeMessage.destroy();
@@ -140,7 +140,7 @@ const onPasswordChanged = () => {
   }
   // Logout
   user.logout();
-  // Redirect to home page
+  // Redirect to Home page
   router.push({ name: "Home" });
 }
 

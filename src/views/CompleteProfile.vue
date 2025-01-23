@@ -63,7 +63,7 @@ const onPasswordChanged = () => {
    */
   // Logout
   user.logout();
-  // Redirect to home page
+  // Redirect to Home page
   router.push({ name: "Home" });
 }
 

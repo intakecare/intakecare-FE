@@ -5,7 +5,7 @@ import {useI18n} from "vue-i18n";
 import {NCarousel} from "naive-ui";
 
 /**
-  * This is the home page of the application. It contains a carousel and a card with some statistics.
+  * This is the Home page of the application. It contains a carousel and a card with some statistics.
 */
 
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
@@ -18,15 +18,6 @@ const data = ref(
     null as { patients: number; therapies: number; intakes: number } | null
 );
 
-// const getData = () => {
-//   api.host.getStats().then((value) => {
-//     data.value = value.data;
-//   });
-// };
-//
-// onMounted(() => {
-//   getData();
-// });
 onMounted(() => {
   data.value = { patients: 53, therapies: 78, intakes: 200 };
 });

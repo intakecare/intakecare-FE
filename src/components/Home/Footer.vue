@@ -15,40 +15,7 @@ const { t } = useI18n({ useScope: "global", inheritLocale: true });
           {{ t("footer.contacts") }}
           <div>
             +39 02 2399 3390<br />
-            project.intakecare@gmail.com<br />
-          </div>
-        </div>
-
-        <div>
-          {{ t("footer.services") }}
-          <div>
-            {{ t("footer.support") }}<br />
-            {{ t("footer.reminderIntegration") }}<br />
-            FAQ
-          </div>
-        </div>
-
-        <div>
-          {{ t("footer.link") }}
-          <div>
-            PlayStore
-            <img
-              height="10"
-              alt="playstore"
-              src="/icons/googleplay.svg"
-            /><br />
-            AppStore
-            <img
-              height="10"
-              alt="appstore"
-              src="/icons/appstore.svg"
-            /><br />
-            Amazon Alexa
-            <img
-              height="10"
-              alt="amazonalexa"
-              src="/icons/amazonalexa.svg"
-            /><br />
+            studiointake@auxologico.it<br />
           </div>
         </div>
       </n-space>

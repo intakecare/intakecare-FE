@@ -82,7 +82,7 @@
     "login":{
         "username":"Nome Utente",
         "password":"Password",
-        "forgottenPassword":"Password Dimenticata? Scrivi una mail ad example{'@'}example.com",
+        "forgottenPassword":"Password Dimenticata? Scrivi una mail a studiointake{'@'}auxologico.it",
         "usernamePasswordError":"Nome utente o password errati",
         "usernameValidation":"Il Nome utente è necessario",
         "passwordValidation":"La password è necessaria"
