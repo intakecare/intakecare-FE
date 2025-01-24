@@ -32,8 +32,8 @@ const cadence = computed({
       time: selectedTime.value,
       max_delay: maxDelay.value,
     };
+    console.log("Emitting: ", temp);
     emits("update:value", temp);
-    console.log(temp);
   },
 });
 
@@ -111,6 +111,12 @@ watch([selectedTime, rangeStartTime, rangeEndTime], ([newTime, newRangeStartTime
     props.option.rangeEndTime = newRangeEndTime;
     errorTimeNotInRange.value = false;
   }
+});
+
+// Watch when maxDelay changes
+watch(maxDelay, (newMaxDelay) => {
+  props.option.max_delay = newMaxDelay;
+  console.log("Max delay changed to: ", newMaxDelay);
 });
 </script>
 

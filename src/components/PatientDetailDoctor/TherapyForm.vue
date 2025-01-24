@@ -58,7 +58,7 @@ let delivery = ref({
   options: [
     {
       time: "12:00",
-      max_delay: 120,
+      max_delay: 960,
       cadence: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"],
       rangeStartTime: null as string | null,
       rangeEndTime: null as string | null,
@@ -143,8 +143,8 @@ const endOptions = computed(() => [
   // },
 ]);
 
-// Set the date range from tomorrow to 90 days from tomorrow
-const dateRange = ref([Date.now() + 24 * 60 * 60 * 1000, Date.now() + (90 + 1) * 24 * 60 * 60 * 1000]);
+// Set the date range from tomorrow to 120 days from tomorrow
+const dateRange = ref([Date.now() + 24 * 60 * 60 * 1000, Date.now() + (120 + 1) * 24 * 60 * 60 * 1000]);
 
 const disablePreviousDate = (ts: number): boolean => {
   return !props.therapy && ts < Date.now() - 24 * 60 * 60 * 1000;
@@ -280,7 +280,7 @@ const computedStyle = computed(() => {
 const addDelivery = () => {
   deliveryComputed.value.options.push({
     time: "12:00",
-    max_delay: 120,
+    max_delay: 960,
     cadence: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"],
     rangeStartTime: undefined,
     rangeEndTime: undefined,

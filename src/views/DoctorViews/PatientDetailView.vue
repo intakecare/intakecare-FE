@@ -303,16 +303,6 @@ const onTherapySelected = (item: any) => {
                           </template>
                           {{ t("general.undo") }}</n-button
                         >
-                        <n-button
-                          secondary
-                          type="error"
-                          @click="deletePatient()"
-                        >
-                          <template #icon>
-                            <trash-icon />
-                          </template>
-                          {{ t("general.delete") }}
-                        </n-button>
                       </n-space>
                     </n-space>
                     <n-divider>{{ t("patientDetail.detail") }}</n-divider>
@@ -486,19 +476,7 @@ const onTherapySelected = (item: any) => {
                           </template>
                           {{ t("general.undo") }}</n-button
                         ></n-gi
-                      ><n-gi>
-                        <n-button
-                          secondary
-                          type="error"
-                          @click="deletePatient()"
-                        >
-                          <template #icon>
-                            <trash-icon />
-                          </template>
-                          {{ t("general.delete") }}
-                        </n-button></n-gi
                       >
-
                       <n-gi>
                         <n-button secondary @click="showDrawer = true">
                           <template #icon>
@@ -609,12 +587,6 @@ const onTherapySelected = (item: any) => {
                       </template>
                       {{ t("general.undo") }}</n-button
                     >
-                    <n-button secondary type="error" @click="deletePatient()">
-                      <template #icon>
-                        <trash-icon />
-                      </template>
-                      {{ t("general.delete") }}
-                    </n-button>
                   </n-space>
 
                   <n-button

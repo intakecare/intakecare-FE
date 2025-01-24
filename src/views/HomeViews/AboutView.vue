@@ -48,15 +48,6 @@ const team = [
   },
 
   {
-    name: "Martino",
-    surname: "Pengo",
-    position: "Physician",
-    image: "",
-    qualification: "Medico Cardiologo",
-    institutions: ["IRCCS Istituto Auxologico Italiano"]
-  },
-
-  {
     name: "Alessandra",
     surname: "Gorini",
     position: "Psicologa",
