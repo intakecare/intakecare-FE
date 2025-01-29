@@ -3,6 +3,7 @@ import {computed, PropType, ref, watch} from "vue";
 import { useI18n } from "vue-i18n";
 import WeekDaySelector from "@/components/patient-details/WeekDaySelector.vue";
 import { Option } from "@/classes/therapy-dto";
+import {RemoveCircle as MinusIcon} from "@vicons/ionicons5";
 
 
 // Props and emits
@@ -10,13 +11,14 @@ const props = defineProps({
   scheduling_type: { type: String, required: true },
   option: {type: Object as PropType<Option>, required: true},
 })
-const emits = defineEmits(["update:value"]);
+const emits = defineEmits(["update:value", "delete"]);
 
 // i18n initialization
 const { t } = useI18n({ useScope: "global", inheritLocale: true });
 
 // Reactive variables
 const selectedTime = ref(props.option.time);
+const maxDelay = ref(props.option.max_delay);
 const rangeStartTime = ref(props.option?.rangeStartTime);
 const rangeEndTime = ref(props.option?.rangeEndTime);
 const errorTimeNotInRange = ref(false);
@@ -28,10 +30,10 @@ const cadence = computed({
     const temp: Option = {
       cadence: value.length > 0 ? value : ["MO"],
       time: selectedTime.value,
-      max_delay: props.option.max_delay,
+      max_delay: maxDelay.value,
     };
+    console.log("Emitting: ", temp);
     emits("update:value", temp);
-    console.log(temp);
   },
 });
 
@@ -57,6 +59,11 @@ const rangeOptions = [
     key: "evening"
   }
 ];
+
+const onDeletePressed = () => {
+  console.log("Delete pressed");
+  emits("delete");
+};
 
 
 const onSelectTimeRangeTemplate = (value: string | number) => {
@@ -105,6 +112,12 @@ watch([selectedTime, rangeStartTime, rangeEndTime], ([newTime, newRangeStartTime
     errorTimeNotInRange.value = false;
   }
 });
+
+// Watch when maxDelay changes
+watch(maxDelay, (newMaxDelay) => {
+  props.option.max_delay = newMaxDelay;
+  console.log("Max delay changed to: ", newMaxDelay);
+});
 </script>
 
 
@@ -121,6 +134,12 @@ watch([selectedTime, rangeStartTime, rangeEndTime], ([newTime, newRangeStartTime
         </n-space>
       </span>
       <span>
+        <n-text> {{ t("therapies.maxDelay") }}: </n-text>
+        <n-input-number v-model:value="maxDelay" :min="1" style="width: 200px">
+        <template #suffix>{{ t("general.minute", 2)}}</template>
+        </n-input-number>
+      </span>
+      <span>
         <n-text> {{ t("therapies.changeableWithin") }}: </n-text>
         <n-space justify="space-between" align="center">
           <n-time-picker format="HH:mm" value-format="HH:mm" v-model:formatted-value="rangeStartTime"/>
@@ -129,6 +148,13 @@ watch([selectedTime, rangeStartTime, rangeEndTime], ([newTime, newRangeStartTime
           <n-dropdown trigger="hover" :options="rangeOptions" @select="onSelectTimeRangeTemplate">
             <n-button>{{t("therapies.template")}}</n-button>
           </n-dropdown>
+          <n-button ghost circle type="error" @click="onDeletePressed">
+            <template #icon>
+              <n-icon>
+                <minus-icon />
+              </n-icon>
+            </template>
+          </n-button>
         </n-space>
         <n-text v-if="errorTimeNotInRange" style="color: #510045FF">{{t('therapies.errorTimeRange')}}</n-text>
       </span>

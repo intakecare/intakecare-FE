@@ -82,7 +82,7 @@
     "login":{
         "username":"Nome Utente",
         "password":"Password",
-        "forgottenPassword":"Password Dimenticata? Scrivi una mail ad example{'@'}example.com",
+        "forgottenPassword":"Password Dimenticata? Scrivi una mail a studiointake{'@'}auxologico.it",
         "usernamePasswordError":"Nome utente o password errati",
         "usernameValidation":"Il Nome utente è necessario",
         "passwordValidation":"La password è necessaria"
@@ -122,7 +122,9 @@
         "showTherapies":"Mostra Terapie",
         "missedIntakes":"Assunzioni Mancate",
         "allTherapies":"Aderenza Globale",
-        "myTherapies":"Le Mie Terapie"
+        "myTherapies":"Le Mie Terapie",
+        "changePersona": "Modifica Persona",
+        "changePersonaMessage": "Seleziona la Persona da assegnare al paziente"
     },
     "patients":{
         "username": "Nome Utente",
@@ -302,5 +304,11 @@
         "FR":"Venerdì|V",
         "SA":"Sabato|S",
         "SU":"Domenica|D"
-    }  
+    },
+    "therapyForm":{
+        "insertDrug":"2. Inserisci il nome del farmaco",
+        "insertPosology": "3. Inserisci la posologia (1 cp, 20 mg, ...)",
+        "insertDateInterval": "4. Seleziona la data di inizio e di fine dei promemoria per la terapia",
+        "insertDoses": "1. Inserisci gli orari di somministrazione"
+    }
 }

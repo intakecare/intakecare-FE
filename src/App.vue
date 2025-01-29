@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ITCLight from "./assets/ITCLight.json"
-import Footer from "./components/home/Footer.vue"
-import NavBar from "@/components/home/NavBar.vue";
+import Footer from "@/components/Home/Footer.vue"
+import NavBar from "@/components/Home/NavBar.vue";
 import { NConfigProvider, NGlobalStyle, NLayout, NLayoutHeader, NLayoutFooter, NMessageProvider, NDialogProvider } from "naive-ui";
 
 /**
@@ -20,7 +20,7 @@ const theme = ITCLight;
         <n-layout position="absolute" style="height: 100%">
           <n-layout-header
               class="main"
-              style="height: 70px; padding: 12px; padding-left: 24px"
+              style="height: 10%; padding: 12px; padding-left: 24px"
           >
             <NavBar />
           </n-layout-header>
@@ -28,13 +28,16 @@ const theme = ITCLight;
               class="main"
               position="static"
               :native-scrollbar="false"
-              style="min-height: calc(100% - 194px); margin: auto"
+              style="min-height: 80%; margin: auto"
           >
             <div class="mainView">
               <router-view />
             </div>
           </n-layout>
-          <n-layout-footer position="static" style="padding: 24px">
+          <n-layout-footer
+              class="main"
+              style="height: 10%; padding: 12px; padding-left: 24px"
+          >
             <Footer />
           </n-layout-footer>
         </n-layout>

@@ -7,7 +7,7 @@ import {
 } from "vue";
 import { useI18n } from "vue-i18n";
 import { Add as AddIcon, Remove as RemoveIcon } from "@vicons/ionicons5";
-import Dose from "@/components/patient-details/Dose.vue";
+import Dose from "@/components/PatientDetailDoctor/Dose.vue";
 import { Delivery, Option } from "@/classes/therapy-dto";
 import useWindowResize from "@/use/useWindowResize";
 

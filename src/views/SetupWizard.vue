@@ -26,11 +26,11 @@ onMounted(() => {
 const onPasswordChanged = () => {
   /**
    *  This function is called when the password is changed in the corresponding component.
-   * It logs out the user and redirects to the home page.
+   * It logs out the user and redirects to the Home page.
    * */
   // Logout
   user.logout();
-  // Redirect to home page
+  // Redirect to Home page
   router.push({ name: "Home" });
 }
 

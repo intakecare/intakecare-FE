@@ -30,7 +30,7 @@ const schedule = ref({
       "time": "12:10"
     });
 const effectiveSchedule = ref([] as Option[]);
-const trueRef = ref(true); //This is for debugging purpose ONLY
+
 // Computed variables
 const posology = computed(() => {
   let mealsSection = ""

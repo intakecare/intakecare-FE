@@ -7,6 +7,16 @@ import {useLanguageStore} from "@/stores/language";
 import { Menu as MenuIcon } from "@vicons/ionicons5";
 import {useRouter} from "vue-router";
 
+/**
+ * This component is used to display the navigation bar of the application.
+ * It contains the logo, the navigation menu, and the language selection.
+ * It also contains the login and profile buttons.
+ * The mobile version of the menu is displayed as a drawer.
+ * @component NavBar
+ * @example
+ * <NavBar />
+ */
+
 // i18n and router setup
 const { t, locale } = useI18n({ useScope: "global", inheritLocale: true });
 const router = useRouter();
@@ -83,7 +93,7 @@ const changeLanguage = (lang: string) => {
 };
 
 const logout = () => {
-  // Remove the user from the store and redirect to the home page
+  // Remove the user from the store and redirect to the Home page
   userModule.logout()
   router.push({ name: "Home" });
 };
@@ -135,9 +145,6 @@ const handleSelect = (key: string) => {
           justify="end"
           item-style="margin: auto;"
         >
-          <n-dropdown @select="handleSelect" :options="languageOptions">
-            <n-button type="primary">{{ t("language") }}</n-button>
-          </n-dropdown>
           <span v-for="v in menuOptions" :key="v.key">
             <n-button type="primary" @click="clickNav(v.key)">{{
               v.label
@@ -214,17 +221,6 @@ const handleSelect = (key: string) => {
                 style="margin-top: 5px"
               >
                 <n-button text size="medium" @click="clickNav(v.key)">{{
-                  v.label
-                }}</n-button>
-              </div>
-
-              <n-divider />
-              <div
-                v-for="v in languageOptions"
-                :key="v.key"
-                style="margin-top: 5px"
-              >
-                <n-button text size="medium" @click="changeLanguage(v.key)">{{
                   v.label
                 }}</n-button>
               </div>
