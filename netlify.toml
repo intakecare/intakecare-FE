@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api*"
-  to = "https://intake-care-de7b20968242.herokuapp.com/:splat"
+  to = "intake-care-de7b20968242.herokuapp.com/:splat"
   status = 200
 
 [[redirects]]
