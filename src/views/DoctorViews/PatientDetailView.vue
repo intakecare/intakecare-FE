@@ -87,7 +87,8 @@ const getData = async () => {
           userData.value.cf = response.data.user.cf;
           userData.value.phone = response.data.user.phone;
           userData.value.email = response.data.user.email;
-          userData.value.persona_id = response.data.persona_id;
+          userData.value.persona_id = response.data.user.persona_id.toString();
+          console.log(userData.value.persona_id)
           therapies.value = response.data.therapies;
           showSpin.value = false;
         })
@@ -134,7 +135,7 @@ const updatePersona = () => {
   if (patientPersona.value) {
     console.log("Patient Persona: ", patientPersona.value);
     api.patients.edit(userData.value.id as string, {"user":
-          {"persona_id": patientPersona.value.toString() }
+          { "persona_id": patientPersona.value.toString() }
     }).then(() => {
       showPersonaModal.value = false;
       getData();
@@ -239,7 +240,7 @@ const onTherapySelected = (item: any) => {
         </n-button>
       </template>
       <n-space vertical>
-        <n-radio-group v-model:value="patientPersona" style="width: 100%">
+        <n-radio-group v-model:value="userData.persona_id" style="width: 100%">
           <n-radio-button value="1">Persona 1</n-radio-button>
           <n-radio-button value="2">Persona 2</n-radio-button>
           <n-radio-button value="3">Persona 3</n-radio-button>
@@ -272,8 +273,20 @@ const onTherapySelected = (item: any) => {
                       </n-h1>
                       <n-space justify="end">
                         <n-button
+                            secondary
+                            v-if="!userData.persona_id"
+                            type="error"
+                            @click="showPersonaModal = true">
+                          <template #icon >
+                            <persona-icon />
+                          </template>
+                          {{ t("patientDetail.assignPersona") }}
+                        </n-button>
+
+                        <n-button
                           secondary
                           type="primary"
+                          v-else
                           @click="showPersonaModal = true">
                           <template #icon >
                             <persona-icon />

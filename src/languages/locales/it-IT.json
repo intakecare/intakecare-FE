@@ -123,6 +123,7 @@
         "missedIntakes":"Assunzioni Mancate",
         "allTherapies":"Aderenza Globale",
         "myTherapies":"Le Mie Terapie",
+        "assignPersona": "Assegna Persona",
         "changePersona": "Modifica Persona",
         "changePersonaMessage": "Seleziona la Persona da assegnare al paziente"
     },
