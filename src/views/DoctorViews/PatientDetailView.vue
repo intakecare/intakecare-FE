@@ -48,11 +48,11 @@ const userData = ref({
   cf: undefined as string | undefined,
   phone: undefined as string | undefined,
   email: undefined as string | undefined,
-  persona_id: undefined as string | undefined
+  persona_id: undefined as number | undefined
 });
 const patientData = ref();
 const therapies = ref([]);
-const patientPersona = ref(null as string | null);
+const patientPersona = ref(null as number | null);
 const editMode = ref(false);
 const showDrawer = ref(false);
 const showTherapyModal = ref(false);
@@ -87,8 +87,7 @@ const getData = async () => {
           userData.value.cf = response.data.user.cf;
           userData.value.phone = response.data.user.phone;
           userData.value.email = response.data.user.email;
-          userData.value.persona_id = response.data.user.persona_id.toString();
-          console.log(userData.value.persona_id)
+          userData.value.persona_id = response.data.user.persona_id;
           therapies.value = response.data.therapies;
           showSpin.value = false;
         })
@@ -135,7 +134,7 @@ const updatePersona = () => {
   if (patientPersona.value) {
     console.log("Patient Persona: ", patientPersona.value);
     api.patients.edit(userData.value.id as string, {"user":
-          { "persona_id": patientPersona.value.toString() }
+          {"persona_id": patientPersona.value }
     }).then(() => {
       showPersonaModal.value = false;
       getData();
