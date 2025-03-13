@@ -52,7 +52,6 @@ const userData = ref({
 });
 const patientData = ref();
 const therapies = ref([]);
-const patientPersona = ref(null as number | null);
 const editMode = ref(false);
 const showDrawer = ref(false);
 const showTherapyModal = ref(false);
@@ -131,14 +130,22 @@ const deletePatient = () => {
  */
 const updatePersona = () => {
   // This function updates the persona of the patient
-  if (patientPersona.value) {
-    console.log("Patient Persona: ", patientPersona.value);
-    api.patients.edit(userData.value.id as string, {"user":
-          {"persona_id": patientPersona.value }
-    }).then(() => {
+  if (userData.value.persona_id) {
+    try {
+      console.log("Patient Persona: ", userData.value.persona_id);
+      api.patients.edit(userData.value.id as string, {
+        "user":
+            {"persona_id": userData.value.persona_id}
+      }).then(() => {
+        showPersonaModal.value = false;
+        getData();
+      });
+    }
+    catch (e) {
+      console.log(e);
       showPersonaModal.value = false;
       getData();
-    });
+    }
   }
 }
 
@@ -239,6 +246,7 @@ const onTherapySelected = (item: any) => {
         </n-button>
       </template>
       <n-space vertical>
+        <n-text>Persona attuale: {{userData.persona_id}}</n-text>
         <n-radio-group v-model:value="userData.persona_id" style="width: 100%">
           <n-radio-button value="1">Persona 1</n-radio-button>
           <n-radio-button value="2">Persona 2</n-radio-button>
